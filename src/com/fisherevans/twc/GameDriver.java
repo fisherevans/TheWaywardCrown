@@ -1,12 +1,9 @@
 package com.fisherevans.twc;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.states.State;
@@ -14,6 +11,11 @@ import com.fisherevans.twc.states.StateManager;
 
 public class GameDriver extends BasicGame
 {
+	public static final int
+		NATIVE_SCREEN_WIDTH = 1280,
+		NATIVE_SCREEN_HEIGHT = 720;
+	
+	
 	private Input _input;
 	private StateManager _sm;
 	

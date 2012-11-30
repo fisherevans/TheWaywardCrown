@@ -1,14 +1,11 @@
 package com.fisherevans.twc;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Insets;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
-import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.CanvasGameContainer;
 import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
@@ -19,6 +16,7 @@ public class Start extends JFrame
 	private int _xInset, _yInset;
 	private static boolean _debug = true;
 	
+	
 	public Start() throws SlickException
 	{
 		super("Chaotic Harmony");
@@ -27,7 +25,7 @@ public class Start extends JFrame
 		initFrame();
 		initInsets();
 
-		setInnerSize(720, 480);
+		setInnerSize(GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT);
 		
 		add(_canvas);
 		_canvas.start();
@@ -53,7 +51,9 @@ public class Start extends JFrame
 	
 	private void initCanvas() throws SlickException
 	{
-		_canvas = new CanvasGameContainer(new ScalableGame(new GameDriver("Chaotic Harmony"),720,480, true));
+		_canvas = new CanvasGameContainer(new ScalableGame(
+				new GameDriver("The Wayward Crown - Beta"),
+				GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT, true));
 		_canvas.getContainer().setAlwaysRender(true);
 		_canvas.getContainer().setShowFPS(_debug);
 		_canvas.getContainer().setTargetFrameRate(60);

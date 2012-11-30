@@ -1,12 +1,12 @@
 package com.fisherevans.twc.states.starting;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import com.fisherevans.twc.GameDriver;
 import com.fisherevans.twc.ResourceTools;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
@@ -46,10 +46,10 @@ public class StartingState extends State
 		gfx.drawImage(titleScreen, 0, 0);
 		if(_scale >= 1)
 		{
-			float readyColor = ((float)Math.cos(_ready))*0.4f + 0.6f;
+			float readyColor = ((float)Math.cos(_ready))*0.5f + 0.5f;
 			gfx.setColor(new Color(readyColor, readyColor, readyColor));
 			gfx.setFont(ResourceTools.getMainFont());
-			gfx.drawString(READY_STRING, gc.getWidth()/2 - ResourceTools.getMainFont().getWidth(READY_STRING)/2, gc.getHeight()*0.8f);
+			gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.getMainFont().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
 		}
 	}
 
