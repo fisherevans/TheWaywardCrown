@@ -18,15 +18,19 @@ public class GameDriver extends BasicGame
 	
 	private Input _input;
 	private StateManager _sm;
+	private Start _frame;
+	private GlobalKeyListener _gkl;
 	
-	public GameDriver(String title)
+	public GameDriver(String title, Start start)
 	{
 		super(title);
+		_frame = start;
 	}
 
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
+		_gkl = new GlobalKeyListener(this);
 		_input = gc.getInput();
 		_sm = new StateManager(this);
 	}
@@ -46,7 +50,13 @@ public class GameDriver extends BasicGame
 	public void setInputTarget(State newInputTarget)
 	{
 		_input.removeAllListeners();
+		_input.addKeyListener(_gkl);
 		_input.addKeyListener(newInputTarget);
 		_input.addMouseListener(newInputTarget);
+	}
+	
+	public Start getFrame()
+	{
+		return _frame;
 	}
 }

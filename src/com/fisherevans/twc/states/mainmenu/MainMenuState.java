@@ -1,18 +1,75 @@
 package com.fisherevans.twc.states.mainmenu;
 
+import java.util.ArrayList;
+
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import com.fisherevans.twc.GameDriver;
+import com.fisherevans.twc.MathTools;
+import com.fisherevans.twc.ResourceTools;
+import com.fisherevans.twc.control.KeyCodes;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
+import com.fisherevans.twc.states.mainmenu.items.*;
+import com.fisherevans.twc.states.starting.StartingState;
 
 public class MainMenuState extends State
 {
+	private ArrayList<MenuItem> _menuItems;
+	private int _menuPos;
 
 	public MainMenuState(StateManager sm)
 	{
 		super(sm);
+		initMenuItems();
+		_menuPos = 0;
+	}
+	
+	private void initMenuItems()
+	{
+		_menuItems = new ArrayList<MenuItem>();
+
+		_menuItems.add(new SimpleTextItem("Resume", true));
+		_menuItems.add(new SimpleTextItem("Load", true));
+		_menuItems.add(new SimpleTextItem("New", true));
+		_menuItems.add(new SimpleTextItem("-----------", false));
+		_menuItems.add(new AdventureDemoItem());
+		_menuItems.add(new SimpleTextItem("-----------", false));
+		_menuItems.add(new ExitItem());
+		
+		if(_menuItems.isEmpty())
+		{
+			_menuItems.add(new SimpleTextItem("Empty!!!", true));
+		}
+	}
+	
+	private void moveDownMenu()
+	{
+		int init = _menuPos++;
+		while(_menuPos < _menuItems.size() && !_menuItems.get(_menuPos).isSelectable())
+		{
+			_menuPos++;
+		}
+		if(_menuPos >= _menuItems.size())
+		{
+			_menuPos = init;
+		}
+	}
+	
+	private void moveUpMenu()
+	{
+		int init = _menuPos--;
+		while(_menuPos >= 0 && !_menuItems.get(_menuPos).isSelectable())
+		{
+			_menuPos--;
+		}
+		if(_menuPos < 0)
+		{
+			_menuPos = init;
+		}
 	}
 
 	@Override
@@ -24,14 +81,38 @@ public class MainMenuState extends State
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
-		gfx.drawString("Main Menu", 10, 10);
+		gfx.setFont(ResourceTools.font40());
 		
+		for(int listId = 0;listId < _menuItems.size();listId++)
+		{
+			Color color = _menuPos == listId ? _menuItems.get(listId).getHighColor() : _menuItems.get(listId).getColor();
+			String text = _menuPos == listId ? "> " + _menuItems.get(listId).getText() + " <" : _menuItems.get(listId).getText();
+			int x = GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font40().getWidth(text)/2;
+			int y = 56 + 56*listId;
+			gfx.setColor(color);
+			gfx.drawString(text, x, y);
+		}
 	}
 
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		
+		if(KeyCodes.isUP(key))
+		{
+			moveUpMenu();
+		}
+		else if(KeyCodes.isDOWN(key))
+		{
+			moveDownMenu();
+		}
+		else if(KeyCodes.isSELECT(key))
+		{
+			_menuItems.get(_menuPos).action();
+		}
+		else if(KeyCodes.isBACK(key))
+		{
+			getSM().setState(new StartingState(getSM()));
+		}
 	}
 
 	@Override

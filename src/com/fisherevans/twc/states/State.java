@@ -7,16 +7,18 @@ import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.SlickException;
 
+import com.fisherevans.twc.GameDriver;
+
 public abstract class State implements KeyListener, MouseListener
 {
-	private StateManager _sm;
+	private static StateManager _sm;
 	
 	public State(StateManager sm)
 	{
 		_sm = sm;
 	}
 	
-	public StateManager getSM()
+	public static StateManager getSM()
 	{
 		return _sm;
 	}

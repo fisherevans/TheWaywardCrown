@@ -12,7 +12,7 @@ public class StateManager
 	public enum States { Starting, MainMenu, NewGame, Adventure, PauseMenu, Combat }
 	
 	private State _currentState;
-	private GameDriver _gd;
+	private static GameDriver _gd;
 	
 	public StateManager(GameDriver gd)
 	{
@@ -25,6 +25,11 @@ public class StateManager
 	{
 		_currentState = newState;
 		_gd.setInputTarget(_currentState);
+	}
+	
+	public static GameDriver getGD()
+	{
+		return _gd;
 	}
 
 	public void updateState(GameContainer gc, int delta) throws SlickException

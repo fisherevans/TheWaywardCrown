@@ -18,6 +18,7 @@ public class StartingState extends State
 				  _ready = 0f;
 	private Image titleScreen;
 	private final String READY_STRING = "[ Press Enter ]";
+	private final String TITLE = "The Wayward Crown";
 	
 	public StartingState(StateManager sm)
 	{
@@ -42,14 +43,16 @@ public class StartingState extends State
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
-		titleScreen.setAlpha(_scale);
-		gfx.drawImage(titleScreen, 0, 0);
+		gfx.setColor(new Color(_scale, _scale, _scale));
+		gfx.setFont(ResourceTools.font48());
+		gfx.drawString(TITLE, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font48().getWidth(TITLE)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.2f);
+		
 		if(_scale >= 1)
 		{
 			float readyColor = ((float)Math.cos(_ready))*0.5f + 0.5f;
 			gfx.setColor(new Color(readyColor, readyColor, readyColor));
-			gfx.setFont(ResourceTools.getMainFont());
-			gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.getMainFont().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
+			gfx.setFont(ResourceTools.font32());
+			gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font32().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
 		}
 	}
 
@@ -58,7 +61,7 @@ public class StartingState extends State
 	{
 		if(key == 28)
 		{
-			super.getSM().setState(new MainMenuState(super.getSM()));
+			getSM().setState(new MainMenuState(getSM()));
 		}
 	}
 

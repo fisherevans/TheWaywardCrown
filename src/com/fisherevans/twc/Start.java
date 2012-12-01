@@ -1,59 +1,105 @@
 package com.fisherevans.twc;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 
+import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.CanvasGameContainer;
 import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 
-public class Start extends JFrame
+public class Start
 {
-	private CanvasGameContainer _canvas;
+	public final String TITLE = "The Wayward Crown - Beta";
+	public final boolean EXPORT = false;
+	
+	private static CanvasGameContainer _canvas;
+	private static ScalableGame _scale;
+	private JFrame _frame;
+	private FrameActions _fa;
+	private boolean _fullscreen = false;
 	private int _xInset, _yInset;
-	private static boolean _debug = true;
+	private static boolean _debug = false;
+	
+	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } };
+	private int _curRes = 1;
 	
 	
 	public Start() throws SlickException
 	{
-		super("Chaotic Harmony");
+		if(EXPORT)
+		{
+			System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
+			System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
+		}
+		
+		_fa = new FrameActions();
 		
 		initCanvas();
 		initFrame();
 		initInsets();
 
-		setInnerSize(GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT);
+		cycleReso();
 		
-		add(_canvas);
+		_frame.add(_canvas);
 		_canvas.start();
 		_canvas.requestFocus();
-		
+	}
+	
+	public void cycleReso()
+	{
+		Dimension dim = _frame.getToolkit().getScreenSize();
+		if(_resos[_curRes][0] >= dim.width || _resos[_curRes][1] >= dim.height)
+		{
+			_fullscreen = true;
+			reInitFrame();
+			_frame.setSize(dim.width, dim.height);
+			_frame.setLocation(0,0);
+			_curRes = -1;
+		}
+		else
+		{
+			if(_fullscreen)
+			{
+				_fullscreen = false;
+				reInitFrame();
+			}
+			setInnerSize(_resos[_curRes][0], _resos[_curRes][1]);
+		}
+		_curRes++;
+		if(_curRes >= _resos.length)
+		{
+			_curRes = 0;
+		}
+		_canvas.requestFocus();
 	}
 	
 	public void setInnerSize(int x, int y)
 	{
 		x += _xInset;
 		y += _yInset;
-		Dimension dim = getToolkit().getScreenSize();
-		setSize(x, y);
-		setLocation(dim.width/2 - x/2, dim.height/2 - y/2);
+		Dimension dim = _frame.getToolkit().getScreenSize();
+		_frame.setSize(x, y);
+		_frame.setLocation(dim.width/2 - x/2, dim.height/2 - y/2);
 	}
 	
 	private void initInsets()
 	{
-		_xInset = getInsets().left + getInsets().right;
-		_yInset = getInsets().top + getInsets().bottom;
+		_xInset = _frame.getInsets().left + _frame.getInsets().right;
+		_yInset = _frame.getInsets().top + _frame.getInsets().bottom;
 		debug("X Inset: " + _xInset + " - Y Inset: " + _yInset);
 	}
 	
 	private void initCanvas() throws SlickException
 	{
-		_canvas = new CanvasGameContainer(new ScalableGame(
-				new GameDriver("The Wayward Crown - Beta"),
-				GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT, true));
+		_scale = new ScalableGame(new GameDriver("The Wayward Crown - Beta", this), GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT, true);
+		_canvas = new CanvasGameContainer(_scale);
 		_canvas.getContainer().setAlwaysRender(true);
 		_canvas.getContainer().setShowFPS(_debug);
 		_canvas.getContainer().setTargetFrameRate(60);
@@ -62,11 +108,26 @@ public class Start extends JFrame
 	
 	private void initFrame()
 	{
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		addWindowListener(new FrameActions());
-		toFront();
-		setState(this.NORMAL);
-		setVisible(true);
+		_frame = new JFrame(TITLE);
+		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		_frame.addWindowListener(_fa);
+		if(_fullscreen)
+		{
+			_frame.setUndecorated(true);
+		}
+		_frame.setVisible(true);
+		_frame.toFront();
+	}
+	
+	public void reInitFrame()
+	{
+		_frame.remove(_canvas);
+		_frame.removeWindowListener(_fa);
+		_frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		_frame.setVisible(false);
+		_frame.dispose();
+		initFrame();
+		_frame.add(_canvas);
 	}
 	
 	public static void debug(String msg)
