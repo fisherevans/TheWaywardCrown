@@ -9,8 +9,6 @@ import com.fisherevans.twc.states.starting.StartingState;
 
 public class StateManager
 {
-	public enum States { Starting, MainMenu, NewGame, Adventure, PauseMenu, Combat }
-	
 	private State _currentState;
 	private static GameDriver _gd;
 	
@@ -18,7 +16,7 @@ public class StateManager
 	{
 		_gd = gd;
 		
-		setState(new StartingState(this));
+		setState(new StartingState(this, _gd.getInput()));
 	}
 	
 	public void setState(State newState)

@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.GameDriver;
@@ -15,14 +16,14 @@ import com.fisherevans.twc.states.mainmenu.MainMenuState;
 public class StartingState extends State
 {
 	private float _scale = 0,
-				  _ready = 0f;
+				  _ready = 180f;
 	private Image titleScreen;
 	private final String READY_STRING = "[ Press Enter ]";
 	private final String TITLE = "The Wayward Crown";
 	
-	public StartingState(StateManager sm)
+	public StartingState(StateManager sm, Input input)
 	{
-		super(sm);
+		super(sm, input);
 		titleScreen = ResourceTools.getImage("res/starting/images/title_screen.png");
 	}
 
@@ -31,11 +32,11 @@ public class StartingState extends State
 	{
 		if(_scale != 1)
 		{
-			_scale = _scale > 1 ? 1 : _scale + 0.0002f*delta;
+			_scale = _scale > 1 ? 1 : _scale + 0.0003f*delta;
 		}
 		else
 		{
-			_ready += 0.003f*delta;
+			_ready += 0.1f*delta;
 			_ready = _ready > 360 ? _ready - 360 : _ready;
 		}
 	}
@@ -49,7 +50,7 @@ public class StartingState extends State
 		
 		if(_scale >= 1)
 		{
-			float readyColor = ((float)Math.cos(_ready))*0.5f + 0.5f;
+			float readyColor = ((float)Math.cos(Math.toRadians(_ready)))*0.25f + 0.25f;
 			gfx.setColor(new Color(readyColor, readyColor, readyColor));
 			gfx.setFont(ResourceTools.font32());
 			gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font32().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
@@ -61,7 +62,7 @@ public class StartingState extends State
 	{
 		if(key == 28)
 		{
-			getSM().setState(new MainMenuState(getSM()));
+			getSM().setState(new MainMenuState(getSM(), getInput()));
 		}
 	}
 

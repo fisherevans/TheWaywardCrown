@@ -1,5 +1,7 @@
 package com.fisherevans.twc.control;
 
+import org.newdawn.slick.Input;
+
 public class KeyCodes
 {
 	public static final int[] UP = { 17, 200 },
@@ -8,6 +10,38 @@ public class KeyCodes
 							  DOWN = { 31, 208 },
 							  SELECT = { 57, 28 },
 							  BACK = { 1 };
+	
+	public static boolean isUPDown(Input in)
+	{
+		return anyKeyDown(UP, in);
+	}
+	
+	public static boolean isDOWNDown(Input in)
+	{
+		return anyKeyDown(DOWN, in);
+	}
+	
+	public static boolean isLEFTDown(Input in)
+	{
+		return anyKeyDown(LEFT, in);
+	}
+	
+	public static boolean isRIGHTDown(Input in)
+	{
+		return anyKeyDown(RIGHT, in);
+	}
+	
+	public static boolean isMOVEDown(Input in)
+	{
+		if(isLEFTDown(in) || isRIGHTDown(in) || isUPDown(in) || isDOWNDown(in))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 	public static boolean isUP(int key)
 	{
@@ -37,6 +71,18 @@ public class KeyCodes
 	public static boolean isBACK(int key)
 	{
 		return contains(BACK, key);
+	}
+	
+	private static boolean anyKeyDown(int[] keys, Input in)
+	{
+		for(int x = 0;x < keys.length;x++)
+		{
+			if(in.isKeyDown(keys[x]))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private static boolean contains(int[] keys, int key)

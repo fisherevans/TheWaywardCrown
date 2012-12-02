@@ -2,6 +2,7 @@ package com.fisherevans.twc.states.mainmenu.items;
 
 import org.newdawn.slick.Color;
 
+import com.fisherevans.twc.GameDriver;
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.mainmenu.MainMenuState;
 
@@ -18,6 +19,6 @@ public class AdventureDemoItem extends MenuItem
 	@Override
 	public void action()
 	{
-		MainMenuState.getSM().setState(new AdventureState(MainMenuState.getSM()));
+		MainMenuState.getSM().setState(new AdventureState(MainMenuState.getSM(), GameDriver.getInput()));
 	}
 }

@@ -12,15 +12,22 @@ import com.fisherevans.twc.GameDriver;
 public abstract class State implements KeyListener, MouseListener
 {
 	private static StateManager _sm;
+	private Input _input;
 	
-	public State(StateManager sm)
+	public State(StateManager sm, Input input)
 	{
 		_sm = sm;
+		_input = input;
 	}
 	
 	public static StateManager getSM()
 	{
 		return _sm;
+	}
+	
+	public Input getInput()
+	{
+		return _input;
 	}
 
 	public abstract void update(GameContainer gc, int detla) throws SlickException;

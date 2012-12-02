@@ -16,8 +16,8 @@ import org.newdawn.slick.SlickException;
 
 public class Start
 {
-	public final String TITLE = "The Wayward Crown - Beta";
-	public final boolean EXPORT = false;
+	public final String TITLE = "The Wayward Crown - Dev";
+	public final boolean EXPORT = true;
 	
 	private static CanvasGameContainer _canvas;
 	private static ScalableGame _scale;

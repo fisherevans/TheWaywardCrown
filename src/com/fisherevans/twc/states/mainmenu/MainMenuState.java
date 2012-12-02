@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.GameDriver;
@@ -21,9 +22,9 @@ public class MainMenuState extends State
 	private ArrayList<MenuItem> _menuItems;
 	private int _menuPos;
 
-	public MainMenuState(StateManager sm)
+	public MainMenuState(StateManager sm, Input input)
 	{
-		super(sm);
+		super(sm, input);
 		initMenuItems();
 		_menuPos = 0;
 	}
@@ -105,13 +106,13 @@ public class MainMenuState extends State
 		{
 			moveDownMenu();
 		}
-		else if(KeyCodes.isSELECT(key))
+		else if(KeyCodes.isSELECT(key) || KeyCodes.isRIGHT(key))
 		{
 			_menuItems.get(_menuPos).action();
 		}
 		else if(KeyCodes.isBACK(key))
 		{
-			getSM().setState(new StartingState(getSM()));
+			getSM().setState(new StartingState(getSM(), getInput()));
 		}
 	}
 

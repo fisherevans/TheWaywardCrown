@@ -16,7 +16,7 @@ public class GameDriver extends BasicGame
 		NATIVE_SCREEN_HEIGHT = 720;
 	
 	
-	private Input _input;
+	private static Input _input;
 	private StateManager _sm;
 	private Start _frame;
 	private GlobalKeyListener _gkl;
@@ -25,6 +25,11 @@ public class GameDriver extends BasicGame
 	{
 		super(title);
 		_frame = start;
+	}
+	
+	public static Input getInput()
+	{
+		return _input;
 	}
 
 	@Override
