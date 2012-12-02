@@ -12,7 +12,7 @@ public class PlayerEntity extends AdventureEntity
 	private boolean _moving = false;
 	private long _startTime;
 	
-	private final float MOVE_TIME = 100;
+	private final float MOVE_TIME = 200;
 	
 	public PlayerEntity(float x, float y, Image image, AdventureState as, Input input)
 	{
@@ -43,11 +43,11 @@ public class PlayerEntity extends AdventureEntity
 				_yb = getY();
 				
 				if(KeyCodes.isLEFTDown(_input)) { _xb -= 1; }
-				if(KeyCodes.isRIGHTDown(_input)) { _xb += 1; }
-				if(KeyCodes.isUPDown(_input)) { _yb -= 1; }
-				if(KeyCodes.isDOWNDown(_input)) { _yb += 1; }
+				else if(KeyCodes.isRIGHTDown(_input)) { _xb += 1; }
+				else if(KeyCodes.isUPDown(_input)) { _yb -= 1; }
+				else if(KeyCodes.isDOWNDown(_input)) { _yb += 1; }
 				
-				if(isGoodMove(_xa, _ya, _xb, _yb))
+				if(isGoodMove(_xb, _yb))
 				{
 					_moving = true;
 					_startTime = System.currentTimeMillis();
@@ -56,15 +56,11 @@ public class PlayerEntity extends AdventureEntity
 		}
 	}
 	
-	public boolean isGoodMove(float xa, float ya, float xb, float yb)
+	public boolean isGoodMove(float xb, float yb)
 	{
-		int xaTile = (int)xa;
-		int yaTile = (int)ya;
 		int xbTile = (int)xb;
 		int ybTile = (int)yb;
 		
-		if(getAS().getMap().getTileId(xaTile, ybTile, 1) == 258) { return false; }
-		if(getAS().getMap().getTileId(xbTile, yaTile, 1) == 258) { return false; }
 		if(getAS().getMap().getTileId(xbTile, ybTile, 1) == 258) { return false; }
 		
 		return true;

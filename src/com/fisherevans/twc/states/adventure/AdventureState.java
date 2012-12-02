@@ -37,7 +37,7 @@ public class AdventureState extends State
 		
 		_mapW = _map.getWidth();
 		_mapH = _map.getHeight();
-		_mapTileSize = _map.getTileHeight();
+		_mapTileSize = _map.getTileHeight()*2;
 		
 		_ents = new ArrayList<AdventureEntity>();
 		_pent = new PlayerEntity(50, 40, null, this, getInput());
@@ -80,7 +80,9 @@ public class AdventureState extends State
 		float xshift = -_pent.getX()*_mapTileSize + GameDriver.NATIVE_SCREEN_WIDTH/2 - _mapTileSize/2;
 		float yshift = -_pent.getY()*_mapTileSize + GameDriver.NATIVE_SCREEN_HEIGHT/2 - _mapTileSize/2;
 		
-		_map.render((int)+xshift, (int)+yshift, 0);
+		gfx.scale(2, 2);
+		_map.render((int)+xshift/2, (int)+yshift/2, 0);
+		gfx.scale(0.5f, 0.5f);
 		
 		for(AdventureEntity ent:_ents)
 		{

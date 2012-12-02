@@ -18,6 +18,7 @@ public class Start
 {
 	public final String TITLE = "The Wayward Crown - Dev";
 	public final boolean EXPORT = true;
+	private static boolean DEBUG = true;
 	
 	private static CanvasGameContainer _canvas;
 	private static ScalableGame _scale;
@@ -25,7 +26,6 @@ public class Start
 	private FrameActions _fa;
 	private boolean _fullscreen = false;
 	private int _xInset, _yInset;
-	private static boolean _debug = false;
 	
 	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } };
 	private int _curRes = 1;
@@ -101,9 +101,9 @@ public class Start
 		_scale = new ScalableGame(new GameDriver("The Wayward Crown - Beta", this), GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT, true);
 		_canvas = new CanvasGameContainer(_scale);
 		_canvas.getContainer().setAlwaysRender(true);
-		_canvas.getContainer().setShowFPS(_debug);
-		_canvas.getContainer().setTargetFrameRate(60);
-		_canvas.getContainer().setVerbose(_debug);
+		_canvas.getContainer().setShowFPS(DEBUG);
+		//_canvas.getContainer().setTargetFrameRate(60);
+		_canvas.getContainer().setVerbose(DEBUG);
 	}
 	
 	private void initFrame()
@@ -132,7 +132,7 @@ public class Start
 	
 	public static void debug(String msg)
 	{
-		if(_debug)
+		if(DEBUG)
 		{
 			System.out.println("[DEBUG] " + msg);
 		}

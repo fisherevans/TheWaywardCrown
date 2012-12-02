@@ -3,6 +3,8 @@ package com.fisherevans.twc.states.adventure;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import com.fisherevans.twc.ResourceTools;
+
 public abstract class AdventureEntity
 {
 	private float _x, _y;
@@ -13,15 +15,7 @@ public abstract class AdventureEntity
 	{
 		if(image == null)
 		{
-			try
-			{
-				image = new Image("res/sprites/default32x32.png");
-			}
-			catch (SlickException e)
-			{
-				System.out.println("Failed to load the default sprite");
-				e.printStackTrace();
-			}
+			image = ResourceTools.getImage("res/sprites/default32x32.png");
 		}
 		_sprite = image;
 		_x = x;
