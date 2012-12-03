@@ -5,8 +5,11 @@ import org.newdawn.slick.KeyListener;
 
 public class GlobalKeyListener implements KeyListener
 {
-	private GameDriver _gd;
+	private GameDriver _gd; // The parent driver onject
 	
+	/** Creates the listener
+	 * @param gd The parent driver
+	 */
 	public GlobalKeyListener(GameDriver gd)
 	{
 		_gd = gd;

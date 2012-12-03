@@ -8,6 +8,7 @@ import com.fisherevans.twc.states.mainmenu.MainMenuState;
 
 public class AdventureDemoItem extends MenuItem
 {
+	/** Creates the adventure demo item - Loads a temp map for testing purposes */
 	public AdventureDemoItem()
 	{
 		setColor(new Color(0.6f, 0.6f, 0.6f));

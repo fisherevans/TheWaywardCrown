@@ -8,7 +8,13 @@ import com.fisherevans.twc.tools.KeyTools;
 
 public class NPCEntity extends MovableEntity
 {
-	
+
+	/** create the entity
+	 * @param x init x pos
+	 * @param y init y pos
+	 * @param image ini imahe
+	 * @param as adventure state holding the entty
+	 */
 	public NPCEntity(float x, float y, Image image, AdventureState as)
 	{
 		super(x, y, image, as);

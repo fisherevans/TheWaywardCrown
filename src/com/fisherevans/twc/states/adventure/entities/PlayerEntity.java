@@ -8,8 +8,15 @@ import com.fisherevans.twc.tools.KeyTools;
 
 public class PlayerEntity extends MovableEntity
 {
-	private Input _input;
+	private Input _input; // the slick 2d player input object
 	
+	/** create the entity
+	 * @param x init x pos
+	 * @param y init y pos
+	 * @param image ini imahe
+	 * @param as adventure state holding the entty
+	 * @param input slick2d user input onject
+	 */
 	public PlayerEntity(float x, float y, Image image, AdventureState as, Input input)
 	{
 		super(x, y, image, as);

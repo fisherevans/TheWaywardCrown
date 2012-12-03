@@ -18,11 +18,15 @@ import com.fisherevans.twc.tools.KeyTools;
 
 public class AdventureState extends State
 {
-	private TiledMap _map;
-	private int _mapW, _mapH, _mapTileSize;
-	private ArrayList<AdventureEntity> _ents;
-	private MovableEntity _pent;
+	private TiledMap _map; // The tiled map that is used with this adventure
+	private int _mapW, _mapH, _mapTileSize; // Width and height of map and it's tiles
+	private ArrayList<AdventureEntity> _ents; // The entities currently in the map.
+	private MovableEntity _pent; // The player's entity.
 
+	/** Create the adventure state
+	 * @param sm The state manager using this state
+	 * @param input The slick2d input object affecting this state
+	 */
 	public AdventureState(StateManager sm, Input input)
 	{
 		super(sm, input);
@@ -53,26 +57,36 @@ public class AdventureState extends State
 		_ents.add(new NPCEntity(53, 40, null, this));
 	}
 	
+	/** @return the TiledMap object of the map loaded for this state */
 	public TiledMap getMap()
 	{
 		return _map;
 	}
 	
+	/** @return the width/height of the map tiles (in pixels) */
 	public int getTileSize()
 	{
 		return _mapTileSize;
 	}
 	
+	/** @return the number of tiles hight the map is */
 	public int getMapH()
 	{
 		return _mapH;
 	}
 	
+	/** @return the number of tiles wide the map is. */
 	public int getMapW()
 	{
 		return _mapW;
 	}
 	
+	/** Checks to see if the tile is taken up by an entity other than the one passed
+	 * @param x The tiledmap tile x corrid
+	 * @param y the tiledmap tile y corrid
+	 * @param ent The entity to ignore in testing
+	 * @return true if available o move into, false if blocked by another entity.
+	 */
 	public boolean isEntityIn(int x, int y, AdventureEntity ent)
 	{
 		//System.out.println("New Test");

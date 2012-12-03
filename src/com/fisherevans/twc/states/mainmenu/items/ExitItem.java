@@ -7,6 +7,7 @@ import com.fisherevans.twc.states.StateManager;
 
 public class ExitItem extends MenuItem
 {
+	/** create an exit item. When used will close the program */
 	public ExitItem()
 	{
 		setColor(new Color(0.6f, 0.6f, 0.6f));

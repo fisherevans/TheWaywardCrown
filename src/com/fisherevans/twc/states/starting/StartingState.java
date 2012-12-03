@@ -15,12 +15,16 @@ import com.fisherevans.twc.states.mainmenu.MainMenuState;
 
 public class StartingState extends State
 {
-	private float _scale = 0,
-				  _ready = 180f;
-	private Image titleScreen;
-	private final String READY_STRING = "[ Press Enter ]";
-	private final String TITLE = "The Wayward Crown";
+	private float _scale = 0, // Fades in the imager/title
+				  _ready = 180f; // Flashes the "press enter" text
+	private Image titleScreen; // Image that is faded in
+	private final String READY_STRING = "[ Press Enter ]"; // Text that flashes when "ready"
+	private final String TITLE = "The Wayward Crown"; // Title of the game
 	
+	/** Create the starting state
+	 * @param sm state manager that holds this state
+	 * @param input The slick2d player input
+	 */
 	public StartingState(StateManager sm, Input input)
 	{
 		super(sm, input);

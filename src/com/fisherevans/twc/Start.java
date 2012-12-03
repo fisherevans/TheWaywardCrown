@@ -16,21 +16,23 @@ import org.newdawn.slick.SlickException;
 
 public class Start
 {
-	public final String TITLE = "The Wayward Crown - Dev";
-	public final boolean EXPORT = false;
-	public static boolean DEBUG = true;
+	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
+	public final boolean EXPORT = false; // True is exporting to runable jar
+	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
 	
-	private static CanvasGameContainer _canvas;
-	private static ScalableGame _scale;
-	private JFrame _frame;
-	private FrameActions _fa;
-	private boolean _fullscreen = false;
-	private int _xInset, _yInset;
+	private static CanvasGameContainer _canvas; // The actual slick2d game
+	private static ScalableGame _scale; // Holds the canvas in a scalable form
+	private JFrame _frame; // The frame holding the game
+	private FrameActions _fa; // Window listener to gracefully close the game on "X"
+	private boolean _fullscreen = false; // Keeps track of windowed ful screen mode.
+	private int _xInset, _yInset; // Window instes used to resize window correctly.
 	
-	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } };
-	private int _curRes = 1;
+	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } }; // Correct ratio resolutions - per pixel
+	private int _curRes = 1; // ID of the current reccomended res being used.
 	
-	
+	/** Creates the game itself
+	 * @throws SlickException
+	 */
 	public Start() throws SlickException
 	{
 		if(EXPORT)
@@ -52,6 +54,8 @@ public class Start
 		_canvas.requestFocus();
 	}
 	
+	/** Resize window to next biggest reccomended res. If it is bigger than the screen, go full screen. If full screen, go to smallest size.
+	 */
 	public void cycleReso()
 	{
 		Dimension dim = _frame.getToolkit().getScreenSize();
@@ -80,6 +84,10 @@ public class Start
 		_canvas.requestFocus();
 	}
 	
+	/** Resizes the window
+	 * @param x The width of the INNER window (the canvas, ignores insets)
+	 * @param y The height of the INNER window (the canvas, ignores insets)
+	 */
 	public void setInnerSize(int x, int y)
 	{
 		x += _xInset;
@@ -89,13 +97,17 @@ public class Start
 		_frame.setLocation(dim.width/2 - x/2, dim.height/2 - y/2);
 	}
 	
+	/** Calculate the inset sizes of the jframe
+	 */
 	private void initInsets()
 	{
 		_xInset = _frame.getInsets().left + _frame.getInsets().right;
 		_yInset = _frame.getInsets().top + _frame.getInsets().bottom;
-		debug("X Inset: " + _xInset + " - Y Inset: " + _yInset);
 	}
 	
+	/** create the slick2d canvas
+	 * @throws SlickException
+	 */
 	private void initCanvas() throws SlickException
 	{
 		_scale = new ScalableGame(new GameDriver("The Wayward Crown - Beta", this), GameDriver.NATIVE_SCREEN_WIDTH, GameDriver.NATIVE_SCREEN_HEIGHT, true);
@@ -106,6 +118,7 @@ public class Start
 		_canvas.getContainer().setVerbose(DEBUG);
 	}
 	
+	/** Create the jframe to hold to slick2d canvas */
 	private void initFrame()
 	{
 		_frame = new JFrame(TITLE);
@@ -119,6 +132,7 @@ public class Start
 		_frame.toFront();
 	}
 	
+	/** Recreate the frame (used from switching between fullscreen and windowed */
 	public void reInitFrame()
 	{
 		_frame.remove(_canvas);
@@ -128,14 +142,6 @@ public class Start
 		_frame.dispose();
 		initFrame();
 		_frame.add(_canvas);
-	}
-	
-	public static void debug(String msg)
-	{
-		if(DEBUG)
-		{
-			System.out.println("[DEBUG] " + msg);
-		}
 	}
 	
 	public static void main(String[] args)

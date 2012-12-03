@@ -21,6 +21,10 @@ public class MainMenuState extends State
 	private ArrayList<MenuItem> _menuItems;
 	private int _menuPos;
 
+	/** creates the menu statee
+	 * @param sm the manager holding this menu
+	 * @param input the slick2d player input object
+	 */
 	public MainMenuState(StateManager sm, Input input)
 	{
 		super(sm, input);
@@ -28,6 +32,8 @@ public class MainMenuState extends State
 		_menuPos = 0;
 	}
 	
+	/** Init the menu list and populate the items within
+	 */
 	private void initMenuItems()
 	{
 		_menuItems = new ArrayList<MenuItem>();
@@ -46,6 +52,7 @@ public class MainMenuState extends State
 		}
 	}
 	
+	/** Move select menu item down the list - skips un-selectable items*/
 	private void moveDownMenu()
 	{
 		int init = _menuPos++;
@@ -58,7 +65,8 @@ public class MainMenuState extends State
 			_menuPos = init;
 		}
 	}
-	
+
+	/** Move select menu item up the list - skips un-selectable items */
 	private void moveUpMenu()
 	{
 		int init = _menuPos--;
