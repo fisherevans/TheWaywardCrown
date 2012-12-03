@@ -9,12 +9,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import com.fisherevans.twc.GameDriver;
-import com.fisherevans.twc.MathTools;
-import com.fisherevans.twc.ResourceTools;
 import com.fisherevans.twc.Start;
-import com.fisherevans.twc.control.KeyCodes;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
+import com.fisherevans.twc.states.adventure.entities.*;
+import com.fisherevans.twc.tools.*;
+import com.fisherevans.twc.tools.KeyTools;
 
 public class AdventureState extends State
 {
@@ -46,11 +46,11 @@ public class AdventureState extends State
 
 		_ents.add(_pent);
 
-		_ents.add(new NPCEntity(50, 38, null, this, getInput()));
-		_ents.add(new NPCEntity(52, 41, null, this, getInput()));
-		_ents.add(new NPCEntity(54, 40, null, this, getInput()));
-		_ents.add(new NPCEntity(50, 37, null, this, getInput()));
-		_ents.add(new NPCEntity(53, 40, null, this, getInput()));
+		_ents.add(new NPCEntity(50, 38, null, this));
+		_ents.add(new NPCEntity(52, 41, null, this));
+		_ents.add(new NPCEntity(54, 40, null, this));
+		_ents.add(new NPCEntity(50, 37, null, this));
+		_ents.add(new NPCEntity(53, 40, null, this));
 	}
 	
 	public TiledMap getMap()

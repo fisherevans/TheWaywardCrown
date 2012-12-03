@@ -1,0 +1,321 @@
+<class-diagram version="1.0.11" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.tools.ResourceTools" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/tools/ResourceTools.java" binary="false">    
+    <position height="-1" width="-1" x="161" y="167"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.mainmenu.items.MenuItem" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/mainmenu/items/MenuItem.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="567" y="1086"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.starting.StartingState" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/starting/StartingState.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="378" y="662"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.entities.NPCEntity" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/NPCEntity.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="971" y="1832"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.StateManager" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/StateManager.java" binary="false">    
+    <position height="-1" width="-1" x="1147" y="1010"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.State" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/State.java" binary="false">    
+    <position height="-1" width="-1" x="1116" y="219"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="7" corner="BOTTOM_RIGHT" language="java" 
+    name="com.fisherevans.twc.states.adventure.entities.AdventureEntity" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/AdventureEntity.java" binary="false">    
+    <position height="-1" width="-1" x="838" y="1086"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.entities.MovableEntity" 
+    project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/MovableEntity.java" binary="false">    
+    <position height="-1" width="-1" x="1117" y="1561"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.tools.MathTools" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/tools/MathTools.java" binary="false">    
+    <position height="-1" width="-1" x="165" y="369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.entities.PlayerEntity" 
+    project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/PlayerEntity.java" binary="false">    
+    <position height="-1" width="-1" x="1262" y="1841"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.mainmenu.items.SimpleTextItem" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/mainmenu/items/SimpleTextItem.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="330" y="1425"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.GameDriver" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/GameDriver.java" binary="false">    
+    <position height="-1" width="-1" x="1366" y="611"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.GlobalKeyListener" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/GlobalKeyListener.java" binary="false">    
+    <position height="-1" width="-1" x="1351" y="126"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="14" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.Start" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/Start.java" binary="false">    
+    <position height="-1" width="-1" x="1394" y="1137"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="15" corner="BOTTOM_RIGHT" language="java" 
+    name="com.fisherevans.twc.states.mainmenu.items.AdventureDemoItem" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/mainmenu/items/AdventureDemoItem.java" binary="false">    
+    <position height="-1" width="-1" x="567" y="1425"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="16" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.mainmenu.MainMenuState" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/mainmenu/MainMenuState.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="625" y="654"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="17" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.AdventureState" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/AdventureState.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="879" y="696"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="18" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.mainmenu.items.ExitItem" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/mainmenu/items/ExitItem.java" 
+    binary="false">    
+    <position height="-1" width="-1" x="804" y="1425"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="19" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.tools.KeyTools" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/tools/KeyTools.java" binary="false">    
+    <position height="-1" width="-1" x="153" y="636"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <class id="20" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.Start.FrameActions" 
+    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/Start.java" binary="false">    
+    <position height="-1" width="-1" x="1412" y="1476"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <association id="21">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="22" name="_fa"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="24">    
+    <bendpoint x="751" y="437"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="26">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="27" name="_gkl"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="30" name="_menuItems"/>      
+      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="32">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="33" name="_frame"/>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="35">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="36" name="_as"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="39">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="40" name="_gd"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="42">    
+    <bendpoint x="1000" y="937"/>    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="43" name="_pent"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="45">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <association id="46">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="47" name="_sm"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="49">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="50">    
+    <bendpoint x="499" y="391"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="52">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="53" name="_ents"/>      
+      <multiplicity id="54" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="55">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="56">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="57" name="_gd"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <nesting id="60">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="20"/>  
+  </nesting>  
+  <association id="61">    
+    <bendpoint x="1040" y="496"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="62" name="_currentState"/>      
+      <multiplicity id="63" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="64">    
+    <bendpoint x="1019" y="496"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="65" name="_sm"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

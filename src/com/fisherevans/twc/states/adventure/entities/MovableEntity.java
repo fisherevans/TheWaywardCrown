@@ -1,13 +1,11 @@
-package com.fisherevans.twc.states.adventure;
+package com.fisherevans.twc.states.adventure.entities;
 
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 
-import com.fisherevans.twc.control.KeyCodes;
+import com.fisherevans.twc.states.adventure.AdventureState;
 
 public abstract class MovableEntity extends AdventureEntity
 {
-	private Input _input;
 	private float _xb, _yb, _xa, _ya;
 	private boolean _moving = false;
 	private long _startTime;
@@ -15,10 +13,9 @@ public abstract class MovableEntity extends AdventureEntity
 	public static final float MOVE_TIME = 200;
 	private float _speedScale = 1;
 	
-	public MovableEntity(float x, float y, Image image, AdventureState as, Input input)
+	public MovableEntity(float x, float y, Image image, AdventureState as)
 	{
 		super(x, y, image, as);
-		_input = input;
 	}
 
 	@Override
@@ -95,11 +92,6 @@ public abstract class MovableEntity extends AdventureEntity
 	public boolean isMoving()
 	{
 		return _moving;
-	}
-	
-	public Input getInput()
-	{
-		return _input;
 	}
 	
 	public void setSpeedScale(float scale)

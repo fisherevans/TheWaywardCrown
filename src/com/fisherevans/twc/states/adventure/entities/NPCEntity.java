@@ -1,16 +1,17 @@
-package com.fisherevans.twc.states.adventure;
+package com.fisherevans.twc.states.adventure.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
-import com.fisherevans.twc.control.KeyCodes;
+import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.tools.KeyTools;
 
 public class NPCEntity extends MovableEntity
 {
 	
-	public NPCEntity(float x, float y, Image image, AdventureState as, Input input)
+	public NPCEntity(float x, float y, Image image, AdventureState as)
 	{
-		super(x, y, image, as, input);
+		super(x, y, image, as);
 		setSpeedScale(0.333f);
 	}
 	

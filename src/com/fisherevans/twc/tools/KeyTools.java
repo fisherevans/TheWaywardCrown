@@ -1,8 +1,8 @@
-package com.fisherevans.twc.control;
+package com.fisherevans.twc.tools;
 
 import org.newdawn.slick.Input;
 
-public class KeyCodes
+public class KeyTools
 {
 	public static final int[] UP = { 17, 200 },
 							  LEFT = { 30, 203 },
@@ -14,10 +14,10 @@ public class KeyCodes
 	public static float[] getMoveVector(Input in)
 	{
 		float[] vec = new float[] { 0, 0 };
-		if(KeyCodes.isLEFTDown(in))       { vec[0] -= 1; }
-		else if(KeyCodes.isRIGHTDown(in)) { vec[0] += 1; }
-		else if(KeyCodes.isUPDown(in))    { vec[1] -= 1; }
-		else if(KeyCodes.isDOWNDown(in))  { vec[1] += 1; }
+		if(KeyTools.isLEFTDown(in))       { vec[0] -= 1; }
+		else if(KeyTools.isRIGHTDown(in)) { vec[0] += 1; }
+		else if(KeyTools.isUPDown(in))    { vec[1] -= 1; }
+		else if(KeyTools.isDOWNDown(in))  { vec[1] += 1; }
 		return vec;
 	}
 	

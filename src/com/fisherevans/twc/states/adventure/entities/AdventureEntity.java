@@ -1,9 +1,10 @@
-package com.fisherevans.twc.states.adventure;
+package com.fisherevans.twc.states.adventure.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import com.fisherevans.twc.ResourceTools;
+import com.fisherevans.twc.tools.*;
+import com.fisherevans.twc.states.adventure.AdventureState;
 
 public abstract class AdventureEntity
 {

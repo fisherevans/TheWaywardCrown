@@ -1,4 +1,4 @@
-package com.fisherevans.twc;
+package com.fisherevans.twc.tools;
 
 public class MathTools
 {

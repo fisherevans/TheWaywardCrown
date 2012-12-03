@@ -9,13 +9,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.GameDriver;
-import com.fisherevans.twc.MathTools;
-import com.fisherevans.twc.ResourceTools;
-import com.fisherevans.twc.control.KeyCodes;
+import com.fisherevans.twc.tools.*;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.mainmenu.items.*;
 import com.fisherevans.twc.states.starting.StartingState;
+import com.fisherevans.twc.tools.KeyTools;
 
 public class MainMenuState extends State
 {
@@ -98,19 +97,19 @@ public class MainMenuState extends State
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		if(KeyCodes.isUP(key))
+		if(KeyTools.isUP(key))
 		{
 			moveUpMenu();
 		}
-		else if(KeyCodes.isDOWN(key))
+		else if(KeyTools.isDOWN(key))
 		{
 			moveDownMenu();
 		}
-		else if(KeyCodes.isSELECT(key) || KeyCodes.isRIGHT(key))
+		else if(KeyTools.isSELECT(key) || KeyTools.isRIGHT(key))
 		{
 			_menuItems.get(_menuPos).action();
 		}
-		else if(KeyCodes.isBACK(key))
+		else if(KeyTools.isBACK(key))
 		{
 			getSM().setState(new StartingState(getSM(), getInput()));
 		}

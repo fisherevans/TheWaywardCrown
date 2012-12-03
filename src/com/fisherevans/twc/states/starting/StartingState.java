@@ -8,7 +8,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.GameDriver;
-import com.fisherevans.twc.ResourceTools;
+import com.fisherevans.twc.tools.*;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.mainmenu.MainMenuState;
