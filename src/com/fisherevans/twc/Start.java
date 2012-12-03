@@ -18,7 +18,7 @@ public class Start
 {
 	public final String TITLE = "The Wayward Crown - Dev";
 	public final boolean EXPORT = true;
-	private static boolean DEBUG = true;
+	public static boolean DEBUG = true;
 	
 	private static CanvasGameContainer _canvas;
 	private static ScalableGame _scale;

@@ -11,6 +11,16 @@ public class KeyCodes
 							  SELECT = { 57, 28 },
 							  BACK = { 1 };
 	
+	public static float[] getMoveVector(Input in)
+	{
+		float[] vec = new float[] { 0, 0 };
+		if(KeyCodes.isLEFTDown(in))       { vec[0] -= 1; }
+		else if(KeyCodes.isRIGHTDown(in)) { vec[0] += 1; }
+		else if(KeyCodes.isUPDown(in))    { vec[1] -= 1; }
+		else if(KeyCodes.isDOWNDown(in))  { vec[1] += 1; }
+		return vec;
+	}
+	
 	public static boolean isUPDown(Input in)
 	{
 		return anyKeyDown(UP, in);
@@ -33,14 +43,7 @@ public class KeyCodes
 	
 	public static boolean isMOVEDown(Input in)
 	{
-		if(isLEFTDown(in) || isRIGHTDown(in) || isUPDown(in) || isDOWNDown(in))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return isLEFTDown(in) || isRIGHTDown(in) || isUPDown(in) || isDOWNDown(in);
 	}
 	
 	public static boolean isUP(int key)

@@ -10,6 +10,8 @@ import org.newdawn.slick.tiled.TiledMap;
 
 import com.fisherevans.twc.GameDriver;
 import com.fisherevans.twc.MathTools;
+import com.fisherevans.twc.ResourceTools;
+import com.fisherevans.twc.Start;
 import com.fisherevans.twc.control.KeyCodes;
 import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
@@ -19,7 +21,7 @@ public class AdventureState extends State
 	private TiledMap _map;
 	private int _mapW, _mapH, _mapTileSize;
 	private ArrayList<AdventureEntity> _ents;
-	private PlayerEntity _pent;
+	private MovableEntity _pent;
 
 	public AdventureState(StateManager sm, Input input)
 	{
@@ -41,8 +43,14 @@ public class AdventureState extends State
 		
 		_ents = new ArrayList<AdventureEntity>();
 		_pent = new PlayerEntity(50, 40, null, this, getInput());
-		
+
 		_ents.add(_pent);
+
+		_ents.add(new NPCEntity(50, 38, null, this, getInput()));
+		_ents.add(new NPCEntity(52, 41, null, this, getInput()));
+		_ents.add(new NPCEntity(54, 40, null, this, getInput()));
+		_ents.add(new NPCEntity(50, 37, null, this, getInput()));
+		_ents.add(new NPCEntity(53, 40, null, this, getInput()));
 	}
 	
 	public TiledMap getMap()
@@ -64,6 +72,21 @@ public class AdventureState extends State
 	{
 		return _mapW;
 	}
+	
+	public boolean isEntityIn(int x, int y, AdventureEntity ent)
+	{
+		//System.out.println("New Test");
+		for(AdventureEntity tent:_ents)
+		{
+			//System.out.println("	Testing" + x + "," + y + " vs. " + tent.getOccuppiedX() + "," + tent.getOccuppiedY());
+			if(tent.getOccuppiedX() == x && tent.getOccuppiedY() == y)
+			{
+				//System.out.print(" >>> boom");
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
@@ -77,6 +100,8 @@ public class AdventureState extends State
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
+		gfx.setFont(ResourceTools.font16());
+		
 		float xshift = -_pent.getX()*_mapTileSize + GameDriver.NATIVE_SCREEN_WIDTH/2 - _mapTileSize/2;
 		float yshift = -_pent.getY()*_mapTileSize + GameDriver.NATIVE_SCREEN_HEIGHT/2 - _mapTileSize/2;
 		
@@ -84,12 +109,16 @@ public class AdventureState extends State
 		_map.render((int)+xshift/2, (int)+yshift/2, 0);
 		gfx.scale(0.5f, 0.5f);
 		
+		int entId = 0;
 		for(AdventureEntity ent:_ents)
 		{
-			gfx.drawImage(ent.getSprite(), ent.getX()*_mapTileSize+xshift, ent.getY()*_mapTileSize+yshift);
+			gfx.drawImage(ent.getImage(), ent.getX()*_mapTileSize+xshift, ent.getY()*_mapTileSize+yshift);
+			if(Start.DEBUG)
+			{
+				gfx.drawString("[" + ent.getOccuppiedX() + ", " + ent.getOccuppiedY() + "] > " + ent.toString().replaceAll(".*\\.", ""), 40, 40 + 40*entId);
+			}
+			entId++;
 		}
-		
-		gfx.drawString("ADVENTURE TIME!!!!", 40, 40);
 	}
 
 	@Override

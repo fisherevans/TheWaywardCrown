@@ -1,5 +1,6 @@
 package com.fisherevans.twc.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -37,6 +38,7 @@ public class StateManager
 
 	public void renderState(GameContainer gc, Graphics gfx) throws SlickException
 	{
+		gfx.setColor(new Color(1f, 1f, 1f));
 		_currentState.render(gc, gfx);
 	}
 }

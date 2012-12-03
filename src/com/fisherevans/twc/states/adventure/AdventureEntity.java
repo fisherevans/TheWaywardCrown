@@ -8,8 +8,9 @@ import com.fisherevans.twc.ResourceTools;
 public abstract class AdventureEntity
 {
 	private float _x, _y;
-	private Image _sprite;
+	private Image _image;
 	private AdventureState _as;
+	
 	
 	public AdventureEntity(float x, float y, Image image, AdventureState as)
 	{
@@ -17,7 +18,7 @@ public abstract class AdventureEntity
 		{
 			image = ResourceTools.getImage("res/sprites/default32x32.png");
 		}
-		_sprite = image;
+		_image = image;
 		_x = x;
 		_y = y;
 		_as = as;
@@ -45,14 +46,24 @@ public abstract class AdventureEntity
 		_y = y;
 	}
 	
-	public Image getSprite()
+	public int getOccuppiedX()
 	{
-		return _sprite;
+		return (int)_x;
 	}
 	
-	public void setSprite(Image image)
+	public int getOccuppiedY()
 	{
-		_sprite = image;
+		return (int)_y;
+	}
+	
+	public Image getImage()
+	{
+		return _image;
+	}
+	
+	public void setImage(Image image)
+	{
+		_image = image;
 	}
 	
 	public AdventureState getAS()
