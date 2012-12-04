@@ -21,7 +21,7 @@ public class AdventureState extends State
 	private TiledMap _map; // The tiled map that is used with this adventure
 	private int _mapW, _mapH, _mapTileSize; // Width and height of map and it's tiles
 	private ArrayList<AdventureEntity> _ents; // The entities currently in the map.
-	private MovableEntity _pent; // The player's entity.
+	private PlayerEntity _pent; // The player's entity.
 
 	/** Create the adventure state
 	 * @param sm The state manager using this state
@@ -91,12 +91,30 @@ public class AdventureState extends State
 	{
 		for(AdventureEntity tent:_ents)
 		{
-			if(tent.getOccuppiedX() == x && tent.getOccuppiedY() == y)
+			if(tent.getOccupiedX() == x && tent.getOccupiedY() == y)
 			{
 				return true;
 			}
 		}
 		return false;
+	}
+	
+	/** Checks to see if the tile is taken up by an entity other than the one passed, then returns that entity
+	 * @param x The tiledmap tile x corrid
+	 * @param y the tiledmap tile y corrid
+	 * @param ent The entity to ignore in testing
+	 * @return the entity if there, null if nothing.
+	 */
+	public AdventureEntity getEntityIn(int x, int y, AdventureEntity ent)
+	{
+		for(AdventureEntity tent:_ents)
+		{
+			if(tent.getOccupiedX() == x && tent.getOccupiedY() == y)
+			{
+				return tent;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -135,7 +153,7 @@ public class AdventureState extends State
 			gfx.drawImage(ent.getImage(), ent.getX()*_mapTileSize+xshift, ent.getY()*_mapTileSize+yshift);
 			if(Start.DEBUG)
 			{
-				gfx.drawString("[" + ent.getOccuppiedX() + ", " + ent.getOccuppiedY() + "] > " + ent.toString().replaceAll(".*\\.", ""), 40, 40 + 40*entId);
+				gfx.drawString("[" + ent.getOccupiedX() + ", " + ent.getOccupiedY() + "] > " + ent.toString().replaceAll(".*\\.", ""), 40, 40 + 40*entId);
 			}
 			entId++;
 		}
@@ -198,7 +216,10 @@ public class AdventureState extends State
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		
+		if(KeyTools.isSELECT(key) && !_pent.isMoving())
+		{
+			_pent.tryToInteract();
+		}
 	}
 
 	@Override

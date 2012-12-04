@@ -29,14 +29,12 @@ public class NPCEntity extends MovableEntity
 			moveStep();
 		}
 		
-		if(!isMoving()) // Not else so continued movement is smooth (doesn't miss a frame).
+		if(!isMoving() && !isInteracting()) // Not else so continued movement is smooth (doesn't miss a frame).
 		{
 			if(Math.random() < 0.002f)
 			{
-				int rand = ((int) (Math.random()*4)) + 1;
-				//System.out.println(rand);
 				float[] moveVec = new float[] { 0, 0 };
-				switch(rand)
+				switch(((int) (Math.random()*4)) + 1)
 				{
 					case 1: moveVec[0] = 1; break;
 					case 2: moveVec[0] = -1; break;

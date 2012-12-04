@@ -9,7 +9,6 @@ import com.fisherevans.twc.tools.KeyTools;
 public class PlayerEntity extends MovableEntity
 {
 	private Input _input; // the slick 2d player input object
-	private boolean _interacting = false; // True if player is interacting ith an entity
 	
 	/** create the entity
 	 * @param x init x pos
@@ -33,25 +32,34 @@ public class PlayerEntity extends MovableEntity
 			moveStep();
 		}
 		
-		if(!isMoving() && KeyTools.isMOVEDown(_input) && !_interacting) // Not else so continued movement is smooth (doesn't miss a frame).
+		if(!isMoving() && KeyTools.isMOVEDown(_input) && !isInteracting()) // Not else so continued movement is smooth (doesn't miss a frame).
 		{
 			float[] moveVec = KeyTools.getMoveVector(_input);
 			setMoveAction(moveVec[0] + getX(), moveVec[1] + getY());
 		}
 	}
-
-	/** sets if plaer is interacting
-	 *  @param interacting true if they are
-	 */
-	public void setInteracting(boolean interacting)
-	{
-		_interacting = interacting;
-	}
 	
-	/** @return true if player is interacting with another entity */
-	public boolean getInteracting()
+	public void tryToInteract()
 	{
-		return _interacting;
+		int[] intVec = { 0, 0 };
+		switch(getAngle())
+		{
+			case 0: intVec[0] = 1; break;
+			case 90: intVec[0] = 1; break;
+			case 180: intVec[0] = 1; break;
+			case 270: intVec[0] = 1; break;
+			default: return;
+		}
+		
+		AdventureEntity ent = getAS().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
+		
+		if(ent == null)
+		{
+			return;
+		}
+		
+		setInteracting(true);
+		ent.setInteracting(true);
 	}
 
 }

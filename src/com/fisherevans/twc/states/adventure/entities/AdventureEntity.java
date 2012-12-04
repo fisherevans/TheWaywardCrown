@@ -11,6 +11,8 @@ public abstract class AdventureEntity
 	private float _x, _y; // The x and y corrids fo the entity (in tile ids)
 	private Image _image; // The image of the sprite
 	private AdventureState _as; // The state holding the entity
+	private boolean _interacting = false; // True if entity is interacting with another entity
+	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
 	
 	/** Create the entity.
 	 * @param x The initital x pos
@@ -66,7 +68,7 @@ public abstract class AdventureEntity
 	/** The tile x corrid the entity is "occupying"
 	 * @return the x corrid
 	 */
-	public int getOccuppiedX()
+	public int getOccupiedX()
 	{
 		return (int)_x;
 	}
@@ -74,7 +76,7 @@ public abstract class AdventureEntity
 	/** The tile y corrid the entity is "occupying"
 	 * @return the y corrid
 	 */
-	public int getOccuppiedY()
+	public int getOccupiedY()
 	{
 		return (int)_y;
 	}
@@ -84,6 +86,7 @@ public abstract class AdventureEntity
 	 */
 	public Image getImage()
 	{
+		_image.setRotation(getAngle());
 		return _image;
 	}
 	
@@ -99,5 +102,34 @@ public abstract class AdventureEntity
 	public AdventureState getAS()
 	{
 		return _as;
+	}
+
+	/** sets if plaer is interacting
+	 *  @param interacting true if they are
+	 */
+	public void setInteracting(boolean interacting)
+	{
+		_interacting = interacting;
+	}
+	
+	/** @return true if player is interacting with another entity */
+	public boolean isInteracting()
+	{
+		return _interacting;
+	}
+	
+	/** @return the angle the ent is facing in degrees */
+	public int getAngle()
+	{
+		return _angle;
+	}
+	
+	/** Sets he ents angle in degrees
+	 * @param angle the new angle in degrees
+	 */
+	public void setAngle(int angle)
+	{
+		angle %= 360;
+		_angle = angle;
 	}
 }

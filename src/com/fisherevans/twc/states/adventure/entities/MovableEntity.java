@@ -71,6 +71,17 @@ public abstract class MovableEntity extends AdventureEntity
 	 */
 	public void setMoveAction(float xb, float yb)
 	{
+		int[] moveVec = { (int)(xb-getX()), (int)(yb-getY()) };
+
+		if(moveVec[0] == 1 && moveVec[1] == 0)
+			setAngle(0);
+		else if(moveVec[0] == -1 && moveVec[1] == 0)
+			setAngle(180);
+		else if(moveVec[0] == 0 && moveVec[1] == 1)
+			setAngle(90);
+		else if(moveVec[0] == 0 && moveVec[1] == -1)
+			setAngle(270);
+		
 		if(isGoodMove(xb, yb))
 		{
 			_xa = getX();
@@ -96,7 +107,7 @@ public abstract class MovableEntity extends AdventureEntity
 	}
 
 	/** @return the y value the entity is "occupying" */
-	public int getOccuppiedY()
+	public int getOccupiedY()
 	{
 		if(_moving)
 		{
