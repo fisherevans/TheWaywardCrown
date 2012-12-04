@@ -43,7 +43,7 @@ public abstract class MovableEntity extends AdventureEntity
 		int xbTile = (int)xb;
 		int ybTile = (int)yb;
 		
-		if(getAS().getMap().getTileId(xbTile, ybTile, 1) == 258) { return false; }
+		if(getAS().getMap().getTileId(xbTile, ybTile, 3) == 258) { return false; }
 		if(getAS().isEntityIn((int)xb, (int)yb, this)) { return false; }
 		
 		return true;

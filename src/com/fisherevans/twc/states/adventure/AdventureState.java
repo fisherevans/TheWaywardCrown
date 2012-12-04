@@ -89,13 +89,10 @@ public class AdventureState extends State
 	 */
 	public boolean isEntityIn(int x, int y, AdventureEntity ent)
 	{
-		//System.out.println("New Test");
 		for(AdventureEntity tent:_ents)
 		{
-			//System.out.println("	Testing" + x + "," + y + " vs. " + tent.getOccuppiedX() + "," + tent.getOccuppiedY());
 			if(tent.getOccuppiedX() == x && tent.getOccuppiedY() == y)
 			{
-				//System.out.print(" >>> boom");
 				return true;
 			}
 		}
@@ -118,11 +115,20 @@ public class AdventureState extends State
 		
 		float xshift = -_pent.getX()*_mapTileSize + GameDriver.NATIVE_SCREEN_WIDTH/2 - _mapTileSize/2;
 		float yshift = -_pent.getY()*_mapTileSize + GameDriver.NATIVE_SCREEN_HEIGHT/2 - _mapTileSize/2;
-		
-		gfx.scale(2, 2);
-		_map.render((int)+xshift/2, (int)+yshift/2, 0);
-		gfx.scale(0.5f, 0.5f);
-		
+
+		drawLayer(gfx, xshift, yshift, 0); // Background Layer
+		drawLayer(gfx, xshift, yshift, 1); // Entity Layer
+		drawEntities(gfx, xshift, yshift); //Draw Entities
+		drawLayer(gfx, xshift, yshift, 2); // Foreground Layer
+	}
+	
+	/** Draw entites on screen centered around shifts
+	 * @param gfx slick2d graphics object
+	 * @param xshift x center corrid
+	 * @param yshift y center corrid
+	 */
+	private void drawEntities(Graphics gfx, float xshift, float yshift)
+	{
 		int entId = 0;
 		for(AdventureEntity ent:_ents)
 		{
@@ -133,6 +139,18 @@ public class AdventureState extends State
 			}
 			entId++;
 		}
+	}
+
+	/** Draw tiledmap layer on screen centered around shifts
+	 * @param gfx slick2d graphics object
+	 * @param xshift x center corrid
+	 * @param yshift y center corrid
+	 */
+	private void drawLayer(Graphics gfx, float xshift, float yshift, int layer)
+	{
+		gfx.scale(2, 2);
+		_map.render((int)+xshift/2, (int)+yshift/2, layer);
+		gfx.scale(0.5f, 0.5f);
 	}
 
 	@Override

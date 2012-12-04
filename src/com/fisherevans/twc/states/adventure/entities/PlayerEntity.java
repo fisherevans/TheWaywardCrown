@@ -9,6 +9,7 @@ import com.fisherevans.twc.tools.KeyTools;
 public class PlayerEntity extends MovableEntity
 {
 	private Input _input; // the slick 2d player input object
+	private boolean _interacting = false; // True if player is interacting ith an entity
 	
 	/** create the entity
 	 * @param x init x pos
@@ -21,6 +22,7 @@ public class PlayerEntity extends MovableEntity
 	{
 		super(x, y, image, as);
 		_input = input;
+		setSpeedScale(1);
 	}
 	
 	@Override
@@ -31,11 +33,25 @@ public class PlayerEntity extends MovableEntity
 			moveStep();
 		}
 		
-		if(!isMoving() && KeyTools.isMOVEDown(_input)) // Not else so continued movement is smooth (doesn't miss a frame).
+		if(!isMoving() && KeyTools.isMOVEDown(_input) && !_interacting) // Not else so continued movement is smooth (doesn't miss a frame).
 		{
 			float[] moveVec = KeyTools.getMoveVector(_input);
 			setMoveAction(moveVec[0] + getX(), moveVec[1] + getY());
 		}
+	}
+
+	/** sets if plaer is interacting
+	 *  @param interacting true if they are
+	 */
+	public void setInteracting(boolean interacting)
+	{
+		_interacting = interacting;
+	}
+	
+	/** @return true if player is interacting with another entity */
+	public boolean getInteracting()
+	{
+		return _interacting;
 	}
 
 }

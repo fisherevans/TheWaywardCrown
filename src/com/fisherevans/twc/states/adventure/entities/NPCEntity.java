@@ -18,7 +18,7 @@ public class NPCEntity extends MovableEntity
 	public NPCEntity(float x, float y, Image image, AdventureState as)
 	{
 		super(x, y, image, as);
-		setSpeedScale(0.333f);
+		setSpeedScale(0.5f);
 	}
 	
 	@Override
