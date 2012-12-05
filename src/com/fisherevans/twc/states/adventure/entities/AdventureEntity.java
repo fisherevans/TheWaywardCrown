@@ -1,10 +1,14 @@
 package com.fisherevans.twc.states.adventure.entities;
 
+import java.util.ArrayList;
+
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.tools.*;
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.dialogue.DialoguePopup;
 
 public abstract class AdventureEntity
 {
@@ -13,6 +17,8 @@ public abstract class AdventureEntity
 	private AdventureState _as; // The state holding the entity
 	private boolean _interacting = false; // True if entity is interacting with another entity
 	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
+	private ArrayList<DialoguePopup> _diags;
+	private int[] _drawOffset = { 0, 0 };
 	
 	/** Create the entity.
 	 * @param x The initital x pos
@@ -24,12 +30,14 @@ public abstract class AdventureEntity
 	{
 		if(image == null)
 		{
-			image = ResourceTools.getImage("res/sprites/default32x32.png");
+			image = ResourceTools.getImage("res/sprites/test/default32x32.png");
 		}
 		_image = image;
 		_x = x;
 		_y = y;
 		_as = as;
+		
+		_diags = new ArrayList<DialoguePopup>();
 	}
 	
 	/** Updates the entity's pos
@@ -131,5 +139,20 @@ public abstract class AdventureEntity
 	{
 		angle %= 360;
 		_angle = angle;
+	}
+	
+	public ArrayList<DialoguePopup> getDialogue()
+	{
+		return _diags;
+	}
+	
+	public int[] getDrawOffset()
+	{
+		return _drawOffset;
+	}
+	
+	public void setDrawOffset(int[] newOffset)
+	{
+		_drawOffset = newOffset;
 	}
 }

@@ -17,8 +17,8 @@ import org.newdawn.slick.SlickException;
 public class Start
 {
 	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
-	public final boolean EXPORT = false; // True is exporting to runable jar
-	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
+	public final boolean EXPORT = true; // True is exporting to runable jar
+	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
 	
 	private static CanvasGameContainer _canvas; // The actual slick2d game
 	private static ScalableGame _scale; // Holds the canvas in a scalable form

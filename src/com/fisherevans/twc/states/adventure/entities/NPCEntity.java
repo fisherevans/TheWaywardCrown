@@ -27,6 +27,7 @@ public class NPCEntity extends MovableEntity
 		if(isMoving())
 		{
 			moveStep();
+			updateAnimation(delta);
 		}
 		
 		if(!isMoving() && !isInteracting()) // Not else so continued movement is smooth (doesn't miss a frame).

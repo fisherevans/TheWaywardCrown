@@ -1,5 +1,6 @@
 package com.fisherevans.twc.states.adventure.entities;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
@@ -9,8 +10,10 @@ public abstract class MovableEntity extends AdventureEntity
 	private float _xb, _yb, _xa, _ya; // posa and posb corrids for interpolation
 	private boolean _moving = false; // true if in a moving phase
 	private long _startTime; // Start time of movement
-	
-	public static final float MOVE_TIME = 200; // Move time (in ms) per tile
+	private Animation _anUp , _anDown, _anLeft, _anRight;
+
+	public static final int MOVE_TIME = 200; // Move time (in ms) per tile
+	public static final int ANIM_DUR = 120; // Move time (in ms) per tile
 	private float _speedScale = 1; // Speed scale
 
 	/** create the entity
@@ -22,6 +25,22 @@ public abstract class MovableEntity extends AdventureEntity
 	public MovableEntity(float x, float y, Image image, AdventureState as)
 	{
 		super(x, y, image, as);
+
+		_anUp = new Animation(true);
+		_anDown = new Animation(true);
+		_anLeft = new Animation(true);
+		_anRight = new Animation(true);
+
+		for(int animX = 0;animX < 192;animX += 64)
+			{ _anUp.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+		for(int animX = 192;animX < 384;animX += 64)
+			{ _anDown.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+		for(int animX = 384;animX < 576;animX += 64)
+			{ _anLeft.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+		for(int animX = 576;animX < 768;animX += 64)
+			{ _anRight.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+
+		setDrawOffset(new int[] { 0, -64 });
 	}
 
 	@Override
@@ -30,7 +49,39 @@ public abstract class MovableEntity extends AdventureEntity
 		if(_moving)
 		{
 			moveStep();
+			updateAnimation(delta);
 		}
+	}
+	
+	public void updateAnimation(int delta)
+	{
+		if(isMoving())
+		{
+			switch(getAngle())
+			{
+				case 0: _anRight.update(delta); break;
+				case 90: _anDown.update(delta); break;
+				case 180: _anLeft.update(delta); break;
+				case 270: _anUp.update(delta); break;
+			}
+		}
+	}
+	
+	public Image getImage()
+	{
+		Animation anim;
+		switch(getAngle())
+		{
+			case 0: anim = _anRight; break;
+			case 90: anim = _anDown; break;
+			case 180: anim = _anLeft; break;
+			case 270: anim = _anUp; break;
+			default: anim = _anDown; break;
+		}
+		if(isMoving())
+			return anim.getCurrentFrame();
+		else
+			return anim.getImage(1);
 	}
 	
 	/** TEsts to see if there isn't a tile in the way of the move
@@ -43,7 +94,14 @@ public abstract class MovableEntity extends AdventureEntity
 		int xbTile = (int)xb;
 		int ybTile = (int)yb;
 		
-		if(getAS().getMap().getTileId(xbTile, ybTile, 3) == 258) { return false; }
+		if(xbTile < 0 || ybTile < 0)
+		{
+			return false;
+		}
+		
+		//System.out.println(getAS().getMap().getTileId(xbTile, ybTile, 3));
+		
+		if(getAS().getMap().getTileId(xbTile, ybTile, 3) == 1026) { return false; }
 		if(getAS().isEntityIn((int)xb, (int)yb, this)) { return false; }
 		
 		return true;

@@ -1,6 +1,8 @@
 package com.fisherevans.twc.states.adventure;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,7 +16,6 @@ import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.adventure.entities.*;
 import com.fisherevans.twc.tools.*;
-import com.fisherevans.twc.tools.KeyTools;
 
 public class AdventureState extends State
 {
@@ -46,15 +47,15 @@ public class AdventureState extends State
 		_mapTileSize = _map.getTileHeight()*2;
 		
 		_ents = new ArrayList<AdventureEntity>();
-		_pent = new PlayerEntity(50, 40, null, this, getInput());
+		_pent = new PlayerEntity(4, 4, ResourceTools.getImage("res/sprites/test/char.png"), this, getInput());
 
 		_ents.add(_pent);
 
-		_ents.add(new NPCEntity(50, 38, null, this));
-		_ents.add(new NPCEntity(52, 41, null, this));
-		_ents.add(new NPCEntity(54, 40, null, this));
-		_ents.add(new NPCEntity(50, 37, null, this));
-		_ents.add(new NPCEntity(53, 40, null, this));
+		_ents.add(new NPCEntity(5, 5, ResourceTools.getImage("res/sprites/test/char2.png"), this));
+		_ents.add(new NPCEntity(6, 6, ResourceTools.getImage("res/sprites/test/char3.png"), this));
+		//_ents.add(new NPCEntity(54, 40, ResourceTools.getImage("res/sprites/test/char.png"), this));
+		//_ents.add(new NPCEntity(50, 37, ResourceTools.getImage("res/sprites/test/char.png"), this));
+		//_ents.add(new NPCEntity(53, 40, ResourceTools.getImage("res/sprites/test/char.png"), this));
 	}
 	
 	/** @return the TiledMap object of the map loaded for this state */
@@ -124,6 +125,8 @@ public class AdventureState extends State
 		{
 			ent.update(delta);
 		}
+		
+		Collections.sort(_ents, new EntityYSorter());
 	}
 
 	@Override
@@ -150,7 +153,9 @@ public class AdventureState extends State
 		int entId = 0;
 		for(AdventureEntity ent:_ents)
 		{
-			gfx.drawImage(ent.getImage(), ent.getX()*_mapTileSize+xshift, ent.getY()*_mapTileSize+yshift);
+			gfx.drawImage(ent.getImage(),
+					ent.getDrawOffset()[0]+ent.getX()*_mapTileSize+xshift,
+					ent.getDrawOffset()[1]+ent.getY()*_mapTileSize+yshift);
 			if(Start.DEBUG)
 			{
 				gfx.drawString("[" + ent.getOccupiedX() + ", " + ent.getOccupiedY() + "] > " + ent.toString().replaceAll(".*\\.", ""), 40, 40 + 40*entId);
@@ -226,5 +231,13 @@ public class AdventureState extends State
 	public void keyReleased(int key, char c)
 	{
 		
+	}
+	
+	public class EntityYSorter implements Comparator<AdventureEntity> {
+	    @Override
+	    public int compare(AdventureEntity o1, AdventureEntity o2)
+	    {
+	        return (int) ((o1.getY()+o1.getDrawOffset()[1]) - (o2.getY()+o2.getDrawOffset()[1]));
+	    }
 	}
 }

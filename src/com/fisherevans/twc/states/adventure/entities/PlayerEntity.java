@@ -30,6 +30,7 @@ public class PlayerEntity extends MovableEntity
 		if(isMoving())
 		{
 			moveStep();
+			updateAnimation(delta);
 		}
 		
 		if(!isMoving() && KeyTools.isMOVEDown(_input) && !isInteracting()) // Not else so continued movement is smooth (doesn't miss a frame).
@@ -53,7 +54,7 @@ public class PlayerEntity extends MovableEntity
 		
 		AdventureEntity ent = getAS().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
 		
-		if(ent == null)
+		if(ent == null || ent.getDialogue().isEmpty())
 		{
 			return;
 		}
