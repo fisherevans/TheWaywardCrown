@@ -1,9 +1,13 @@
 package com.fisherevans.twc.states.adventure.entities;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.actions.AdventureAction;
+import com.fisherevans.twc.states.adventure.entities.controlers.*;
 import com.fisherevans.twc.tools.KeyTools;
 
 public class PlayerEntity extends MovableEntity
@@ -19,7 +23,7 @@ public class PlayerEntity extends MovableEntity
 	 */
 	public PlayerEntity(float x, float y, Image image, AdventureState as, Input input)
 	{
-		super(x, y, image, as);
+		super(x, y, image, new PlayerControler(input), as);
 		_input = input;
 		setSpeedScale(1);
 	}
@@ -27,17 +31,7 @@ public class PlayerEntity extends MovableEntity
 	@Override
 	public void update(int delta)
 	{
-		if(isMoving())
-		{
-			moveStep();
-			updateAnimation(delta);
-		}
-		
-		if(!isMoving() && KeyTools.isMOVEDown(_input) && !isInteracting()) // Not else so continued movement is smooth (doesn't miss a frame).
-		{
-			float[] moveVec = KeyTools.getMoveVector(_input);
-			setMoveAction(moveVec[0] + getX(), moveVec[1] + getY());
-		}
+		getControler().update(delta);
 	}
 	
 	public void tryToInteract()
@@ -46,21 +40,26 @@ public class PlayerEntity extends MovableEntity
 		switch(getAngle())
 		{
 			case 0: intVec[0] = 1; break;
-			case 90: intVec[0] = 1; break;
-			case 180: intVec[0] = 1; break;
-			case 270: intVec[0] = 1; break;
+			case 90: intVec[1] = 1; break;
+			case 180: intVec[0] = -1; break;
+			case 270: intVec[1] = -1; break;
 			default: return;
 		}
 		
 		AdventureEntity ent = getAS().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
 		
-		if(ent == null || ent.getDialogue().isEmpty())
+		if(ent == null)
 		{
 			return;
 		}
 		
-		setInteracting(true);
-		ent.setInteracting(true);
+		ent.getInteraction();
+		
+		//setInteracting(true);
+		//ent.setInteracting(true);
 	}
+	
+	public void getInteraction()
+	{ }
 
 }

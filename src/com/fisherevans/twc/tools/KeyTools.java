@@ -2,14 +2,24 @@ package com.fisherevans.twc.tools;
 
 import org.newdawn.slick.Input;
 
+/**
+ * @author Fisher
+ *
+ */
 public class KeyTools
 {
-	public static final int[] UP = { 17, 200 }, // Key codes for each input action
-							  LEFT = { 30, 203 },
-							  RIGHT = { 32, 205 }, 
-							  DOWN = { 31, 208 },
-							  SELECT = { 57, 28 },
-							  BACK = { 1 };
+	/** Arrays of key codes which correspond with pressing up */
+	public static final int[] UP = { 17, 200 };
+	/** Arrays of key codes which correspond with pressing left */
+	public static final int[] LEFT = { 30, 203 };
+	/** Arrays of key codes which correspond with pressing right */
+	public static final int[] RIGHT = { 32, 205 }; 
+	/** Arrays of key codes which correspond with pressing down */
+	public static final int[] DOWN = { 31, 208 };
+	/** Arrays of key codes which correspond with pressing select */
+	public static final int[] SELECT = { 57, 28 };
+	/** Arrays of key codes which correspond with pressing back */
+	public static final int[] BACK = { 1 };
 	
 	/** Creates a movement vector (perp to an axis) based on key downs
 	 * @param in slick2d player input object

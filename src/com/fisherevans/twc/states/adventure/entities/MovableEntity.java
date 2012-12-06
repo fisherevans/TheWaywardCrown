@@ -4,16 +4,25 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.entities.controlers.EntityControler;
 
+/**
+ * @author Fisher
+ *
+ */
 public abstract class MovableEntity extends AdventureEntity
 {
+	/** Time in milliseconds to move from tile to tile */
+	public static final int MOVE_TIME = 200;
+	/** Time in milliseconds between each frame of the anumation. */
+	public static final int ANIM_DUR = (int) (MOVE_TIME/1.66);
+	
 	private float _xb, _yb, _xa, _ya; // posa and posb corrids for interpolation
 	private boolean _moving = false; // true if in a moving phase
 	private long _startTime; // Start time of movement
 	private Animation _anUp , _anDown, _anLeft, _anRight;
+	private EntityControler _controler;
 
-	public static final int MOVE_TIME = 200; // Move time (in ms) per tile
-	public static final int ANIM_DUR = 120; // Move time (in ms) per tile
 	private float _speedScale = 1; // Speed scale
 
 	/** create the entity
@@ -22,9 +31,12 @@ public abstract class MovableEntity extends AdventureEntity
 	 * @param image ini imahe
 	 * @param as adventure state holding the entty
 	 */
-	public MovableEntity(float x, float y, Image image, AdventureState as)
+	public MovableEntity(float x, float y, Image image, EntityControler controler, AdventureState as)
 	{
 		super(x, y, image, as);
+		
+		_controler = controler;
+		_controler.setEnt(this);
 
 		_anUp = new Animation(true);
 		_anDown = new Animation(true);
@@ -33,12 +45,16 @@ public abstract class MovableEntity extends AdventureEntity
 
 		for(int animX = 0;animX < 192;animX += 64)
 			{ _anUp.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+			_anUp.addFrame(image.getSubImage(64, 0, 64, image.getHeight()), ANIM_DUR);
 		for(int animX = 192;animX < 384;animX += 64)
 			{ _anDown.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+			_anDown.addFrame(image.getSubImage(256, 0, 64, image.getHeight()), ANIM_DUR);
 		for(int animX = 384;animX < 576;animX += 64)
 			{ _anLeft.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+			_anLeft.addFrame(image.getSubImage(448, 0, 64, image.getHeight()), ANIM_DUR);
 		for(int animX = 576;animX < 768;animX += 64)
 			{ _anRight.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
+			_anRight.addFrame(image.getSubImage(640, 0, 64, image.getHeight()), ANIM_DUR);
 
 		setDrawOffset(new int[] { 0, -64 });
 	}
@@ -46,15 +62,15 @@ public abstract class MovableEntity extends AdventureEntity
 	@Override
 	public void update(int delta)
 	{
-		if(_moving)
-		{
-			moveStep();
-			updateAnimation(delta);
-		}
+		getControler().update(delta);
 	}
 	
+	/** Steps throug animation
+	 * @param delta time delta since last update
+	 */
 	public void updateAnimation(int delta)
 	{
+		delta *= getSpeedScale();
 		if(isMoving())
 		{
 			switch(getAngle())
@@ -67,6 +83,7 @@ public abstract class MovableEntity extends AdventureEntity
 		}
 	}
 	
+	@Override
 	public Image getImage()
 	{
 		Animation anim;
@@ -99,9 +116,9 @@ public abstract class MovableEntity extends AdventureEntity
 			return false;
 		}
 		
-		//System.out.println(getAS().getMap().getTileId(xbTile, ybTile, 3));
+		//System.out.println(getAS().getMap().getTileId(xbTile, ybTile, getAS().getMap().getLayerIndex("col")s));
 		
-		if(getAS().getMap().getTileId(xbTile, ybTile, 3) == 1026) { return false; }
+		if(getAS().getMap().getTileId(xbTile, ybTile, getAS().getMap().getLayerIndex("col")) == 1026) { return false; }
 		if(getAS().isEntityIn((int)xb, (int)yb, this)) { return false; }
 		
 		return true;
@@ -111,7 +128,7 @@ public abstract class MovableEntity extends AdventureEntity
 	 */
 	public void moveStep()
 	{
-		float t = ((float)(System.currentTimeMillis() - _startTime))/(MOVE_TIME/_speedScale);
+		float t = (((float)(System.currentTimeMillis() - _startTime))/(MOVE_TIME))*_speedScale;
 		setX(_xa + ((_xb - _xa) * t));
 		setY(_ya + ((_yb - _ya) * t));
 		
@@ -196,5 +213,15 @@ public abstract class MovableEntity extends AdventureEntity
 	public float getSpeedScale()
 	{
 		return _speedScale;
+	}
+
+	public EntityControler getControler()
+	{
+		return _controler;
+	}
+
+	public void setControler(EntityControler controler)
+	{
+		_controler = controler;
 	}
 }

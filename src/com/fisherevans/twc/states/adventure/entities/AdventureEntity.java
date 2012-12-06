@@ -8,7 +8,7 @@ import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.tools.*;
 import com.fisherevans.twc.states.adventure.AdventureState;
-import com.fisherevans.twc.states.adventure.dialogue.DialoguePopup;
+import com.fisherevans.twc.states.adventure.actions.AdventureAction;
 
 public abstract class AdventureEntity
 {
@@ -17,7 +17,6 @@ public abstract class AdventureEntity
 	private AdventureState _as; // The state holding the entity
 	private boolean _interacting = false; // True if entity is interacting with another entity
 	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
-	private ArrayList<DialoguePopup> _diags;
 	private int[] _drawOffset = { 0, 0 };
 	
 	/** Create the entity.
@@ -36,8 +35,6 @@ public abstract class AdventureEntity
 		_x = x;
 		_y = y;
 		_as = as;
-		
-		_diags = new ArrayList<DialoguePopup>();
 	}
 	
 	/** Updates the entity's pos
@@ -141,11 +138,6 @@ public abstract class AdventureEntity
 		_angle = angle;
 	}
 	
-	public ArrayList<DialoguePopup> getDialogue()
-	{
-		return _diags;
-	}
-	
 	public int[] getDrawOffset()
 	{
 		return _drawOffset;
@@ -155,4 +147,6 @@ public abstract class AdventureEntity
 	{
 		_drawOffset = newOffset;
 	}
+	
+	public abstract void getInteraction();
 }
