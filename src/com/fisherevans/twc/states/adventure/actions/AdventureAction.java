@@ -1,16 +1,21 @@
 package com.fisherevans.twc.states.adventure.actions;
 
+import org.newdawn.slick.Graphics;
+
+import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 
 public abstract class AdventureAction
 {
 	private boolean _isComplete = false;
-	private AdventureState _as;
+	private ActionManager _am;
 	private boolean _hasStarted = false;
+	private boolean _blockInput;
 	
-	public AdventureAction(AdventureState as)
+	public AdventureAction(ActionManager am, boolean blockInput)
 	{
-		_as = as;
+		_am = am;
+		_blockInput = blockInput;
 	}
 
 	public boolean isComplete()
@@ -18,32 +23,51 @@ public abstract class AdventureAction
 		return _isComplete;
 	}
 	
-	public abstract void startAction();
+	public void start()
+	{
+		_hasStarted = true;
+		initAction();
+	}
 	
-	public abstract void updateAction();
+	public void end()
+	{
+		_hasStarted = false;
+		_isComplete = false;
+		reInitAction();
+	}
+	
+	public abstract void initAction();
+	
+	public abstract void reInitAction();
+	
+	public abstract void updateAction(int delta);
+	
+	public abstract void render(Graphics gfx);
+	
+	public abstract boolean keyPressed(int key, char c);
 
 	public void setComplete(boolean isComplete)
 	{
 		_isComplete = isComplete;
 	}
 
-	public AdventureState getAS()
+	public ActionManager getAM()
 	{
-		return _as;
+		return _am;
 	}
 
-	public void setAS(AdventureState as)
-	{
-		_as = as;
-	}
-
-	public boolean isHasStarted()
+	public boolean hasStarted()
 	{
 		return _hasStarted;
 	}
-
-	public void setHasStarted(boolean hasStarted)
+	
+	public void setBlockingInput(boolean blockInput)
 	{
-		_hasStarted = hasStarted;
+		_blockInput = blockInput;
+	}
+	
+	public boolean isBlockingInput()
+	{
+		return _blockInput;
 	}
 }

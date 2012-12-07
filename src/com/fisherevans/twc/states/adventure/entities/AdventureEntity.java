@@ -8,16 +8,18 @@ import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.tools.*;
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.EntityManager;
 import com.fisherevans.twc.states.adventure.actions.AdventureAction;
 
 public abstract class AdventureEntity
 {
 	private float _x, _y; // The x and y corrids fo the entity (in tile ids)
 	private Image _image; // The image of the sprite
-	private AdventureState _as; // The state holding the entity
+	private EntityManager _em; // The state holding the entity
 	private boolean _interacting = false; // True if entity is interacting with another entity
 	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
 	private int[] _drawOffset = { 0, 0 };
+	private ArrayList<AdventureAction> _actions;
 	
 	/** Create the entity.
 	 * @param x The initital x pos
@@ -25,7 +27,7 @@ public abstract class AdventureEntity
 	 * @param image The initian sprite/image
 	 * @param as the state holding this ent
 	 */
-	public AdventureEntity(float x, float y, Image image, AdventureState as)
+	public AdventureEntity(float x, float y, Image image, EntityManager em)
 	{
 		if(image == null)
 		{
@@ -34,9 +36,26 @@ public abstract class AdventureEntity
 		_image = image;
 		_x = x;
 		_y = y;
-		_as = as;
+		_em = em;
+		_actions = new ArrayList<>();
 	}
 	
+	public ArrayList<AdventureAction> getActions()
+	{
+		return _actions;
+	}
+
+	public void setActions(ArrayList<AdventureAction> actions)
+	{
+		_actions = actions;
+	}
+
+	/** @return the entity manager holding this enttiy */
+	public EntityManager getEM()
+	{
+		return _em;
+	}
+
 	/** Updates the entity's pos
 	 * @param delta The time delta;
 	 */
@@ -102,12 +121,6 @@ public abstract class AdventureEntity
 	{
 		_image = image;
 	}
-	
-	/** @return the adventure state holding this enttiy */
-	public AdventureState getAS()
-	{
-		return _as;
-	}
 
 	/** sets if plaer is interacting
 	 *  @param interacting true if they are
@@ -148,5 +161,8 @@ public abstract class AdventureEntity
 		_drawOffset = newOffset;
 	}
 	
-	public abstract void getInteraction();
+	public void pushInteraction()
+	{
+		getEM().getAS().getAM().addActions(_actions);
+	}
 }

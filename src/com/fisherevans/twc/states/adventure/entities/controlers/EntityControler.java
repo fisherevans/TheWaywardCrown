@@ -12,6 +12,11 @@ public abstract class EntityControler
 	}
 	
 	public abstract void update(int delta);
+	
+	public boolean keyPressed(int key, char c)
+	{
+		return false;
+	}
 
 	public MovableEntity getEnt()
 	{

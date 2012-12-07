@@ -1,5 +1,8 @@
 package com.fisherevans.twc.states.adventure.actions;
 
+import org.newdawn.slick.Graphics;
+
+import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.entities.AdventureEntity;
 
@@ -7,25 +10,41 @@ public class ChangeCameraAction extends AdventureAction
 {
 	private AdventureEntity _ent;
 	
-	public ChangeCameraAction(AdventureState as, AdventureEntity ent)
+	public ChangeCameraAction(ActionManager am, AdventureEntity ent)
 	{
-		super(as);
+		super(am, false);
 		_ent = ent;
 	}
-	
-	public void startAction()
+
+	@Override
+	public void initAction()
 	{
-		getAS().setCameraEntity(_ent);
+		getAM().getAS().getEM().setCameraEntity(_ent);
 		setComplete(true);
 	}
 
 	@Override
-	public void updateAction()
+	public void reInitAction()
 	{
-		if(!isHasStarted())
-		{
-			startAction();
-			setHasStarted(true);
-		}
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateAction(int delta)
+	{
+		
+	}
+
+	@Override
+	public void render(Graphics gfx)
+	{
+		
+	}
+
+	@Override
+	public boolean keyPressed(int key, char c)
+	{
+		return isBlockingInput();
 	}
 }

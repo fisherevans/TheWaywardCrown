@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.EntityManager;
 import com.fisherevans.twc.states.adventure.actions.AdventureAction;
 import com.fisherevans.twc.states.adventure.entities.controlers.*;
 import com.fisherevans.twc.tools.KeyTools;
@@ -21,9 +22,9 @@ public class PlayerEntity extends MovableEntity
 	 * @param as adventure state holding the entty
 	 * @param input slick2d user input onject
 	 */
-	public PlayerEntity(float x, float y, Image image, AdventureState as, Input input)
+	public PlayerEntity(float x, float y, Image image, EntityManager em, Input input)
 	{
-		super(x, y, image, new PlayerControler(input), as);
+		super(x, y, image, new PlayerControler(input), em);
 		_input = input;
 		setSpeedScale(1);
 	}
@@ -34,7 +35,7 @@ public class PlayerEntity extends MovableEntity
 		getControler().update(delta);
 	}
 	
-	public void tryToInteract()
+	public void interact()
 	{
 		int[] intVec = { 0, 0 };
 		switch(getAngle())
@@ -46,20 +47,14 @@ public class PlayerEntity extends MovableEntity
 			default: return;
 		}
 		
-		AdventureEntity ent = getAS().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
+		AdventureEntity ent = getEM().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
 		
 		if(ent == null)
 		{
 			return;
 		}
 		
-		ent.getInteraction();
-		
-		//setInteracting(true);
-		//ent.setInteracting(true);
+		ent.pushInteraction();
 	}
-	
-	public void getInteraction()
-	{ }
 
 }

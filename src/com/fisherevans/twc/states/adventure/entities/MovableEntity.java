@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
+import com.fisherevans.twc.states.adventure.EntityManager;
 import com.fisherevans.twc.states.adventure.entities.controlers.EntityControler;
 
 /**
@@ -31,9 +32,9 @@ public abstract class MovableEntity extends AdventureEntity
 	 * @param image ini imahe
 	 * @param as adventure state holding the entty
 	 */
-	public MovableEntity(float x, float y, Image image, EntityControler controler, AdventureState as)
+	public MovableEntity(float x, float y, Image image, EntityControler controler, EntityManager em)
 	{
-		super(x, y, image, as);
+		super(x, y, image, em);
 		
 		_controler = controler;
 		_controler.setEnt(this);
@@ -118,8 +119,8 @@ public abstract class MovableEntity extends AdventureEntity
 		
 		//System.out.println(getAS().getMap().getTileId(xbTile, ybTile, getAS().getMap().getLayerIndex("col")s));
 		
-		if(getAS().getMap().getTileId(xbTile, ybTile, getAS().getMap().getLayerIndex("col")) == 1026) { return false; }
-		if(getAS().isEntityIn((int)xb, (int)yb, this)) { return false; }
+		if(getEM().getAS().getMM().getMap().getTileId(xbTile, ybTile, getEM().getAS().getMM().getMap().getLayerIndex("col")) == 1026) { return false; }
+		if(getEM().isEntityIn((int)xb, (int)yb, this)) { return false; }
 		
 		return true;
 	}
@@ -192,6 +193,11 @@ public abstract class MovableEntity extends AdventureEntity
 		{
 			return (int)getY();
 		}
+	}
+	
+	public void interact()
+	{
+		
 	}
 	
 

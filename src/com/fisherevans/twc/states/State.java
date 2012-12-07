@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 
 import com.fisherevans.twc.GameDriver;
 
-public abstract class State implements KeyListener, MouseListener
+public abstract class State implements KeyListener
 {
 	private static StateManager _sm; // The manager that holds this state
 	private Input _input; // The slick2d input object
@@ -67,24 +67,6 @@ public abstract class State implements KeyListener, MouseListener
 	@Override
 	public void setInput(Input input)
 	{ }
-
-	@Override
-	public abstract void mouseClicked(int button, int x, int y, int clickCount);
-
-	@Override
-	public abstract void mouseDragged(int oldx, int oldy, int newx, int newy);
-
-	@Override
-	public abstract void mouseMoved(int oldx, int oldy, int newx, int newy);
-
-	@Override
-	public abstract void mousePressed(int button, int x, int y);
-
-	@Override
-	public abstract void mouseReleased(int button, int x, int y);
-
-	@Override
-	public abstract void mouseWheelMoved(int change);
 
 	@Override
 	public abstract void keyPressed(int key, char c);

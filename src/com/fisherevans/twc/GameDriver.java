@@ -72,7 +72,6 @@ public class GameDriver extends BasicGame
 		_input.removeAllListeners();
 		_input.addKeyListener(_gkl);
 		_input.addKeyListener(newInputTarget);
-		_input.addMouseListener(newInputTarget);
 	}
 	
 	/**
