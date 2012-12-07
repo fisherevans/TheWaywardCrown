@@ -16,8 +16,10 @@ import com.fisherevans.twc.states.StateManager;
 public class GameDriver extends BasicGame
 {
 	public static final int
-		NATIVE_SCREEN_WIDTH = 1280,
-		NATIVE_SCREEN_HEIGHT = 720; // The NATIVE resolution of the game. This never changes,  but the window can scale and keep the ratio.
+	NATIVE_SCREEN_WIDTH = 1280,
+	NATIVE_SCREEN_HEIGHT = 720, // The NATIVE resolution of the game. This never changes,  but the window can scale and keep the ratio.
+	NATIVE_SCREEN_H_WIDTH = NATIVE_SCREEN_WIDTH/2,
+	NATIVE_SCREEN_H_HEIGHT = NATIVE_SCREEN_HEIGHT/2; // The NATIVE resolution of the game. This never changes,  but the window can scale and keep the ratio.
 	
 	
 	private static Input _input; // Play input object

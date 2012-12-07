@@ -6,10 +6,14 @@ import java.util.Comparator;
 
 import org.newdawn.slick.Graphics;
 
+import com.fisherevans.twc.GameDriver;
 import com.fisherevans.twc.Start;
 import com.fisherevans.twc.states.adventure.actions.AdventureAction;
 import com.fisherevans.twc.states.adventure.actions.ChangeCameraAction;
 import com.fisherevans.twc.states.adventure.actions.DialogueAction;
+import com.fisherevans.twc.states.adventure.actions.MoveAction;
+import com.fisherevans.twc.states.adventure.actions.SetSpeedAction;
+import com.fisherevans.twc.states.adventure.actions.TeleportAction;
 import com.fisherevans.twc.states.adventure.actions.WaitAction;
 import com.fisherevans.twc.states.adventure.entities.AdventureEntity;
 import com.fisherevans.twc.states.adventure.entities.NPCEntity;
@@ -22,10 +26,14 @@ public class EntityManager
 	private ArrayList<AdventureEntity> _ents; // The entities currently in the map.
 	private AdventureEntity _cameraEntity; // The player's entity.
 	private PlayerEntity _playerEntity; // The player's entity.
+	private float _baseXShift, _baseYShift;
 	
 	public EntityManager(AdventureState as)
 	{
 		_as = as;
+
+		_baseXShift = GameDriver.NATIVE_SCREEN_H_WIDTH -  getAS().getMM().getMapTileSize()/2;
+		_baseYShift = GameDriver.NATIVE_SCREEN_H_HEIGHT - getAS().getMM().getMapTileSize()/2;
 		
 		_ents = new ArrayList<AdventureEntity>();
 		_playerEntity = new PlayerEntity(4, 4, ResourceTools.getImage("res/sprites/test/char.png"), this, _as.getInput());
@@ -33,7 +41,7 @@ public class EntityManager
 
 		_ents.add(_playerEntity);
 		
-		NPCEntity npc = new NPCEntity(4, 4, ResourceTools.getImage("res/sprites/test/char2.png"), this);
+		NPCEntity npc = new NPCEntity(5, 7, ResourceTools.getImage("res/sprites/test/char2.png"), this);
 		ArrayList<AdventureAction> actions = new ArrayList<>();
 		actions.add(new DialogueAction(_as.getAM(), "Why hello! I'm a Non-Player-Controled testing unit! Hit Space :)", ResourceTools.getImage("res/sprites/test/default64x64.png"), true));
 		actions.add(new ChangeCameraAction(_as.getAM(), npc));
@@ -48,9 +56,23 @@ public class EntityManager
 		actions.add(new WaitAction(_as.getAM(), 10000, false));
 		actions.add(new ChangeCameraAction(_as.getAM(), npc));
 		actions.add(new DialogueAction(_as.getAM(), "And now the camera is back to me! You'll also notice that my ugly " +
-				"face icon is on the right now. It was on the left before... Well, too-da-loo!",
+				"face icon is on the right now. It was on the left before... Now, DANCE MONKEY!",
 				ResourceTools.getImage("res/sprites/test/default64x64.png"), false));
+		actions.add(new SetSpeedAction(_as.getAM(), true, _playerEntity, 0.333f));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 1, 0 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 0, -1 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { -1, 0 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 0, 1 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { -1, 0 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 1, 0 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 0, -1 }));
+		actions.add(new MoveAction(_as.getAM(), true, _playerEntity, new int[] { 0, 1 }));
+		actions.add(new SetSpeedAction(_as.getAM(), true, _playerEntity, 1));
+		actions.add(new DialogueAction(_as.getAM(), "And now the face is back on the left! Now I'll teleport you to the " +
+				"courtyard and let you be on your way.",
+				ResourceTools.getImage("res/sprites/test/default64x64.png"), true));
 		actions.add(new ChangeCameraAction(_as.getAM(), _playerEntity));
+		actions.add(new TeleportAction(_as.getAM(), true, _playerEntity, new int[] { 41, 15 } ));
 		npc.setActions(actions);
 		
 		_ents.add(npc);
@@ -72,15 +94,19 @@ public class EntityManager
 	 * @param xshift x center corrid
 	 * @param yshift y center corrid
 	 */
-	public void render(Graphics gfx, float xshift, float yshift)
+	public void render(Graphics gfx)
 	{
 		Collections.sort(_ents, new EntityYSorter());
+
+		float xShift = _baseXShift - _cameraEntity.getX()*getAS().getMM().getMapTileSize();
+		float yShift = _baseYShift - _cameraEntity.getY()*getAS().getMM().getMapTileSize();
+		
 		int entId = 0;
 		for(AdventureEntity ent:_ents)
 		{
 			gfx.drawImage(ent.getImage(),
-					ent.getDrawOffset()[0]+ent.getX()*_as.getMM().getMapTileSize()+xshift,
-					ent.getDrawOffset()[1]+ent.getY()*_as.getMM().getMapTileSize()+yshift);
+					ent.getDrawOffset()[0]+ent.getX()*_as.getMM().getMapTileSize()+xShift,
+					ent.getDrawOffset()[1]+ent.getY()*_as.getMM().getMapTileSize()+yShift);
 			if(Start.DEBUG)
 			{
 				gfx.drawString("[" + ent.getOccupiedX() + ", " + ent.getOccupiedY() + "] > " + ent.toString().replaceAll(".*\\.", ""), 40, 40 + 40*entId);

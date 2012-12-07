@@ -4,27 +4,25 @@ import org.newdawn.slick.Graphics;
 
 import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.entities.MovableEntity;
-import com.fisherevans.twc.tools.KeyTools;
 
-public class MoveAction extends AdventureAction
+public class TeleportAction extends AdventureAction
 {
 	private MovableEntity _ent;
-	private int[] _moveVec;
-
-	public MoveAction(ActionManager am, boolean blockInput, MovableEntity ent, int[] moveVec)
+	private int[] _pos;
+	
+	public TeleportAction(ActionManager am, boolean blockInput, MovableEntity ent, int[] pos)
 	{
 		super(am, blockInput);
 		_ent = ent;
-		_moveVec = moveVec;
+		_pos = pos;
 	}
 
 	@Override
 	public void initAction()
 	{
-		if(!_ent.isMoving()) // If we're not already moving.
-		{
-			_ent.setMoveAction(_moveVec[0] + _ent.getX(), _moveVec[1] + _ent.getY());
-		}
+		_ent.setX(_pos[0]);
+		_ent.setY(_pos[1]);
+		setComplete(true);
 	}
 
 	@Override
@@ -37,11 +35,8 @@ public class MoveAction extends AdventureAction
 	@Override
 	public void updateAction(int delta)
 	{
-		_ent.getControler().update(delta);
-		if(!_ent.isMoving())
-		{
-			setComplete(true);
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

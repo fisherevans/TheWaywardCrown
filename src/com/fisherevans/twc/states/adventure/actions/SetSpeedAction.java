@@ -4,27 +4,25 @@ import org.newdawn.slick.Graphics;
 
 import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.entities.MovableEntity;
-import com.fisherevans.twc.tools.KeyTools;
 
-public class MoveAction extends AdventureAction
+
+public class SetSpeedAction extends AdventureAction
 {
 	private MovableEntity _ent;
-	private int[] _moveVec;
+	private float _speedScale;
 
-	public MoveAction(ActionManager am, boolean blockInput, MovableEntity ent, int[] moveVec)
+	public SetSpeedAction(ActionManager am, boolean blockInput, MovableEntity ent, float speedScale)
 	{
 		super(am, blockInput);
 		_ent = ent;
-		_moveVec = moveVec;
+		_speedScale = speedScale;
 	}
 
 	@Override
 	public void initAction()
 	{
-		if(!_ent.isMoving()) // If we're not already moving.
-		{
-			_ent.setMoveAction(_moveVec[0] + _ent.getX(), _moveVec[1] + _ent.getY());
-		}
+		_ent.setSpeedScale(_speedScale);
+		setComplete(true);
 	}
 
 	@Override
@@ -37,11 +35,8 @@ public class MoveAction extends AdventureAction
 	@Override
 	public void updateAction(int delta)
 	{
-		_ent.getControler().update(delta);
-		if(!_ent.isMoving())
-		{
-			setComplete(true);
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

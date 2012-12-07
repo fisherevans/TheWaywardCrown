@@ -55,14 +55,13 @@ public class AdventureState extends State
 	{
 		gfx.setFont(ResourceTools.font16());
 		
-		float xshift = -_em.getCameraEntity().getX()*_mm.getMapTileSize() + GameDriver.NATIVE_SCREEN_WIDTH/2 - _mm.getMapTileSize()/2;
-		float yshift = -_em.getCameraEntity().getY()*_mm.getMapTileSize() + GameDriver.NATIVE_SCREEN_HEIGHT/2 - _mm.getMapTileSize()/2;
+		_mm.updateShift(_em.getCameraEntity());
 
-		_mm.drawLayer(gfx, xshift, yshift, _mm.getMap().getLayerIndex("bg")); // Background Layer
-		_mm.drawLayer(gfx, xshift, yshift, _mm.getMap().getLayerIndex("entbg")); // Entity Background Layer
-		_em.render(gfx, xshift, yshift); //Draw Entities
-		_mm.drawLayer(gfx, xshift, yshift, _mm.getMap().getLayerIndex("entfg")); // Entity Foreground Layer
-		_mm.drawLayer(gfx, xshift, yshift, _mm.getMap().getLayerIndex("fg")); // Foreground Layer
+		_mm.drawLayer(gfx, "bg"); // Background Layer
+		_mm.drawLayer(gfx, "entbg"); // Entity Background Layer
+		_em.render(gfx); //Draw Entities
+		_mm.drawLayer(gfx, "entfg"); // Entity Foreground Layer
+		_mm.drawLayer(gfx, "fg"); // Foreground Layer
 		
 		_am.render(gfx);
 		_dm.render(gfx);
