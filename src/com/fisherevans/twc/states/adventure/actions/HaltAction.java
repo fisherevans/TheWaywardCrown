@@ -1,48 +1,45 @@
 package com.fisherevans.twc.states.adventure.actions;
 
-import org.newdawn.slick.Graphics;
-
 import com.fisherevans.twc.states.adventure.entities.MovableEntity;
 
-public class TeleportAction extends AdventureAction
+public class HaltAction extends AdventureAction
 {
 	private String _entName;
-	private int _x, _y;
+	private boolean _halt;
 	
-	public TeleportAction(ActionManager am, String entName, int x, int y)
+	public HaltAction(ActionManager am, String entName, boolean halt)
 	{
 		super(am);
 		_entName = entName;
-		_x = x;
-		_y = y;
+		_halt = halt;
 	}
 
 	@Override
 	public void initAction()
 	{
 		MovableEntity ent = ((MovableEntity)getAM().getAS().getEM().getEntity(_entName));
-		ent.setX(_x);
-		ent.setY(_y);
+		if(_halt)
+			ent.halt();
+		else
+			ent.unhalt();
+
 		setComplete(true);
 	}
 
 	@Override
 	public void reInitAction()
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void updateAction(int delta)
 	{
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void keyPressed(int key, char c)
 	{
+		// TODO Auto-generated method stub
 		
 	}
 

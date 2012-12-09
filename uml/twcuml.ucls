@@ -45,8 +45,8 @@
     </display>  
   </class>  
   <class id="6" corner="BOTTOM_RIGHT" language="java" 
-    name="com.fisherevans.twc.states.adventure.entities.controlers.EntityControler" project="TheWaywardCrown" 
-    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controlers/EntityControler.java" 
+    name="com.fisherevans.twc.states.adventure.entities.controllers.EntityControler" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controllers/EntityControler.java" 
     binary="false">    
     <position height="-1" width="-1" x="3053" y="658"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -80,9 +80,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="10" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.ActionManager" 
-    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/ActionManager.java" 
-    binary="false">    
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.actions.ActionManager" 
+    project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/actions/ActionManager.java" binary="false">    
     <position height="-1" width="-1" x="2029" y="589"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -116,8 +116,8 @@
     </display>  
   </class>  
   <class id="14" corner="BOTTOM_RIGHT" language="java" 
-    name="com.fisherevans.twc.states.adventure.entities.controlers.PlayerControler" project="TheWaywardCrown" 
-    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controlers/PlayerControler.java" 
+    name="com.fisherevans.twc.states.adventure.entities.controllers.PlayerControler" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controllers/PlayerControler.java" 
     binary="false">    
     <position height="-1" width="-1" x="3340" y="683"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -179,8 +179,8 @@
     </display>  
   </class>  
   <class id="21" corner="BOTTOM_RIGHT" language="java" 
-    name="com.fisherevans.twc.states.adventure.entities.controlers.NullControler" project="TheWaywardCrown" 
-    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controlers/NullControler.java" 
+    name="com.fisherevans.twc.states.adventure.entities.controllers.NullControler" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controllers/NullControler.java" 
     binary="false">    
     <position height="-1" width="-1" x="3340" y="821"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
@@ -213,9 +213,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="25" corner="BOTTOM_RIGHT" language="java" name="com.fisherevans.twc.states.adventure.EntityManager" 
-    project="TheWaywardCrown" file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/EntityManager.java" 
-    binary="false">    
+  <class id="25" corner="BOTTOM_RIGHT" language="java" 
+    name="com.fisherevans.twc.states.adventure.entities.EntityManager" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/EntityManager.java" binary="false">    
     <position height="-1" width="-1" x="1808" y="178"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -249,8 +249,8 @@
     </display>  
   </class>  
   <class id="29" corner="BOTTOM_RIGHT" language="java" 
-    name="com.fisherevans.twc.states.adventure.EntityManager.EntityYSorter" project="TheWaywardCrown" 
-    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/EntityManager.java" binary="false">    
+    name="com.fisherevans.twc.states.adventure.entities.EntityManager.EntityYSorter" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/EntityManager.java" binary="false">    
     <position height="-1" width="-1" x="1804" y="377"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -284,8 +284,8 @@
     </display>  
   </class>  
   <class id="33" corner="BOTTOM_RIGHT" language="java" 
-    name="com.fisherevans.twc.states.adventure.entities.controlers.RandomControler" project="TheWaywardCrown" 
-    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controlers/RandomControler.java" 
+    name="com.fisherevans.twc.states.adventure.entities.controllers.RandomControler" project="TheWaywardCrown" 
+    file="/TheWaywardCrown/src/com/fisherevans/twc/states/adventure/entities/controllers/RandomControler.java" 
     binary="false">    
     <position height="-1" width="-1" x="3338" y="542"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" visibility="true">      

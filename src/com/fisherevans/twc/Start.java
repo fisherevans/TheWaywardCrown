@@ -18,7 +18,7 @@ public class Start
 {
 	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
 	public final boolean EXPORT = false; // True is exporting to runable jar
-	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
+	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
 	
 	private static CanvasGameContainer _canvas; // The actual slick2d game
 	private static ScalableGame _scale; // Holds the canvas in a scalable form
@@ -114,8 +114,9 @@ public class Start
 		_canvas = new CanvasGameContainer(_scale);
 		_canvas.getContainer().setAlwaysRender(true);
 		_canvas.getContainer().setShowFPS(DEBUG);
-		//_canvas.getContainer().setTargetFrameRate(60);
+		_canvas.getContainer().setTargetFrameRate(120);
 		_canvas.getContainer().setVerbose(DEBUG);
+		_canvas.getContainer().setMinimumLogicUpdateInterval(4);
 	}
 	
 	/** Create the jframe to hold to slick2d canvas */

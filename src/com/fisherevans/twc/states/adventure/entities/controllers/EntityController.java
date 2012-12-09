@@ -1,21 +1,21 @@
-package com.fisherevans.twc.states.adventure.entities.controlers;
+package com.fisherevans.twc.states.adventure.entities.controllers;
 
 import com.fisherevans.twc.states.adventure.entities.MovableEntity;
 
-public abstract class EntityControler
+public abstract class EntityController
 {
 	private MovableEntity _ent;
 	
-	public EntityControler()
+	public EntityController(MovableEntity ent)
 	{
-		_ent = null;
+		_ent = ent;
 	}
 	
 	public abstract void update(int delta);
 	
-	public boolean keyPressed(int key, char c)
+	public void keyPressed(int key, char c)
 	{
-		return false;
+		
 	}
 
 	public MovableEntity getEnt()

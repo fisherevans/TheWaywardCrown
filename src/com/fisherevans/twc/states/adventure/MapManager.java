@@ -4,6 +4,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.tiled.TiledMap;
 
 import com.fisherevans.twc.GameDriver;
+import com.fisherevans.twc.states.adventure.config.AdventureConfigLoader;
+import com.fisherevans.twc.states.adventure.config.MapConfig;
 import com.fisherevans.twc.states.adventure.entities.AdventureEntity;
 import com.fisherevans.twc.tools.MathTools;
 
@@ -18,14 +20,18 @@ public class MapManager
 	public MapManager(AdventureState as)
 	{
 		_as = as;
-		
+	}
+	
+	public void initManager(AdventureConfigLoader config)
+	{
+		MapConfig mapConfig = config.getMapConfig();
 		try
 		{
-			_map = new TiledMap("res/maps/test/test.tmx", "res/maps/test");
+			_map = new TiledMap(mapConfig.getTmx(), mapConfig.getTiles());
 		}
 		catch(Exception e)
 		{
-			System.out.println("Could not load test map");
+			System.out.println("Could not load test map - " + mapConfig.getTmx() + " - " + mapConfig.getTiles());
 			e.printStackTrace();
 		}
 		
@@ -34,7 +40,12 @@ public class MapManager
 		_mapTileSize = _map.getTileHeight()*2;
 
 		_baseSX = (int) ((-_map.getTileHeight() + GameDriver.NATIVE_SCREEN_H_WIDTH)*0.5f); 
-		_baseSY = (int) ((-_map.getTileHeight() + GameDriver.NATIVE_SCREEN_H_HEIGHT)*0.5f); 
+		_baseSY = (int) ((-_map.getTileHeight() + GameDriver.NATIVE_SCREEN_H_HEIGHT)*0.5f);
+		
+		_as.getEM().setCameraEntity(mapConfig.getCamera());
+		_as.getEM().setPlayerEntity(mapConfig.getPlayer());
+		
+		_as.getEM().setShifts(_map.getTileHeight());
 	}
 	
 	public void updateShift(AdventureEntity camera)

@@ -6,7 +6,6 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.DialogueManager;
 import com.fisherevans.twc.tools.ResourceTools;
@@ -19,7 +18,7 @@ public class DialogueAction extends AdventureAction
 
 	public DialogueAction(ActionManager am, String baseMessage, Image icon, boolean leftAlign)
 	{
-		super(am, true);
+		super(am);
 		_baseMessage = baseMessage;
 		_leftAlign = leftAlign;
 		_icon = icon;
@@ -28,7 +27,7 @@ public class DialogueAction extends AdventureAction
 	@Override
 	public void initAction()
 	{
-		getAM().getAS().getDM().addDialogue(_baseMessage, _leftAlign, _icon);
+		//getAM().getAS().getDM().addDialogue(_baseMessage, _leftAlign, _icon);
 	}
 
 	@Override
@@ -38,28 +37,18 @@ public class DialogueAction extends AdventureAction
 		
 	}
 
-
 	@Override
 	public void updateAction(int delta)
 	{
-		if(!getAM().getAS().getDM().isShowing())
+		/*if(!getAM().getAS().getDM().isShowing())
 		{
 			setComplete(true);
-		}
+		}*/
 	}
 
-
 	@Override
-	public void render(Graphics gfx)
+	public void keyPressed(int key, char c)
 	{
-		// TODO Auto-generated method stub
 		
-	}
-
-
-	@Override
-	public boolean keyPressed(int key, char c)
-	{
-		return isBlockingInput();
 	}
 }

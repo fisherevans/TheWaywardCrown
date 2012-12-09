@@ -2,7 +2,6 @@ package com.fisherevans.twc.states.adventure.actions;
 
 import org.newdawn.slick.Graphics;
 
-import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 
 public class WaitAction extends AdventureAction
@@ -10,9 +9,9 @@ public class WaitAction extends AdventureAction
 	private long _endTime;
 	private int _time;
 
-	public WaitAction(ActionManager as, int time, boolean blocksInput)
+	public WaitAction(ActionManager as, int time)
 	{
-		super(as, blocksInput);
+		super(as);
 		_time = time;
 	}
 
@@ -39,16 +38,9 @@ public class WaitAction extends AdventureAction
 	}
 
 	@Override
-	public void render(Graphics gfx)
+	public void keyPressed(int key, char c)
 	{
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public boolean keyPressed(int key, char c)
-	{
-		return isBlockingInput();
 	}
 	
 }

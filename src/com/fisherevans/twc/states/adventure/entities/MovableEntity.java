@@ -4,17 +4,16 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
-import com.fisherevans.twc.states.adventure.EntityManager;
-import com.fisherevans.twc.states.adventure.entities.controlers.EntityControler;
+import com.fisherevans.twc.states.adventure.entities.controllers.EntityController;
 
 /**
  * @author Fisher
  *
  */
-public abstract class MovableEntity extends AdventureEntity
+public class MovableEntity extends AdventureEntity
 {
 	/** Time in milliseconds to move from tile to tile */
-	public static final int MOVE_TIME = 200;
+	public static final int MOVE_TIME = 220;
 	/** Time in milliseconds between each frame of the anumation. */
 	public static final int ANIM_DUR = (int) (MOVE_TIME/1.66);
 	
@@ -22,7 +21,8 @@ public abstract class MovableEntity extends AdventureEntity
 	private boolean _moving = false; // true if in a moving phase
 	private long _startTime; // Start time of movement
 	private Animation _anUp , _anDown, _anLeft, _anRight;
-	private EntityControler _controler;
+	private EntityController _controler;
+	private boolean _halt = false;
 
 	private float _speedScale = 1; // Speed scale
 
@@ -32,13 +32,15 @@ public abstract class MovableEntity extends AdventureEntity
 	 * @param image ini imahe
 	 * @param as adventure state holding the entty
 	 */
-	public MovableEntity(float x, float y, Image image, EntityControler controler, EntityManager em)
+	public MovableEntity(EntityManager em)
 	{
-		super(x, y, image, em);
-		
-		_controler = controler;
-		_controler.setEnt(this);
+		super(em);
 
+		setDrawOffset(new int[] { 0, -64 });
+	}
+	
+	public void setAnimation(Image image)
+	{
 		_anUp = new Animation(true);
 		_anDown = new Animation(true);
 		_anLeft = new Animation(true);
@@ -56,13 +58,18 @@ public abstract class MovableEntity extends AdventureEntity
 		for(int animX = 576;animX < 768;animX += 64)
 			{ _anRight.addFrame(image.getSubImage(animX, 0, 64, image.getHeight()), ANIM_DUR); }
 			_anRight.addFrame(image.getSubImage(640, 0, 64, image.getHeight()), ANIM_DUR);
-
-		setDrawOffset(new int[] { 0, -64 });
 	}
 
 	@Override
 	public void update(int delta)
 	{
+		// If the player is moving, step the animation and interpolation.
+		if(isMoving())
+		{
+			moveStep();
+			updateAnimation(delta);
+		}
+		
 		getControler().update(delta);
 	}
 	
@@ -71,7 +78,7 @@ public abstract class MovableEntity extends AdventureEntity
 	 */
 	public void updateAnimation(int delta)
 	{
-		delta *= getSpeedScale();
+		delta *= Math.sqrt(getSpeedScale());
 		if(isMoving())
 		{
 			switch(getAngle())
@@ -145,25 +152,31 @@ public abstract class MovableEntity extends AdventureEntity
 	 * @param xb x pos to move to
 	 * @param yb y pos to move to.
 	 */
-	public void setMoveAction(float xb, float yb)
+	public void setMoveAction(int angle, int distance)
 	{
-		int[] moveVec = { (int)(xb-getX()), (int)(yb-getY()) };
-
-		if(moveVec[0] == 1 && moveVec[1] == 0)
-			setAngle(0);
-		else if(moveVec[0] == -1 && moveVec[1] == 0)
-			setAngle(180);
-		else if(moveVec[0] == 0 && moveVec[1] == 1)
-			setAngle(90);
-		else if(moveVec[0] == 0 && moveVec[1] == -1)
-			setAngle(270);
+		if(_halt)
+		{
+			return;
+		}
 		
-		if(isGoodMove(xb, yb))
+		setAngle(angle);
+
+		int[] moveVec = { (int)getX(), (int)getY() };
+		
+		switch(angle)
+		{
+			case 0: moveVec[0] += distance; break;
+			case 90: moveVec[1] += distance; break;
+			case 180: moveVec[0] -= distance; break;
+			case 270: moveVec[1] -= distance; break;
+		}
+		
+		if(isGoodMove(moveVec[0], moveVec[1]))
 		{
 			_xa = getX();
 			_ya = getY();
-			_xb = xb;
-			_yb = yb;
+			_xb = moveVec[0];
+			_yb = moveVec[1];
 			_moving = true;
 			_startTime = System.currentTimeMillis();
 		}
@@ -197,7 +210,24 @@ public abstract class MovableEntity extends AdventureEntity
 	
 	public void interact()
 	{
-		
+		int[] intVec = { 0, 0 };
+		switch(getAngle())
+		{
+			case 0: intVec[0] = 1; break;
+			case 90: intVec[1] = 1; break;
+			case 180: intVec[0] = -1; break;
+			case 270: intVec[1] = -1; break;
+			default: return;
+		}
+
+		AdventureEntity ent = getEM().getEntityIn(getOccupiedX() + intVec[0], getOccupiedY() + intVec[1], this);
+
+		if(ent == null)
+		{
+			return;
+		}
+
+		getEM().getAS().getAM().addActionQueue(ent.getActions());
 	}
 	
 
@@ -221,13 +251,29 @@ public abstract class MovableEntity extends AdventureEntity
 		return _speedScale;
 	}
 
-	public EntityControler getControler()
+	public EntityController getControler()
 	{
 		return _controler;
 	}
 
-	public void setControler(EntityControler controler)
+	public void setControler(EntityController controler)
 	{
 		_controler = controler;
+		_controler.setEnt(this);
+	}
+	
+	public void halt()
+	{
+		_halt = true;
+	}
+	
+	public void unhalt()
+	{
+		_halt = false;
+	}
+	
+	public boolean isHalted()
+	{
+		return _halt;
 	}
 }

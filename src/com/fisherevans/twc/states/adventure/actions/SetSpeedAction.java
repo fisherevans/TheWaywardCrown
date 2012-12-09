@@ -2,26 +2,26 @@ package com.fisherevans.twc.states.adventure.actions;
 
 import org.newdawn.slick.Graphics;
 
-import com.fisherevans.twc.states.adventure.ActionManager;
 import com.fisherevans.twc.states.adventure.entities.MovableEntity;
 
 
 public class SetSpeedAction extends AdventureAction
 {
-	private MovableEntity _ent;
+	private String _entName;
 	private float _speedScale;
 
-	public SetSpeedAction(ActionManager am, boolean blockInput, MovableEntity ent, float speedScale)
+	public SetSpeedAction(ActionManager am, String entName, float speedScale)
 	{
-		super(am, blockInput);
-		_ent = ent;
+		super(am);
+		_entName = entName;
 		_speedScale = speedScale;
 	}
 
 	@Override
 	public void initAction()
 	{
-		_ent.setSpeedScale(_speedScale);
+		MovableEntity ent = ((MovableEntity)getAM().getAS().getEM().getEntity(_entName));
+		ent.setSpeedScale(_speedScale);
 		setComplete(true);
 	}
 
@@ -40,17 +40,9 @@ public class SetSpeedAction extends AdventureAction
 	}
 
 	@Override
-	public void render(Graphics gfx)
+	public void keyPressed(int key, char c)
 	{
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public boolean keyPressed(int key, char c)
-	{
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

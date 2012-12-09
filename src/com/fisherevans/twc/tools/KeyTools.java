@@ -35,6 +35,16 @@ public class KeyTools
 		return vec;
 	}
 	
+	public static int getMoveAngle(Input in)
+	{
+		int angle = -1;
+		if(KeyTools.isLEFTDown(in))       { angle = 180; }
+		else if(KeyTools.isRIGHTDown(in)) { angle = 0; }
+		else if(KeyTools.isUPDown(in))    { angle = 270; }
+		else if(KeyTools.isDOWNDown(in))  { angle = 90; }
+		return angle;
+	}
+	
 	/**
 	 * @param in slick2d player input object
 	 * @return true if an up key is pressed down
