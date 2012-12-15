@@ -49,6 +49,7 @@ public class ActionQueue
 			{
 				action.end();
 				_actions.remove(0);
+				update(delta);
 			}
 		}
 	}

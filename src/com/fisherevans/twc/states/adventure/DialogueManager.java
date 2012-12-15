@@ -22,8 +22,8 @@ public class DialogueManager
 	private final float FAST_SCALE = 3;
 	private final int MAX_PRINT_WIDTH = 1000;
 	private final int TEXT_SIDE = 210;
-	private final int TEXT_1_TOP = 620;
-	private final int TEXT_2_TOP = 660;
+	private final int TEXT_1_TOP = 619;
+	private final int TEXT_2_TOP = 663;
 	private final int IMG_SIDE = 40;
 	private final int IMG_TOP = 596;
 	private final int BG_TOP = 596;
@@ -35,7 +35,7 @@ public class DialogueManager
 		_visible = false;
 		_bg = ResourceTools.getImage("res/gui/dialogue.png");
 		_dialogues = new ArrayList<>();
-		_font = ResourceTools.font24();
+		_font = ResourceTools.fontFP32();
 	}
 	
 	/** Updates the dialogue
@@ -80,14 +80,13 @@ public class DialogueManager
 	 * @param c key character
 	 * @return true if you want to interrupt input
 	 */
-	public boolean keyPressed(int key, char c)
+	public void keyPressed(int key, char c)
 	{
-		if(KeyTools.isSELECT(key) && !_dialogues.isEmpty())
+		if(!_dialogues.isEmpty())
 		{
-			_dialogues.remove(0);
+			if(_dialogues.get(0).keyPressed(key, c));
+			else if(KeyTools.isSELECT(key)) { _dialogues.remove(0); }
 		}
-		
-		return false;
 	}
 	
 	public void addDialogue(String message, boolean leftAlign, Image icon)
@@ -165,6 +164,11 @@ public class DialogueManager
 		private void setLeftAlign(boolean leftAlign)
 		{
 			_leftAlign = leftAlign;
+		}
+		
+		public boolean keyPressed(int key, char c)
+		{
+			return false;
 		}
 	}
 }

@@ -60,7 +60,7 @@ public class EntityManager
 	{
 		if(conf.isBadConfig())
 		{
-			System.out.println(conf.getName() + " is a bad config item!");
+			System.out.println(conf.getName() + " is a bad entity config item!");
 		}
 		else
 		{
@@ -77,6 +77,7 @@ public class EntityManager
 					tempEnt.setSpeedScale(conf.getSpeed());
 					tempEnt.setDispName(conf.getDispName());
 					tempEnt.setActions(conf.getActions());
+					tempEnt.setName(conf.getName());
 					switch(conf.getController())
 					{
 						case "player":
@@ -89,9 +90,22 @@ public class EntityManager
 							tempEnt.setControler(new NullController(tempEnt));
 							break;
 					}
-					_entsHash.put(conf.getName(), tempEnt);
+					_entsHash.put(conf.getName(), (AdventureEntity)tempEnt);
 					_ents.add(tempEnt);
-				}
+				} break;
+				case ANIMATED:
+				{
+					AnimatedEntity tempEnt = new AnimatedEntity(this);
+					tempEnt.setAnimation(ResourceTools.getImage(conf.getSprite()), conf.getAnimDur());
+					tempEnt.setIcon(ResourceTools.getImage(conf.getIcon()));
+					tempEnt.setAngle(conf.getAngle());
+					tempEnt.setX(conf.getX());
+					tempEnt.setY(conf.getY());
+					tempEnt.setActions(conf.getActions());
+					tempEnt.setDispName(conf.getDispName());
+					_entsHash.put(conf.getName(), (AdventureEntity)tempEnt);
+					_ents.add(tempEnt);
+				} break;
 			}
 			
 		}

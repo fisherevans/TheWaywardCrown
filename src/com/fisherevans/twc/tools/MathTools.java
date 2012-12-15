@@ -14,4 +14,9 @@ public class MathTools
 		x = x > max ? max : x;
 		return x;
 	}
+	
+	public static boolean isBetween(int x, int min, int max)
+	{
+		return (x >= min && x <= max);
+	}
 }

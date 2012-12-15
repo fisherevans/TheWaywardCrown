@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import org.newdawn.slick.Color;
+
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.actions.*;
 import com.fisherevans.twc.states.adventure.config.EntityConfig.ENTTYPE;
+import com.fisherevans.twc.states.adventure.lights.TorchLight;
+import com.fisherevans.twc.states.adventure.triggers.AdventureTrigger;
 
 public class AdventureConfigLoader
 {
-	private enum LOADPART { MAP, ENTITIES, ACTIONS };
+	private enum LOADPART { MAP, LIGHTS, ENTITIES, ACTIONS, TRIGGERS };
 	
 	private AdventureState _as;
 	
@@ -22,8 +26,14 @@ public class AdventureConfigLoader
 	
 	private MapConfig _mapConfig;
 	
+	private LightConfig _lightConfig;
+	private int _lightIndex;
+	
 	private ArrayList<EntityConfig> _entityConfigs;
 	private int _entityIndex;
+	
+	private ArrayList<AdventureTrigger> _triggerConfigs;
+	private int _triggerIndex;
 	
 	private HashMap _queueHash;
 	private String _queueKey;
@@ -33,8 +43,11 @@ public class AdventureConfigLoader
 		_as = as;
 		
 		_mapConfig = new MapConfig();
+		_lightConfig = new LightConfig();
 		_entityConfigs = new ArrayList<>();
 		_entityIndex = -1;
+		_triggerConfigs = new ArrayList<>();
+		_triggerIndex = -1;
 		
 		_queueHash = new HashMap();
 		_queueKey = "default";
@@ -61,11 +74,17 @@ public class AdventureConfigLoader
 							case MAP:
 								processMapLine(line);
 								break;
+							case LIGHTS:
+								processLightsLine(line);
+								break;
 							case ENTITIES:
 								processEntitiesLine(line);
 								break;
 							case ACTIONS:
 								processActionsLine(line);
+								break;
+							case TRIGGERS:
+								processTriggersLine(line);
 								break;
 						}
 					}
@@ -91,11 +110,17 @@ public class AdventureConfigLoader
 				case "MAP":
 					_curLoadPart = LOADPART.MAP;
 					break;
+				case "LIGHTS":
+					_curLoadPart = LOADPART.LIGHTS;
+					break;
 				case "ENTITIES":
 					_curLoadPart = LOADPART.ENTITIES;
 					break;
 				case "ACTIONS":
 					_curLoadPart = LOADPART.ACTIONS;
+					break;
+				case "TRIGGERS":
+					_curLoadPart = LOADPART.TRIGGERS;
 					break;
 			}
 		}
@@ -117,6 +142,41 @@ public class AdventureConfigLoader
 				break;
 			case "PLAYER":
 				_mapConfig.setPlayer(line[1]);
+				break;
+		}
+	}
+	
+	private void processLightsLine(String[] line)
+	{
+		switch(line[0])
+		{
+			case "DAWN":
+				_lightConfig.setTimeLight(0, new Color(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+				break;
+			case "DAY":
+				_lightConfig.setTimeLight(1, new Color(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+				break;
+			case "DUSK":
+				_lightConfig.setTimeLight(2, new Color(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+				break;
+			case "NIGHT":
+				_lightConfig.setTimeLight(3, new Color(Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+				break;
+			case "NEW":
+				switch(line[1])
+				{
+					case "TORCH":
+						_lightIndex = _lightConfig.addLight(new TorchLight(line[2]));
+						break;
+				} break;
+			case "X":
+				_lightConfig.getLight(_lightIndex).setX(Integer.parseInt(line[1]));
+				break;
+			case "Y":
+				_lightConfig.getLight(_lightIndex).setY(Integer.parseInt(line[1]));
+				break;
+			case "SIZE":
+				_lightConfig.getLight(_lightIndex).setSize(Integer.parseInt(line[1]));
 				break;
 		}
 	}
@@ -153,6 +213,9 @@ public class AdventureConfigLoader
 			case "SPEED":
 				_entityConfigs.get(_entityIndex).setSpeed(Float.parseFloat(line[1]));
 				break;
+			case "ANIMDUR":
+				_entityConfigs.get(_entityIndex).setAnimDur(Integer.parseInt(line[1]));
+				break;
 			case "FACE":
 				switch(line[1])
 				{
@@ -178,6 +241,9 @@ public class AdventureConfigLoader
 					case "movable":
 						_entityConfigs.get(_entityIndex).setType(ENTTYPE.MOVABLE);
 						break;
+					case "animated":
+						_entityConfigs.get(_entityIndex).setType(ENTTYPE.ANIMATED);
+						break;
 				}
 				break;
 		}
@@ -193,28 +259,88 @@ public class AdventureConfigLoader
 				_queueHash.put(line[1], queue);
 				break;
 			case "HALT":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new HaltAction(_as.getAM(), line[1], true));
+				addAction(new HaltAction(_as.getAM(), line[1], true));
 				break;
 			case "UNHALT":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new HaltAction(_as.getAM(), line[1], false));
+				addAction(new HaltAction(_as.getAM(), line[1], false));
 				break;
 			case "WAIT":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new WaitAction(_as.getAM(), Integer.parseInt(line[1])));
+				addAction(new WaitAction(_as.getAM(), Integer.parseInt(line[1])));
 				break;
 			case "SETCAMERA":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new SetCameraAction(_as.getAM(), line[1]));
+				addAction(new SetCameraAction(_as.getAM(), line[1]));
 				break;
 			case "SETSPEED":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new SetSpeedAction(_as.getAM(), line[1], Float.parseFloat(line[2])));
+				addAction(new SetSpeedAction(_as.getAM(), line[1], Float.parseFloat(line[2])));
 				break;
 			case "MOVE":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new SetCameraAction(_as.getAM(), line[1]));
+				addAction(new SetCameraAction(_as.getAM(), line[1]));
 				break;
 			case "TELEPORT":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new TeleportAction(_as.getAM(), line[1], Integer.parseInt(line[2]), Integer.parseInt(line[3])));
+				addAction(new TeleportAction(_as.getAM(), line[1], Integer.parseInt(line[2]), Integer.parseInt(line[3])));
 				break;
 			case "WAITTOSTOP":
-				((ActionQueue)_queueHash.get(_queueKey)).addAction(new WaitToStopAction(_as.getAM(), line[1]));
+				addAction(new WaitToStopAction(_as.getAM(), line[1]));
+				break;
+			case "SETADVENTURE":
+				addAction(new SetAdventureStateAction(_as.getAM(), line[1]));
+				addAction(new FadeInAction(_as.getAM()));
+				break;
+			case "DIALOGUE":
+				addAction(new DialogueAction(_as.getAM(), getStringFrom(line, 3), line[2], line[1].equals("left")));
+				break;
+			case "FADEOUT":
+				addAction(new FadeOutAction(_as.getAM()));
+				break;
+			case "FADEIN":
+				addAction(new FadeInAction(_as.getAM()));
+				break;
+			case "FACE":
+				switch(line[2])
+				{
+					case "N": addAction(new FaceAction(_as.getAM(), line[1], 270)); break;
+					case "S": addAction(new FaceAction(_as.getAM(), line[1], 90)); break;
+					case "E": addAction(new FaceAction(_as.getAM(), line[1], 0)); break;
+					case "W": addAction(new FaceAction(_as.getAM(), line[1], 180)); break;
+					default: addAction(new FaceAction(_as.getAM(), line[1], line[2])); break; 
+				}
+				break;
+		};
+	}
+	
+	private void addAction(AdventureAction action)
+	{
+		((ActionQueue)_queueHash.get(_queueKey)).addAction(action);
+	}
+	
+	private void processTriggersLine(String[] line)
+	{
+		switch(line[0])
+		{
+			case "NEW":
+				_triggerConfigs.add(new AdventureTrigger(_as.getTM()));
+				_triggerIndex++;
+				break;
+			case "X1":
+				_triggerConfigs.get(_triggerIndex).setX1(Integer.parseInt(line[1]));
+				break;
+			case "X2":
+				_triggerConfigs.get(_triggerIndex).setX2(Integer.parseInt(line[1]));
+				break;
+			case "Y1":
+				_triggerConfigs.get(_triggerIndex).setY1(Integer.parseInt(line[1]));
+				break;
+			case "Y2":
+				_triggerConfigs.get(_triggerIndex).setY2(Integer.parseInt(line[1]));
+				break;
+			case "ACTIONS":
+				_triggerConfigs.get(_triggerIndex).setActions(line[1]);
+				break;
+			case "TIMES":
+				_triggerConfigs.get(_triggerIndex).setTimes(Integer.parseInt(line[1]));
+				break;
+			case "EFFECTS":
+				_triggerConfigs.get(_triggerIndex).setEffects(getStringFrom(line, 1).split(" "));
 				break;
 		};
 	}
@@ -241,6 +367,11 @@ public class AdventureConfigLoader
 		return _entityConfigs;
 	}
 
+	public ArrayList<AdventureTrigger> getTriggers()
+	{
+		return _triggerConfigs;
+	}
+
 	public MapConfig getMapConfig()
 	{
 		return _mapConfig;
@@ -249,5 +380,10 @@ public class AdventureConfigLoader
 	public HashMap getQueueHash()
 	{
 		return _queueHash;
+	}
+	
+	public LightConfig getLightConfig()
+	{
+		return _lightConfig;
 	}
 }

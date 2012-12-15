@@ -1,0 +1,68 @@
+:MAP
+	TMX res/maps/tmx/forest_layout.tmx
+	TILES res/maps/tilesets
+	CAMERA player
+	PLAYER player
+
+:LIGHTS
+	DAWN  153 178 180
+	DAY   251 255 237
+	DUSK  207 159 116
+	NIGHT 50  55  105
+	NEW TORCH torch1_light
+		X 121
+		Y 128
+		SIZE 512
+	NEW TORCH chris_light
+		X 130
+		Y 130
+		SIZE 1024
+
+:ENTITIES
+	NEW player                                     # Main Player Entity
+		TYPE      movable
+		SPRITE    res/sprites/test/char.png
+		ICON      res/sprites/test/default64x64.png
+		X         115
+		Y         131
+		FACE      N
+		CONTROLER player
+		SPEED     1
+		NAME      Main Player
+	NEW torch1                                     # Main Player Entity
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         121
+		Y         128
+		FACE      N
+		NAME      Torch 1
+		ACTIONS torchAction
+	NEW chris
+		Type      movable
+		SPRITE    res/sprites/test/char3.png
+		ICON      res/sprites/test/default64x64.png
+		X         130
+		Y         130
+		FACE      S
+		CONTROLER null
+		SPEED     1
+		NAME      NPC Chris
+		ACTIONS   chris_dialogue
+:ACTIONS
+	NEW torchAction
+		HALT player
+		DIALOGUE left torch1 It's a torch.
+		DIALOGUE left torch1 You thought it would talk? You twit...
+		DIALOGUE left torch1 The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
+		UNHALT player
+	NEW chris_dialogue
+		HALT player
+		HALT chris
+		FACE player chris
+		FACE chris player
+		DIALOGUE left chris Hey!
+		DIALOGUE right chris Have you seen my sister? She tells you what this place is, and what you can do here. I'll show you were she is.
+		UNHALT player
+		UNHALT chris
+:TRIGGERS

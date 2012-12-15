@@ -124,9 +124,9 @@ public class MovableEntity extends AdventureEntity
 			return false;
 		}
 		
-		//System.out.println(getAS().getMap().getTileId(xbTile, ybTile, getAS().getMap().getLayerIndex("col")s));
+		//System.out.println(getEM().getAS().getMM().getMap().getTileId(xbTile, ybTile, getEM().getAS().getMM().getMap().getLayerIndex("col")));
 		
-		if(getEM().getAS().getMM().getMap().getTileId(xbTile, ybTile, getEM().getAS().getMM().getMap().getLayerIndex("col")) == 1026) { return false; }
+		if(getEM().getAS().getMM().getMap().getTileId(xbTile, ybTile, getEM().getAS().getMM().getMap().getLayerIndex("col")) == 2) { return false; }
 		if(getEM().isEntityIn((int)xb, (int)yb, this)) { return false; }
 		
 		return true;
@@ -145,6 +145,7 @@ public class MovableEntity extends AdventureEntity
 			setX(_xb);
 			setY(_yb);
 			_moving = false;
+			getEM().getAS().getTM().checkTrigger(this);
 		}
 	}
 	

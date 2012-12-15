@@ -1,6 +1,7 @@
 package com.fisherevans.twc;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -16,13 +17,12 @@ import org.newdawn.slick.SlickException;
 
 public class Start
 {
+	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
 	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
-	public final boolean EXPORT = false; // True is exporting to runable jar
-	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
 	
 	private static CanvasGameContainer _canvas; // The actual slick2d game
 	private static ScalableGame _scale; // Holds the canvas in a scalable form
-	private JFrame _frame; // The frame holding the game
+	private static JFrame _frame; // The frame holding the game
 	private FrameActions _fa; // Window listener to gracefully close the game on "X"
 	private boolean _fullscreen = false; // Keeps track of windowed ful screen mode.
 	private int _xInset, _yInset; // Window instes used to resize window correctly.
@@ -30,16 +30,15 @@ public class Start
 	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } }; // Correct ratio resolutions - per pixel
 	private int _curRes = 1; // ID of the current reccomended res being used.
 	
+	public static boolean running = true;
+	
 	/** Creates the game itself
 	 * @throws SlickException
 	 */
 	public Start() throws SlickException
 	{
-		if(EXPORT)
-		{
-			System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
-			System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
-		}
+		System.setProperty("org.lwjgl.librarypath", new File(new File(System.getProperty("user.dir"), "res/lib/lwjgl/native"), LWJGLUtil.getPlatformName()).getAbsolutePath());
+		System.setProperty("net.java.games.input.librarypath", System.getProperty("org.lwjgl.librarypath"));
 		
 		_fa = new FrameActions();
 		
@@ -114,7 +113,7 @@ public class Start
 		_canvas = new CanvasGameContainer(_scale);
 		_canvas.getContainer().setAlwaysRender(true);
 		_canvas.getContainer().setShowFPS(DEBUG);
-		_canvas.getContainer().setTargetFrameRate(120);
+		//_canvas.getContainer().setTargetFrameRate(120);
 		_canvas.getContainer().setVerbose(DEBUG);
 		_canvas.getContainer().setMinimumLogicUpdateInterval(4);
 	}
@@ -144,6 +143,16 @@ public class Start
 		initFrame();
 		_frame.add(_canvas);
 	}
+	
+	public static CanvasGameContainer getCanvas()
+	{
+		return _canvas;
+	}
+
+    public static void pullThePlug() {
+            WindowEvent wev = new WindowEvent(_frame, WindowEvent.WINDOW_CLOSING);
+            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+    }
 	
 	public static void main(String[] args)
 	{

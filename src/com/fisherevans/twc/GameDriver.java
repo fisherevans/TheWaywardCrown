@@ -1,5 +1,6 @@
 package com.fisherevans.twc;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -52,6 +53,7 @@ public class GameDriver extends BasicGame
 		_gkl = new GlobalKeyListener(this);
 		_input = gc.getInput();
 		_sm = new StateManager(this);
+		GL11.glEnable(GL11.GL_BLEND);
 	}
 
 	@Override

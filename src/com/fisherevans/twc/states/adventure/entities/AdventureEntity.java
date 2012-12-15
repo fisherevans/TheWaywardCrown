@@ -20,7 +20,7 @@ public abstract class AdventureEntity
 	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
 	private int[] _drawOffset = { 0, 0 };
 	private String _actions;
-	private String _dispName;
+	private String _dispName, _name;
 	
 	/** Create the entity.
 	 * @param x The initital x pos
@@ -175,5 +175,15 @@ public abstract class AdventureEntity
 	public void setDispName(String dispName)
 	{
 		_dispName = dispName;
+	}
+
+	public String getName()
+	{
+		return _name;
+	}
+
+	public void setName(String name)
+	{
+		_name = name;
 	}
 }

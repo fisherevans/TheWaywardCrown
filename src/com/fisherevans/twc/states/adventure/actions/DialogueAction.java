@@ -8,26 +8,29 @@ import org.newdawn.slick.Image;
 
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.DialogueManager;
+import com.fisherevans.twc.states.adventure.entities.AdventureEntity;
 import com.fisherevans.twc.tools.ResourceTools;
 
 public class DialogueAction extends AdventureAction
 {
 	private String _baseMessage;
-	private Image _icon;
+	private String _entName;
 	private boolean _leftAlign;
 
-	public DialogueAction(ActionManager am, String baseMessage, Image icon, boolean leftAlign)
+	public DialogueAction(ActionManager am, String baseMessage, String entName, boolean leftAlign)
 	{
 		super(am);
 		_baseMessage = baseMessage;
 		_leftAlign = leftAlign;
-		_icon = icon;
+		_entName = entName;
 	}
 
 	@Override
 	public void initAction()
 	{
-		//getAM().getAS().getDM().addDialogue(_baseMessage, _leftAlign, _icon);
+		AdventureEntity ent = getAM().getAS().getEM().getEntity(_entName);
+		Image icon = ent.getIcon();
+		getAM().getAS().getDM().addDialogue(_baseMessage, _leftAlign, icon);
 	}
 
 	@Override
@@ -40,10 +43,10 @@ public class DialogueAction extends AdventureAction
 	@Override
 	public void updateAction(int delta)
 	{
-		/*if(!getAM().getAS().getDM().isShowing())
+		if(!getAM().getAS().getDM().isShowing())
 		{
 			setComplete(true);
-		}*/
+		}
 	}
 
 	@Override

@@ -1,0 +1,183 @@
+:MAP
+	TMX res/maps/tmx/test2.tmx
+	TILES res/maps/tilesets
+	CAMERA player
+	PLAYER player
+
+:LIGHTS
+	DAWN  240 210 240
+	DAY   240 210 240
+	DUSK  240 210 240
+	NIGHT 240 210 240
+
+:ENTITIES
+	NEW player                                     # Main Player Entity
+		TYPE      movable
+		SPRITE    res/sprites/test/char.png
+		ICON      res/sprites/test/default64x64.png
+		X         23
+		Y         16
+		FACE      N
+		CONTROLER player
+		SPEED     1
+		NAME      Main Player
+	NEW Bookshelf                                   # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         21
+		Y         8
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Bookshelf
+		ACTIONS   bookshelf
+	NEW Bookshelf2                                 # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         22
+		Y         8
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Bookshelf
+		ACTIONS   bookshelf
+	NEW bed                                # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         18
+		Y         9
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Bed
+		ACTIONS   bedsleep
+	NEW Trapdoor                                 # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         23
+		Y         8
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Trapdoor
+		ACTIONS   basemententer
+	NEW Ladder                                 # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         49
+		Y         4
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Ladder
+		ACTIONS   basementexit
+	NEW Ladder2                                 # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         51
+		Y         40
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Ladder
+		ACTIONS   basementexit
+	NEW Booze                                 # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         51
+		Y         5
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Booze
+		ACTIONS   drunkeness
+	NEW Secretdoor                               # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         53
+		Y         4
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Hiddenswitch
+		ACTIONS   secretentrance
+	NEW Secretdoor2                               # Main Player Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         55
+		Y         40
+		FACE      N
+		CONTROLER null
+		SPEED     1
+		NAME      Hiddenswitch
+		ACTIONS   secretexit
+:ACTIONS
+	NEW loadtest
+		HALT player
+		WAITTOSTOP player
+		FADEOUT
+		SETADVENTURE res/configs/test.ldr
+	NEW bookshelf
+		HALT player
+		DIALOGUE left Bookshelf You open a book titled: The Toils of Naming Things. You flip to a random page, "Naming cities and towns is a very difficult task; never attempt this task for it is hazardous to one's health".
+		UNHALT player
+	NEW basemententer
+		HALT player
+		WAITTOSTOP player
+		FADEOUT
+		TELEPORT player 49 5
+		FADEIN
+		UNHALT player
+	NEW basementexit
+		HALT player
+		WAITTOSTOP player
+		FADEOUT
+		TELEPORT player 24 8
+		FADEIN
+		UNHALT player
+	NEW bedsleep
+		HALT player
+		WAITTOSTOP player
+		DIALOGUE left bed The bed is inviting, and looks cozy. Maybe just a quick nap...
+		FADEOUT
+		WAIT 3000
+		FADEIN
+		DIALOGUE left bed You feel well rested.
+		UNHALT player
+	NEW drunkeness
+		HALT player
+		DIALOGUE left Booze The alcohol smells strong. You take a sip.
+		SETCONTROLLER player random
+		UNHALT player
+		WAIT 4000
+		SETCONTROLLER player player
+	NEW secretentrance
+		HALT player
+		WAITTOSTOP player
+		TELEPORT player 55 41
+		UNHALT player
+	NEW secretexit
+		HALT player
+		WAITTOSTOP player
+		TELEPORT player 53 5
+		UNHALT player
+		
+		
+:TRIGGERS
+	NEW teleport
+		X1 23
+		Y1 17
+		X2 23
+		Y2 17
+		TIMES 1
+		EFFECTS player
+		ACTIONS loadtest

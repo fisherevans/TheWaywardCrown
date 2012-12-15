@@ -13,7 +13,10 @@ import org.newdawn.slick.TrueTypeFont;
 
 public class ResourceTools
 {
-	private static AngelCodeFont _font16 = null, _font24 = null, _font32 = null, _font40 = null, _font48 = null; // font sizes available for use
+	private static AngelCodeFont _fontMC16 = null, _fontMC32 = null; // font sizes available for use
+	private static AngelCodeFont _fontPM16 = null, _fontPM32 = null, _fontPM64 = null;
+	private static AngelCodeFont _fontPMB16 = null, _fontPMB32 = null, _fontPMB64 = null;
+	private static AngelCodeFont _fontFP32 = null, _fontFP64 = null;
 	
 	/** creates a correctly scaled image
 	 * @param res location of image to load
@@ -37,102 +40,122 @@ public class ResourceTools
 	}
 	
 	/** @return default size 16 font. */
-	public static AngelCodeFont font16()
+	public static AngelCodeFont fontMC16()
 	{
-		if(_font16 == null)
+		if(_fontMC16 == null)
 		{
 			Image fontImage;
 			try
 			{
-				fontImage = new Image("res/fonts/size16.png", false, Image.FILTER_NEAREST);
-				_font16 = new AngelCodeFont("res/fonts/size16.fnt", fontImage);
+				fontImage = new Image("res/fonts/mc16.png", false, Image.FILTER_NEAREST);
+				_fontMC16 = new AngelCodeFont("res/fonts/mc16.fnt", fontImage);
 			}
 			catch (SlickException e)
 			{
-				System.out.println("Failed to load the size16 font!");
+				System.out.println("Failed to load the mc16 font!");
 				e.printStackTrace();
 			}
 		}
-		return _font16;
-	}
-
-	/** @return default size 24 font. */
-	public static AngelCodeFont font24()
-	{
-		if(_font24 == null)
-		{
-			Image fontImage;
-			try
-			{
-				fontImage = new Image("res/fonts/size24.png", false, Image.FILTER_NEAREST);
-				_font24 = new AngelCodeFont("res/fonts/size24.fnt", fontImage);
-			}
-			catch (SlickException e)
-			{
-				System.out.println("Failed to load the size24 font!");
-				e.printStackTrace();
-			}
-		}
-		return _font24;
+		return _fontMC16;
 	}
 
 	/** @return default size 32 font. */
-	public static AngelCodeFont font32()
+	public static AngelCodeFont fontMC32()
 	{
-		if(_font32 == null)
+		if(_fontMC32 == null)
 		{
 			Image fontImage;
 			try
 			{
-				fontImage = new Image("res/fonts/size32.png", false, Image.FILTER_NEAREST);
-				_font32 = new AngelCodeFont("res/fonts/size32.fnt", fontImage);
+				fontImage = new Image("res/fonts/mc32.png", false, Image.FILTER_NEAREST);
+				_fontMC32 = new AngelCodeFont("res/fonts/mc32.fnt", fontImage);
 			}
 			catch (SlickException e)
 			{
-				System.out.println("Failed to load the size32 font!");
+				System.out.println("Failed to load the mc32 font!");
 				e.printStackTrace();
 			}
 		}
-		return _font32;
+		return _fontMC32;
+	}
+	
+	/** @return default size 16 font. */
+	public static AngelCodeFont fontPM16()
+	{
+		if(_fontPM16 == null)
+		{
+			Image fontImage;
+			try
+			{
+				fontImage = new Image("res/fonts/pm16.png", false, Image.FILTER_NEAREST);
+				_fontPM16 = new AngelCodeFont("res/fonts/pm16.fnt", fontImage);
+			}
+			catch (SlickException e)
+			{
+				System.out.println("Failed to load the pm16 font!");
+				e.printStackTrace();
+			}
+		}
+		return _fontPM16;
 	}
 
-	/** @return default size 40 font. */
-	public static AngelCodeFont font40()
+	/** @return default size 32 font. */
+	public static AngelCodeFont fontPM32()
 	{
-		if(_font40 == null)
+		if(_fontPM32 == null)
 		{
 			Image fontImage;
 			try
 			{
-				fontImage = new Image("res/fonts/size40.png", false, Image.FILTER_NEAREST);
-				_font40 = new AngelCodeFont("res/fonts/size40.fnt", fontImage);
+				fontImage = new Image("res/fonts/pm32.png", false, Image.FILTER_NEAREST);
+				_fontPM32 = new AngelCodeFont("res/fonts/pm32.fnt", fontImage);
 			}
 			catch (SlickException e)
 			{
-				System.out.println("Failed to load the size40 font!");
+				System.out.println("Failed to load the pm32 font!");
 				e.printStackTrace();
 			}
 		}
-		return _font40;
+		return _fontPM32;
 	}
 
-	/** @return default size 48 font. */
-	public static AngelCodeFont font48()
+	/** @return default size 32 font. */
+	public static AngelCodeFont fontFP32()
 	{
-		if(_font48 == null)
+		if(_fontFP32 == null)
 		{
 			Image fontImage;
 			try
 			{
-				fontImage = new Image("res/fonts/size48.png", false, Image.FILTER_NEAREST);
-				_font48 = new AngelCodeFont("res/fonts/size48.fnt", fontImage);
+				fontImage = new Image("res/fonts/fp32.png", false, Image.FILTER_NEAREST);
+				_fontFP32 = new AngelCodeFont("res/fonts/fp32.fnt", fontImage);
 			}
 			catch (SlickException e)
 			{
-				System.out.println("Failed to load the size48 font!");
+				System.out.println("Failed to load the fp32 font!");
 				e.printStackTrace();
 			}
 		}
-		return _font48;
+		return _fontFP32;
+	}
+
+	/** @return default size 32 font. */
+	public static AngelCodeFont fontFP64()
+	{
+		if(_fontFP64 == null)
+		{
+			Image fontImage;
+			try
+			{
+				fontImage = new Image("res/fonts/fp64.png", false, Image.FILTER_NEAREST);
+				_fontFP64 = new AngelCodeFont("res/fonts/fp64.fnt", fontImage);
+			}
+			catch (SlickException e)
+			{
+				System.out.println("Failed to load the fp64 font!");
+				e.printStackTrace();
+			}
+		}
+		return _fontFP64;
 	}
 }

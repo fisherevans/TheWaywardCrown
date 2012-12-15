@@ -15,8 +15,7 @@ import com.fisherevans.twc.states.mainmenu.MainMenuState;
 
 public class StartingState extends State
 {
-	private float _scale = 0, // Fades in the imager/title
-				  _ready = 180f; // Flashes the "press enter" text
+	private float _ready = 180f; // Flashes the "press enter" text
 	private Image titleScreen; // Image that is faded in
 	private final String READY_STRING = "[ Press Enter ]"; // Text that flashes when "ready"
 	private final String TITLE = "The Wayward Crown"; // Title of the game
@@ -34,31 +33,20 @@ public class StartingState extends State
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-		if(_scale != 1)
-		{
-			_scale = _scale > 1 ? 1 : _scale + 0.0003f*delta;
-		}
-		else
-		{
-			_ready += 0.1f*delta;
-			_ready = _ready > 360 ? _ready - 360 : _ready;
-		}
+		_ready += 0.1f*delta;
+		_ready = _ready > 360 ? _ready - 360 : _ready;
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
-		gfx.setColor(new Color(_scale, _scale, _scale));
-		gfx.setFont(ResourceTools.font48());
-		gfx.drawString(TITLE, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font48().getWidth(TITLE)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.2f);
-		
-		if(_scale >= 1)
-		{
-			float readyColor = ((float)Math.cos(Math.toRadians(_ready)))*0.25f + 0.25f;
-			gfx.setColor(new Color(readyColor, readyColor, readyColor));
-			gfx.setFont(ResourceTools.font32());
-			gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font32().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
-		}
+		gfx.setColor(new Color(1f, 1f, 1f));
+		gfx.setFont(ResourceTools.fontMC32());
+		gfx.drawString(TITLE, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.fontMC32().getWidth(TITLE)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.2f);
+		float readyColor = ((float)Math.cos(Math.toRadians(_ready)))*0.25f + 0.25f;
+		gfx.setColor(new Color(readyColor, readyColor, readyColor));
+		gfx.setFont(ResourceTools.fontMC32());
+		gfx.drawString(READY_STRING, GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.fontMC32().getWidth(READY_STRING)/2, GameDriver.NATIVE_SCREEN_HEIGHT*0.8f);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ public class ActionManager
 	private AdventureState _as;
 	private ArrayList<ActionQueue> _queues;
 	private HashMap _queueHash;
+	private ActionQueue _curQueue;
 	
 	public ActionManager(AdventureState as)
 	{
@@ -43,6 +44,8 @@ public class ActionManager
 		if(queue == null)
 			return -1;
 		
+		System.out.println("Loading Action Queue: " + queue);
+		
 		ArrayList<AdventureAction> newActions = new ArrayList<>();
 		newActions.addAll(((ActionQueue)_queueHash.get(queue)).getActions());
 		ActionQueue newQueue = new ActionQueue(this, newActions);
@@ -58,9 +61,15 @@ public class ActionManager
 	{
 		if(!_queues.isEmpty())
 		{
-			for(ActionQueue queue:_queues)
+			for(int x = 0;x < _queues.size();)
 			{
-				queue.update(delta);
+				_curQueue = _queues.get(x);
+				_curQueue.update(delta);
+				
+				if(_curQueue.getActions().isEmpty())
+					_queues.remove(x);
+				else
+					x++;
 			}
 		}
 	}
@@ -92,5 +101,10 @@ public class ActionManager
 	public AdventureState getAS()
 	{
 		return _as;
+	}
+	
+	public ActionQueue getCurrentQueue()
+	{
+		return _curQueue;
 	}
 }

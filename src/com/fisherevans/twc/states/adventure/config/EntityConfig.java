@@ -2,10 +2,10 @@ package com.fisherevans.twc.states.adventure.config;
 
 public class EntityConfig
 {
-	public enum ENTTYPE { MOVABLE };
+	public enum ENTTYPE { MOVABLE, ANIMATED };
 	private String _name, _sprite, _icon, _controller, _actions, _dispName;
 	private float _x = 0, _y = 0, _speed = 1;
-	private int _angle = 90;
+	private int _angle = 90, _animDur = 100;
 	private ENTTYPE _type = ENTTYPE.MOVABLE;
 	
 	public EntityConfig(String name)
@@ -16,7 +16,15 @@ public class EntityConfig
 	public boolean isBadConfig()
 	{
 		//System.out.printf("%s, %s, %s, %s, %s, %s, %f, %f, %d, %f\n", _name,_dispName,_sprite,_icon,_controller,_actions,_x,_y,_angle,_speed);
-		return _name == null || _dispName == null || _sprite == null || _icon == null || _controller == null || _x < 0 || _y < 0 || _angle < 0 || _speed < 0;
+		switch(_type)
+		{
+			case MOVABLE:
+				return _name == null || _dispName == null || _sprite == null || _icon == null || _controller == null || _x < 0 || _y < 0 || _angle < 0 || _speed < 0; 
+			case ANIMATED:
+				return _name == null || _sprite == null || _x < 0 || _y < 0 || _angle < 0; 
+			default:
+				return false;
+		}
 	}
 	
 	public String getActions()
@@ -112,5 +120,15 @@ public class EntityConfig
 	public void setDispName(String dispName)
 	{
 		_dispName = dispName;
+	}
+
+	public int getAnimDur()
+	{
+		return _animDur;
+	}
+
+	public void setAnimDur(int animDur)
+	{
+		_animDur = animDur;
 	}
 }

@@ -46,11 +46,11 @@ public class GlobalKeyListener implements KeyListener
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		
+		/*
 		if(Start.DEBUG)
 		{
 			System.out.println("Key: " + key + " - Char: " + c);
-		}
+		}*/
 		
 		if(key == 87)
 		{

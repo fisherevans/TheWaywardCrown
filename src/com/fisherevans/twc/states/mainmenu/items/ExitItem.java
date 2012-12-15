@@ -1,5 +1,8 @@
 package com.fisherevans.twc.states.mainmenu.items;
 
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowListener;
+
 import org.newdawn.slick.Color;
 
 import com.fisherevans.twc.Start;
@@ -11,7 +14,7 @@ public class ExitItem extends MenuItem
 	public ExitItem()
 	{
 		setColor(new Color(0.6f, 0.6f, 0.6f));
-		setHighColor(new Color(1f, 0f, 0f));
+		setHighColor(new Color(180, 60, 60));
 		setText("Exit");
 		setSelectable(true);
 	}
@@ -19,6 +22,6 @@ public class ExitItem extends MenuItem
 	@Override
 	public void action()
 	{
-		
+		Start.pullThePlug();
 	}
 }

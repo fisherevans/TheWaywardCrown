@@ -37,13 +37,9 @@ public class MainMenuState extends State
 	private void initMenuItems()
 	{
 		_menuItems = new ArrayList<MenuItem>();
-
-		_menuItems.add(new SimpleTextItem("Resume", true));
-		_menuItems.add(new SimpleTextItem("Load", true));
-		_menuItems.add(new SimpleTextItem("New", true));
-		_menuItems.add(new SimpleTextItem("-----------", false));
 		_menuItems.add(new AdventureDemoItem());
 		_menuItems.add(new SimpleTextItem("-----------", false));
+		_menuItems.add(new CreditsItem());
 		_menuItems.add(new ExitItem());
 		
 		if(_menuItems.isEmpty())
@@ -89,13 +85,13 @@ public class MainMenuState extends State
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
-		gfx.setFont(ResourceTools.font40());
+		gfx.setFont(ResourceTools.fontMC32());
 		
 		for(int listId = 0;listId < _menuItems.size();listId++)
 		{
 			Color color = _menuPos == listId ? _menuItems.get(listId).getHighColor() : _menuItems.get(listId).getColor();
 			String text = _menuPos == listId ? "> " + _menuItems.get(listId).getText() + " <" : _menuItems.get(listId).getText();
-			int x = GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.font40().getWidth(text)/2;
+			int x = GameDriver.NATIVE_SCREEN_WIDTH/2 - ResourceTools.fontMC32().getWidth(text)/2;
 			int y = 56 + 56*listId;
 			gfx.setColor(color);
 			gfx.drawString(text, x, y);

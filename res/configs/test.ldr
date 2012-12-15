@@ -1,0 +1,82 @@
+:MAP
+	TMX res/maps/tmx/test.tmx
+	TILES res/maps/tilesets
+	CAMERA player
+	PLAYER player
+
+:LIGHTS
+	DAWN  153 178 180
+	DAY   251 255 237
+	DUSK  207 159 116
+	NIGHT 48  51  78
+
+:ENTITIES
+	NEW player                                     # Main Player Entity
+		TYPE      movable
+		SPRITE    res/sprites/test/char.png
+		ICON      res/sprites/test/default64x64.png
+		X         125
+		Y         139
+		FACE      S
+		CONTROLER player
+		SPEED     1
+		NAME      Main Player
+	NEW meg                                     # Meg NPC Entity
+		TYPE      movable
+		SPRITE    res/sprites/test/char4.png
+		ICON      res/sprites/test/default64x64.png
+		X         142
+		Y         131
+		FACE      W
+		CONTROLER random
+		SPEED     0.25
+		NAME      NPC Meg
+		ACTIONS   meg_dialogue
+	NEW door                                     # Door Entity
+		TYPE      static
+		SPRITE    res/sprites/characters/invisible.png
+		ICON      res/sprites/test/default64x64.png
+		X         125
+		Y         138
+		FACE      W
+		CONTROLER null
+		SPEED     1
+		NAME      I'M A DOOR
+		ACTIONS   loadtest2
+	NEW chris
+		Type      static
+		SPRITE    res/sprites/test/char3.png
+		ICON      res/sprites/test/default64x64.png
+		X         122
+		Y         144
+		FACE      S
+		CONTROLER null
+		SPEED     400
+		NAME      NPC_Chris
+		ACTIONS   chris_dialogue
+		
+:ACTIONS
+	NEW loadtest2
+		HALT player
+		WAITTOSTOP player
+		FADEOUT
+		SETADVENTURE res/configs/test2.ldr
+	NEW meg_dialogue
+		HALT player
+		HALT meg
+		DIALOGUE left meg Hello there!
+		DIALOGUE right meg This island you're on is a test! It's for the developers of The Wayward Crown to test ideas and practice with the coding. Go ahead and explore the island, and look for different things you can interact with using [ENTER] or [SPACE].
+		UNHALT player
+		UNHALT meg
+	NEW chris_dialogue
+		HALT player
+		HALT chris
+		FACE player chris
+		FACE chris player
+		DIALOGUE left meg Hey!
+		DIALOGUE right meg Have you seen my sister? She tells you what this place is, and what you can do here. I'll show you were she is.
+		SETCAMERA meg
+		WAIT 3000
+		SETCAMERA player
+		UNHALT player
+		UNHALT chris
