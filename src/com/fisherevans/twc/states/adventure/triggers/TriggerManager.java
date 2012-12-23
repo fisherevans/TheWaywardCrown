@@ -36,7 +36,7 @@ public class TriggerManager
 		
 	}
 
-	public AdventureState getAs()
+	public AdventureState getAS()
 	{
 		return _as;
 	}

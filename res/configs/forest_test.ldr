@@ -10,14 +10,33 @@
 	DUSK  207 159 116
 	NIGHT 50  55  105
 	NEW TORCH torch1_light
-		X 121
+		X 126
+		Y 130
+		SIZE 512
+	NEW TORCH torch2_light
+		X 122
+		Y 132
+		SIZE 512
+	NEW TORCH torch3_light
+		X 119
+		Y 127
+		SIZE 512
+	NEW TORCH torch4_light
+		X 111
+		Y 130
+		SIZE 512
+	NEW TORCH torch5_light
+		X 134
 		Y 128
 		SIZE 512
-	NEW TORCH chris_light
-		X 130
-		Y 130
-		SIZE 1024
-
+	NEW TORCH torch6_light
+		X 116
+		Y 134
+		SIZE 512
+	NEW TORCH torch7_light
+		X 115
+		Y 128
+		SIZE 512
 :ENTITIES
 	NEW player                                     # Main Player Entity
 		TYPE      movable
@@ -29,40 +48,101 @@
 		CONTROLER player
 		SPEED     1
 		NAME      Main Player
-	NEW torch1                                     # Main Player Entity
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         121
-		Y         128
-		FACE      N
-		NAME      Torch 1
-		ACTIONS torchAction
 	NEW chris
 		Type      movable
 		SPRITE    res/sprites/test/char3.png
 		ICON      res/sprites/test/default64x64.png
-		X         130
-		Y         130
-		FACE      S
+		X         127
+		Y         131
+		FACE      W
 		CONTROLER null
 		SPEED     1
 		NAME      NPC Chris
 		ACTIONS   chris_dialogue
+	NEW torch1
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         126
+		Y         130
+		FACE      N
+		NAME      Torch 1
+	NEW torch2
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         122
+		Y         132
+		FACE      N
+		NAME      Torch 2
+	NEW torch3
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         119
+		Y         127
+		FACE      N
+		NAME      Torch 3
+	NEW torch4
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         111
+		Y         130
+		FACE      N
+		NAME      Torch 4
+	NEW torch5
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         134
+		Y         128
+		FACE      N
+		NAME      Torch 5
+	NEW torch6
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         116
+		Y         134
+		FACE      N
+		NAME      Torch 6
+	NEW torch7
+		TYPE      animated
+		SPRITE    res/sprites/ents/torch.png
+		ICON      res/sprites/test/default64x64.png
+		X         115
+		Y         128
+		FACE      N
+		NAME      Torch 7
 :ACTIONS
 	NEW torchAction
 		HALT player
-		DIALOGUE left torch1 It's a torch.
-		DIALOGUE left torch1 You thought it would talk? You twit...
-		DIALOGUE left torch1 The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
+		NOTIFICATION It's a torch.
+		NOTIFICATION You thought it would talk? You twit...
 		UNHALT player
 	NEW chris_dialogue
 		HALT player
 		HALT chris
 		FACE player chris
 		FACE chris player
-		DIALOGUE left chris Hey!
-		DIALOGUE right chris Have you seen my sister? She tells you what this place is, and what you can do here. I'll show you were she is.
+		DIALOGUE left chris There are some scary creatures out there. You shouldn't venture out unarmed...
 		UNHALT player
 		UNHALT chris
+	NEW stop_player
+		HALT player
+		HALT chris
+		FACE player chris
+		FACE chris player
+		DIALOGUE left chris Hey, hold up! It's dangerous out there. I won't let you leave without a cat grenade.
+		UNHALT player
+		UNHALT chris
+		WAITTOSTOP player
+		MOVE player W 1
 :TRIGGERS
+	NEW
+		X 127
+		Y 132
+		TIMES 0
+		ACTIONS stop_player
+		EFFECTS player

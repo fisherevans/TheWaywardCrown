@@ -20,6 +20,9 @@ public class MainMenuState extends State
 {
 	private ArrayList<MenuItem> _menuItems;
 	private int _menuPos;
+	
+	private boolean _leaving = false;
+	private State _nextState;
 
 	/** creates the menu statee
 	 * @param sm the manager holding this menu
@@ -28,6 +31,11 @@ public class MainMenuState extends State
 	public MainMenuState(StateManager sm, Input input)
 	{
 		super(sm, input);
+	}
+
+	@Override
+	public void load()
+	{
 		initMenuItems();
 		_menuPos = 0;
 	}
@@ -79,7 +87,10 @@ public class MainMenuState extends State
 	@Override
 	public void update(GameContainer gc, int detla) throws SlickException
 	{
-		
+		if(_leaving && getSM().getFM().isFadedOut())
+		{
+			getSM().setState(_nextState);
+		}
 	}
 
 	@Override
@@ -109,9 +120,15 @@ public class MainMenuState extends State
 		{
 			moveDownMenu();
 		}
-		else if(KeyTools.isSELECT(key) || KeyTools.isRIGHT(key))
+		else if((KeyTools.isSELECT(key) || KeyTools.isRIGHT(key)) && !_leaving)
 		{
-			_menuItems.get(_menuPos).action();
+			State actionState = _menuItems.get(_menuPos).action();
+			if(actionState != null)
+			{
+				_leaving = true;
+				getSM().getFM().fadeOut();
+				_nextState = actionState;
+			}
 		}
 		else if(KeyTools.isBACK(key))
 		{

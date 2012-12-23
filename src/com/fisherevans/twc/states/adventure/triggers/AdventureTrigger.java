@@ -36,7 +36,7 @@ public class AdventureTrigger
 		float py = ent.getY();
 		if(px >= _x1 && px <= _x2 && py >= _y1 && py <= _y2)
 		{
-			_tm.getAs().getAM().addActionQueue(_actions);
+			_tm.getAS().getAM().addActionQueue(_actions);
 			_times++;
 		}
 	}

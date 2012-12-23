@@ -2,6 +2,8 @@ package com.fisherevans.twc.states.mainmenu.items;
 
 import org.newdawn.slick.Color;
 
+import com.fisherevans.twc.states.State;
+
 public class SimpleTextItem extends MenuItem
 {
 	/** Creates a menu item that is just text and has no action .
@@ -17,8 +19,8 @@ public class SimpleTextItem extends MenuItem
 	}
 	
 	@Override
-	public void action()
+	public State action()
 	{
-		
+		return null;
 	}
 }

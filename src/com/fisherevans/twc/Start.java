@@ -2,6 +2,8 @@ package com.fisherevans.twc;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -15,9 +17,9 @@ import org.newdawn.slick.CanvasGameContainer;
 import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 
-public class Start
+public class Start implements ComponentListener
 {
-	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
+	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
 	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
 	
 	private static CanvasGameContainer _canvas; // The actual slick2d game
@@ -29,6 +31,7 @@ public class Start
 	
 	private int[][] _resos = { { 640, 360 }, { 1280, 720 }, { 1920, 1080 }, { 2560, 1440 } }; // Correct ratio resolutions - per pixel
 	private int _curRes = 1; // ID of the current reccomended res being used.
+	public static int width = 1280, height = 720;
 	
 	public static boolean running = true;
 	
@@ -124,6 +127,7 @@ public class Start
 		_frame = new JFrame(TITLE);
 		_frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		_frame.addWindowListener(_fa);
+		_frame.addComponentListener(this);
 		if(_fullscreen)
 		{
 			_frame.setUndecorated(true);
@@ -176,5 +180,33 @@ public class Start
 		@Override public void windowDeiconified(WindowEvent arg0) { }
 		@Override public void windowIconified  (WindowEvent arg0) { }
 		@Override public void windowOpened     (WindowEvent arg0) { }
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent comp)
+	{
+		width = comp.getComponent().getWidth();
+		height = comp.getComponent().getHeight();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

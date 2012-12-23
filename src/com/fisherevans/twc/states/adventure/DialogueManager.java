@@ -57,19 +57,27 @@ public class DialogueManager
 			gfx.drawImage(_bg, 0, BG_TOP);
 			Dialogue d = _dialogues.get(0);
 			int iconLeft = 0, text0Left = 0, text1Left = 0;
-
-			if(d.isLeftAlign())
+			
+			if(d.getClass() == Notification.class)
 			{
-				iconLeft = IMG_SIDE; text0Left = TEXT_SIDE; text1Left = TEXT_SIDE;
+				text0Left = IMG_SIDE; text1Left = IMG_SIDE;
 			}
 			else
 			{
-				iconLeft = GameDriver.NATIVE_SCREEN_WIDTH-d.getIcon().getWidth()-IMG_SIDE;
-				text0Left = GameDriver.NATIVE_SCREEN_WIDTH-TEXT_SIDE-_font.getWidth(d.getMessage()[0]);
-				text1Left = GameDriver.NATIVE_SCREEN_WIDTH-TEXT_SIDE-_font.getWidth(d.getMessage()[1]);
+				if(d.isLeftAlign())
+				{
+					iconLeft = IMG_SIDE; text0Left = TEXT_SIDE; text1Left = TEXT_SIDE;
+				}
+				else
+				{
+					iconLeft = GameDriver.NATIVE_SCREEN_WIDTH-d.getIcon().getWidth()-IMG_SIDE;
+					text0Left = GameDriver.NATIVE_SCREEN_WIDTH-TEXT_SIDE-_font.getWidth(d.getMessage()[0]);
+					text1Left = GameDriver.NATIVE_SCREEN_WIDTH-TEXT_SIDE-_font.getWidth(d.getMessage()[1]);
+				}
+				
+				gfx.drawImage(d.getIcon(), iconLeft, IMG_TOP);
 			}
 			
-			gfx.drawImage(d.getIcon(), iconLeft, IMG_TOP);
 			gfx.drawString(d.getMessage()[0], text0Left, TEXT_1_TOP);
 			gfx.drawString(d.getMessage()[1], text1Left, TEXT_2_TOP);
 		}
@@ -115,6 +123,35 @@ public class DialogueManager
 				dualBuffer[1] = messages.get(index + 1);
 			}
 			_dialogues.add(new Dialogue(dualBuffer, icon, leftAlign));
+		}
+	}
+	
+	public void addNotification(String message)
+	{
+		ArrayList<String> messages = new ArrayList<>();
+		
+		String[] words = message.split(" +");
+		String buffer = "";
+		
+		for(int index = 0;index < words.length;index++)
+		{
+			if(_font.getWidth(buffer + words[index]) >= MAX_PRINT_WIDTH + (TEXT_SIDE - IMG_SIDE))
+			{
+				messages.add(buffer);
+				buffer = "";
+			}
+			buffer += words[index] + " ";
+		}
+		messages.add(buffer);
+		
+		for(int index = 0;index < messages.size();index += 2)
+		{
+			String[] dualBuffer = { messages.get(index), "" };
+			if(index + 1 < messages.size())
+			{
+				dualBuffer[1] = messages.get(index + 1);
+			}
+			_dialogues.add(new Notification(dualBuffer));
 		}
 	}
 	
@@ -169,6 +206,14 @@ public class DialogueManager
 		public boolean keyPressed(int key, char c)
 		{
 			return false;
+		}
+	}
+	
+	private class Notification extends Dialogue
+	{
+		public Notification(String[] messages)
+		{
+			super(messages, null, true);
 		}
 	}
 }

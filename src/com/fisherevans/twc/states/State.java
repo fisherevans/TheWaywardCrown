@@ -13,6 +13,7 @@ public abstract class State implements KeyListener
 {
 	private static StateManager _sm; // The manager that holds this state
 	private Input _input; // The slick2d input object
+	private boolean _loadUpdate = true;
 	
 	/** create the state
 	 * @param sm The manager that holds this state
@@ -35,6 +36,8 @@ public abstract class State implements KeyListener
 	{
 		return _input;
 	}
+	
+	public abstract void load();
 
 	/** Update the state (step from game loop)
 	 * @param gc The game's conatainer
@@ -73,5 +76,15 @@ public abstract class State implements KeyListener
 
 	@Override
 	public abstract void keyReleased(int key, char c);
+
+	public boolean isLoadUpdate()
+	{
+		return _loadUpdate;
+	}
+
+	public void setLoadUpdate(boolean loadUpdate)
+	{
+		_loadUpdate = loadUpdate;
+	}
 
 }

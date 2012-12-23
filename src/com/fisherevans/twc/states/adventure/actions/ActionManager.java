@@ -53,6 +53,20 @@ public class ActionManager
 		_queues.add(newQueue);
 		return _queues.size()-1;
 	}
+
+	public ActionQueue getActionQueue(String queue)
+	{
+		if(queue == null)
+			return null;
+		
+		System.out.println("Loading Action Queue: " + queue);
+		
+		ArrayList<AdventureAction> newActions = new ArrayList<>();
+		newActions.addAll(((ActionQueue)_queueHash.get(queue)).getActions());
+		ActionQueue newQueue = new ActionQueue(this, newActions);
+		
+		return newQueue;
+	}
 	
 	/** Updates the current action
 	 * @param delta time delta between frames

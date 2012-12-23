@@ -274,7 +274,15 @@ public class AdventureConfigLoader
 				addAction(new SetSpeedAction(_as.getAM(), line[1], Float.parseFloat(line[2])));
 				break;
 			case "MOVE":
-				addAction(new SetCameraAction(_as.getAM(), line[1]));
+				int angle = 0;
+				switch(line[2])
+				{
+					case "N": angle = 90; break;
+					case "E": angle = 0; break;
+					case "S": angle = 270; break;
+					case "W": angle = 180; break;
+				}
+				addAction(new MoveAction(_as.getAM(), line[1], angle, Integer.parseInt(line[3])));
 				break;
 			case "TELEPORT":
 				addAction(new TeleportAction(_as.getAM(), line[1], Integer.parseInt(line[2]), Integer.parseInt(line[3])));
@@ -288,6 +296,9 @@ public class AdventureConfigLoader
 				break;
 			case "DIALOGUE":
 				addAction(new DialogueAction(_as.getAM(), getStringFrom(line, 3), line[2], line[1].equals("left")));
+				break;
+			case "NOTIFICATION":
+				addAction(new NotificationAction(_as.getAM(), getStringFrom(line, 1)));
 				break;
 			case "FADEOUT":
 				addAction(new FadeOutAction(_as.getAM()));
@@ -305,6 +316,9 @@ public class AdventureConfigLoader
 					default: addAction(new FaceAction(_as.getAM(), line[1], line[2])); break; 
 				}
 				break;
+			case "INSERT":
+				addAction(new InsertAction(_as.getAM(), line[1]));
+				break;
 		};
 	}
 	
@@ -320,6 +334,14 @@ public class AdventureConfigLoader
 			case "NEW":
 				_triggerConfigs.add(new AdventureTrigger(_as.getTM()));
 				_triggerIndex++;
+				break;
+			case "X":
+				_triggerConfigs.get(_triggerIndex).setX1(Integer.parseInt(line[1]));
+				_triggerConfigs.get(_triggerIndex).setX2(Integer.parseInt(line[1]));
+				break;
+			case "Y":
+				_triggerConfigs.get(_triggerIndex).setY1(Integer.parseInt(line[1]));
+				_triggerConfigs.get(_triggerIndex).setY2(Integer.parseInt(line[1]));
 				break;
 			case "X1":
 				_triggerConfigs.get(_triggerIndex).setX1(Integer.parseInt(line[1]));

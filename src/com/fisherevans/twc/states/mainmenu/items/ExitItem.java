@@ -6,6 +6,7 @@ import java.awt.event.WindowListener;
 import org.newdawn.slick.Color;
 
 import com.fisherevans.twc.Start;
+import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
 
 public class ExitItem extends MenuItem
@@ -20,8 +21,9 @@ public class ExitItem extends MenuItem
 	}
 	
 	@Override
-	public void action()
+	public State action()
 	{
 		Start.pullThePlug();
+		return null;
 	}
 }

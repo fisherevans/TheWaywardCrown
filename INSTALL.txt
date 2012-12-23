@@ -1,0 +1,2 @@
+You must have perl installed on your system. You can find the installer for Windows here:
+http://www.activestate.com/activeperl/downloads

@@ -30,6 +30,8 @@ import com.fisherevans.twc.tools.*;
 
 public class AdventureState extends State
 {
+	private String _ldr;
+	
 	private AdventureConfigLoader _config;
 	private MapManager _mm;
 	private EntityManager _em;
@@ -45,7 +47,12 @@ public class AdventureState extends State
 	public AdventureState(StateManager sm, Input input, String ldr)
 	{
 		super(sm, input);
+		_ldr = ldr;
+	}
 
+	@Override
+	public void load()
+	{
 		_em = new EntityManager(this);
 		_mm = new MapManager(this);
 		_am = new ActionManager(this);
@@ -53,7 +60,7 @@ public class AdventureState extends State
 		_dm = new DialogueManager(this);
 		_lm = new LightManager(this);
 		
-		_config = new AdventureConfigLoader(this, ldr);
+		_config = new AdventureConfigLoader(this, _ldr);
 
 		_em.initManager(_config);
 		_mm.initManager(_config);
@@ -67,11 +74,11 @@ public class AdventureState extends State
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
-		_em.update(delta);
 		_am.update(delta);
 		_tm.update(delta);
 		_dm.update(delta);
-		_lm.update(delta);
+		_lm.update(gc, delta);
+		_em.update(delta);
 	}
 
 	@Override

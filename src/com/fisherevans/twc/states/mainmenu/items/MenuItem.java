@@ -2,6 +2,8 @@ package com.fisherevans.twc.states.mainmenu.items;
 
 import org.newdawn.slick.Color;
 
+import com.fisherevans.twc.states.State;
+
 public abstract class MenuItem
 {
 	private Color _color, _highColor; // color of the item normally and when selected.
@@ -9,7 +11,7 @@ public abstract class MenuItem
 	private boolean _selectable; // If you can select the object
 	
 	/** Method to call when the user selects the menu item */
-	public abstract void action();
+	public abstract State action();
 	
 	/** Sets the text of the item
 	 * @param text the new text

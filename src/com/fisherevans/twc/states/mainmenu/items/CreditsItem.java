@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 
 import com.fisherevans.twc.GameDriver;
+import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.credits.CreditsState;
 import com.fisherevans.twc.states.mainmenu.MainMenuState;
 import com.fisherevans.twc.tools.ResourceTools;
@@ -22,8 +23,8 @@ public class CreditsItem extends MenuItem
 	}
 	
 	@Override
-	public void action()
+	public State action()
 	{
-		MainMenuState.getSM().setState(new CreditsState(MainMenuState.getSM(), GameDriver.getInput()));
+		return new CreditsState(MainMenuState.getSM(), GameDriver.getInput());
 	}
 }

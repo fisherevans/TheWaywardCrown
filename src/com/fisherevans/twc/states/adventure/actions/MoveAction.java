@@ -7,13 +7,14 @@ import com.fisherevans.twc.tools.KeyTools;
 
 public class MoveAction extends AdventureAction
 {
-	private MovableEntity _ent;
+	private String _entName;
+	MovableEntity _ent;
 	private int _angle, _distance;
 
-	public MoveAction(ActionManager am, String ent, int angle, int distance)
+	public MoveAction(ActionManager am, String entName, int angle, int distance)
 	{
 		super(am);
-		_ent = ((MovableEntity)getAM().getAS().getEM().getEntity(ent));
+		_entName = entName;
 		_angle = angle;
 		_distance = distance;
 	}
@@ -21,8 +22,10 @@ public class MoveAction extends AdventureAction
 	@Override
 	public void initAction()
 	{
-		if(_ent.isMoving()) // If we're not already moving.
+		_ent = ((MovableEntity)getAM().getAS().getEM().getEntity(_entName));
+		if(!_ent.isMoving()) // If we're not already moving.
 		{
+			//System.out.println("Moving " + _distance + " unites at " + _angle + " degres");
 			_ent.setMoveAction(_angle, _distance);
 		}
 	}

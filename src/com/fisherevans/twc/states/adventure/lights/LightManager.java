@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -12,6 +13,7 @@ import org.newdawn.slick.svg.Gradient;
 
 import com.fisherevans.twc.GameDriver;
 import com.fisherevans.twc.Start;
+import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.config.AdventureConfigLoader;
 import com.fisherevans.twc.tools.MathTools;
@@ -72,7 +74,7 @@ public class LightManager
 		System.out.println("Loaded " + _lights.size() + " Lights.");
 	}
 	
-	public void update(int delta)
+	public void update(GameContainer gc, int delta)
 	{
 		_curTimeColor = _timeGradient.getColorAt(_as.getSM().getTimeM().getTimeFloat());
 		
@@ -80,11 +82,22 @@ public class LightManager
 		{
 			light.update(delta);
 		}
+		/*
+		if(Start.width != _lightMap.getWidth() || Start.height != _lightMap.getHeight())
+		{
+			try
+			{
+				_lightMap = new Image(Start.width, Start.height);
+			}
+			catch (SlickException e)
+			{
+				e.printStackTrace();
+			}
+		}*/
 	}
 	
 	public void render(Graphics gfx)
 	{
-		
 		try
 		{
 			Graphics lg = _lightMap.getGraphics();

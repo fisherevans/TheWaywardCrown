@@ -13,6 +13,7 @@ import com.fisherevans.twc.states.State;
 import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.mainmenu.MainMenuState;
 import com.fisherevans.twc.tools.KeyTools;
+import com.fisherevans.twc.tools.MathTools;
 import com.fisherevans.twc.tools.ResourceTools;
 
 public class CreditsState extends State
@@ -20,6 +21,8 @@ public class CreditsState extends State
 	private ArrayList<Line> _lines;
 	
 	private float _vertScroll = GameDriver.NATIVE_SCREEN_HEIGHT/2;
+	private float _vertScrollV = 0.33f;
+	private float _maxVert = 0;
 	private boolean[] _keys = { false, false };
 	
 	private final int LINE_PAD = 8,
@@ -27,10 +30,19 @@ public class CreditsState extends State
 					  BASE_RT_PAD = GameDriver.NATIVE_SCREEN_WIDTH - SIDE_PAD,
 					  BASE_CTR_PAD = GameDriver.NATIVE_SCREEN_WIDTH/2;
 	
+	private final float MAX_AUTO_SCROLL = 0.05f,
+						AUTO_SCROLL_ACC = 0.000025f;
+	
+	private boolean _leaving = false;
+	
 	public CreditsState(StateManager sm, Input input)
 	{
 		super(sm, input);
+	}
 
+	@Override
+	public void load()
+	{
 		_lines = new ArrayList<>();
 		createLines();
 	}
@@ -40,18 +52,22 @@ public class CreditsState extends State
 		Font small = ResourceTools.fontMC16();
 		Font med = ResourceTools.fontFP32();
 		Font big = ResourceTools.fontFP64();
+		
+		/* LINES */
+		
+		_lines.add(new Line(256));
 
 		_lines.add(new Line("The Wayward Crown", Align.CENTER, big));
 		_lines.add(new Line("and its awesome developers", Align.CENTER, small));
 		
-		_lines.add(new Line(96));
+		_lines.add(new Line(400));
 
-		_lines.add(new Line("Lead Software Engineer", Align.LEFT, small));
+		_lines.add(new Line("Software Engineer", Align.LEFT, small));
 		_lines.add(new Line("Fisher Evans", Align.LEFT, big));
 		
 		_lines.add(new Line(16));
 
-		_lines.add(new Line("Lead Story Writer", Align.RIGHT, small));
+		_lines.add(new Line("Story Writer", Align.RIGHT, small));
 		_lines.add(new Line("Jack Evans", Align.RIGHT, big));
 
 		_lines.add(new Line(16));
@@ -66,55 +82,44 @@ public class CreditsState extends State
 		
 		_lines.add(new Line(16));
 
-		_lines.add(new Line("Lead Software Engineer", Align.LEFT, small));
-		_lines.add(new Line("Fisher Evans", Align.LEFT, big));
+		_lines.add(new Line("Pixel Artist", Align.LEFT, small));
+		_lines.add(new Line("Julie Feikens", Align.LEFT, big));
 		
-		_lines.add(new Line(16));
+		_lines.add(new Line(390));
 
-		_lines.add(new Line("Lead Story Writer", Align.RIGHT, small));
-		_lines.add(new Line("Jack Evans", Align.RIGHT, big));
-
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Map Designer", Align.LEFT, small));
-		_lines.add(new Line("Rachel First", Align.LEFT, big));
-
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Music Composer", Align.RIGHT, small));
-		_lines.add(new Line("Måns Åberg", Align.RIGHT, big));
+		_lines.add(new Line("Press [ Enter ]", Align.CENTER, med));
 		
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Lead Software Engineer", Align.LEFT, small));
-		_lines.add(new Line("Fisher Evans", Align.LEFT, big));
+		_lines.add(new Line(300));
 		
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Lead Story Writer", Align.RIGHT, small));
-		_lines.add(new Line("Jack Evans", Align.RIGHT, big));
-
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Map Designer", Align.LEFT, small));
-		_lines.add(new Line("Rachel First", Align.LEFT, big));
-
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Music Composer", Align.RIGHT, small));
-		_lines.add(new Line("Måns Åberg", Align.RIGHT, big));
+		/* CALC TIME */
 		
-		_lines.add(new Line(16));
-
-		_lines.add(new Line("Press [ Enter ]", Align.CENTER, big));
+		for(Line line:_lines)
+		{
+			_maxVert += LINE_PAD;
+			if(line.isLineBreak())
+			{
+				_maxVert += line.getBreakSize();
+			}
+			else
+			{
+				_maxVert += line.getFont().getHeight(line.getText());
+			}
+		}
+		_maxVert -= GameDriver.NATIVE_SCREEN_HEIGHT;
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
+		if(_leaving && getSM().getFM().isFadedOut())
+		{
+			getSM().setState(new MainMenuState(getSM(), getInput()));
+		}
+		
 		if(_keys[0])
 		{
 			_vertScroll += 0.3f*delta;
+			_vertScrollV = MAX_AUTO_SCROLL;
 		}
 		else if(_keys[1])
 		{
@@ -122,14 +127,21 @@ public class CreditsState extends State
 		}
 		else
 		{
-			_vertScroll -= 0.025f*delta;
+			_vertScrollV -= AUTO_SCROLL_ACC*delta;
+			_vertScrollV = MathTools.clamp(_vertScrollV, -MAX_AUTO_SCROLL, MAX_AUTO_SCROLL);
+			if(_vertScrollV < 0)
+			{
+				_vertScroll += _vertScrollV*delta;
+			}
 		}
+		
+		_vertScroll = MathTools.clamp(_vertScroll, -_maxVert, 0);
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics gfx) throws SlickException
 	{
-		int top = 16;
+		int top = 0;
 		for(int x = 0;x < _lines.size();x++)
 		{
 			Line curLine = _lines.get(x);
@@ -172,9 +184,10 @@ public class CreditsState extends State
 			_keys[1] = true;
 		}
 		
-		if(key == 28)
+		if(key == 28 && !_leaving)
 		{
-			getSM().setState(new MainMenuState(getSM(), getInput()));
+			_leaving = true;
+			getSM().getFM().fadeOut();
 		}
 	}
 
