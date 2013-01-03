@@ -120,7 +120,7 @@ public class MainMenuState extends State
 		{
 			moveDownMenu();
 		}
-		else if((KeyTools.isSELECT(key) || KeyTools.isRIGHT(key)) && !_leaving)
+		else if(KeyTools.isSELECT(key) && !_leaving)
 		{
 			State actionState = _menuItems.get(_menuPos).action();
 			if(actionState != null)

@@ -8,8 +8,8 @@ public class TorchLight extends AdventureLight
 	private Color _baseColor;
 	private long _nextFlicker = 0;
 	
-	private final int FLICKER_DUR = 100;
-	private final float FLICKER_DARKNESS = 0.16f;
+	private final int FLICKER_DUR = 150;
+	private final float FLICKER_DARKNESS = 0.1f;
 	
 	public TorchLight(String name)
 	{

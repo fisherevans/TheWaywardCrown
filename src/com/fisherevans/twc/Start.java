@@ -19,7 +19,7 @@ import org.newdawn.slick.SlickException;
 
 public class Start implements ComponentListener
 {
-	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
+	public static boolean DEBUG = true; // Used to turn on or off debug printing throughout the game.
 	public final String TITLE = "The Wayward Crown - Dev"; // The title of the game
 	
 	private static CanvasGameContainer _canvas; // The actual slick2d game

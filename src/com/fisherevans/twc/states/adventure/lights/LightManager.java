@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,12 +13,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.svg.Gradient;
 
 import com.fisherevans.twc.GameDriver;
-import com.fisherevans.twc.Start;
-import com.fisherevans.twc.states.StateManager;
 import com.fisherevans.twc.states.adventure.AdventureState;
 import com.fisherevans.twc.states.adventure.config.AdventureConfigLoader;
-import com.fisherevans.twc.tools.MathTools;
 import com.fisherevans.twc.tools.ResourceTools;
+
+import external.chronocide.shaders.Shader;
 
 public class LightManager
 {
@@ -30,6 +30,8 @@ public class LightManager
 	private Image _lightImage;
 	private Image _whitePixel;
 	private Gradient _timeGradient;
+	
+	private Shader _ltShdr;
 	
 	public static final int LIGHT_SIZE = 96*2;
 	
@@ -72,6 +74,17 @@ public class LightManager
 			_lightsHash.put(light.getName(), light);
 		}
 		System.out.println("Loaded " + _lights.size() + " Lights.");
+		
+		try
+		{
+			_ltShdr = Shader.makeShader("res/shaders/highLight.vert", "res/shaders/highLight.frag");
+		}
+		catch (SlickException e)
+		{
+			System.out.println("Could not load light shadrs.");
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void update(GameContainer gc, int delta)
@@ -102,13 +115,14 @@ public class LightManager
 		{
 			Graphics lg = _lightMap.getGraphics();
 			lg.drawImage(_whitePixel, 0, 0, _lightMap.getWidth(), _lightMap.getHeight(), 0, 0, 1, 1, _curTimeColor);
-
+			//_ltShdr.startShader();
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 			for(AdventureLight light:_lights)
 			{
 				int offset = (int) ((light.getSize()/32f)*16);
 				lg.drawImage(_lightImage.getScaledCopy(light.getScale()), _as.getScreenX(light.getX())-offset, _as.getScreenY(light.getY())-offset, light.getColor());
 			}
+			//Shader.forceFixedShader();
 			//lg.drawImage(_spotLight.getScaledCopy(4), GameDriver.NATIVE_SCREEN_H_WIDTH-256, GameDriver.NATIVE_SCREEN_H_HEIGHT-256 - 32);
 			lg.setDrawMode(Graphics.MODE_NORMAL);
 			lg.flush();

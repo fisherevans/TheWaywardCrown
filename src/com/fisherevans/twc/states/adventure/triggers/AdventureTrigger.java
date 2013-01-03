@@ -20,16 +20,16 @@ public class AdventureTrigger
 		_times = 0;
 	}
 	
-	public void checkTrigger(AdventureEntity ent)
+	public boolean checkTrigger(AdventureEntity ent)
 	{
 		if(_times > 0 && _times < _timesMax)
 		{
-			return;
+			return false;
 		}
 		
 		if(!Arrays.asList(_effects).contains(ent.getName()))
 		{
-			return;
+			return false;
 		}
 		
 		float px = ent.getX();
@@ -38,7 +38,9 @@ public class AdventureTrigger
 		{
 			_tm.getAS().getAM().addActionQueue(_actions);
 			_times++;
+			return true;
 		}
+		return false;
 	}
 	
 	public int getX1()

@@ -18,7 +18,7 @@ public abstract class AdventureEntity
 	private EntityManager _em; // The state holding the entity
 	private boolean _interacting = false; // True if entity is interacting with another entity
 	private int _angle = 90; // 0 means they're facing right, 90 is down, so on.
-	private int[] _drawOffset = { 0, 0 };
+	private float[] _drawOffset = { 0, 0 };
 	private String _actions;
 	private String _dispName, _name;
 	
@@ -137,12 +137,12 @@ public abstract class AdventureEntity
 		_angle = angle;
 	}
 	
-	public int[] getDrawOffset()
+	public float[] getDrawOffset()
 	{
 		return _drawOffset;
 	}
 	
-	public void setDrawOffset(int[] newOffset)
+	public void setDrawOffset(float[] newOffset)
 	{
 		_drawOffset = newOffset;
 	}

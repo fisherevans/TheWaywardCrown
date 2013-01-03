@@ -87,7 +87,7 @@ public class CreditsState extends State
 		
 		_lines.add(new Line(390));
 
-		_lines.add(new Line("Press [ Enter ]", Align.CENTER, med));
+		_lines.add(new Line("Press [ Select ]", Align.CENTER, med));
 		
 		_lines.add(new Line(300));
 		
@@ -184,7 +184,7 @@ public class CreditsState extends State
 			_keys[1] = true;
 		}
 		
-		if(key == 28 && !_leaving)
+		if(KeyTools.isSELECT(key) && !_leaving)
 		{
 			_leaving = true;
 			getSM().getFM().fadeOut();

@@ -59,6 +59,16 @@
 		SPEED     1
 		NAME      NPC Chris
 		ACTIONS   chris_dialogue
+	NEW speedpotion
+		TYPE      movable
+		SPRITE    res/sprites/test/char2.png
+		ICON      res/sprites/test/default64x64.png
+		X         124
+		Y         129
+		FACE      S
+		CONTROLER null
+		NAME      Annebeth
+		ACTIONS   speedpotion
 	NEW torch1
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -67,6 +77,7 @@
 		Y         130
 		FACE      N
 		NAME      Torch 1
+		ACTIONS   torchAction
 	NEW torch2
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -75,6 +86,7 @@
 		Y         132
 		FACE      N
 		NAME      Torch 2
+		ACTIONS   torchAction
 	NEW torch3
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -83,6 +95,7 @@
 		Y         127
 		FACE      N
 		NAME      Torch 3
+		ACTIONS   torchAction
 	NEW torch4
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -91,6 +104,7 @@
 		Y         130
 		FACE      N
 		NAME      Torch 4
+		ACTIONS   torchAction
 	NEW torch5
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -99,6 +113,7 @@
 		Y         128
 		FACE      N
 		NAME      Torch 5
+		ACTIONS   torchAction
 	NEW torch6
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -107,6 +122,7 @@
 		Y         134
 		FACE      N
 		NAME      Torch 6
+		ACTIONS   torchAction
 	NEW torch7
 		TYPE      animated
 		SPRITE    res/sprites/ents/torch.png
@@ -115,11 +131,24 @@
 		Y         128
 		FACE      N
 		NAME      Torch 7
+		ACTIONS   torchAction
 :ACTIONS
 	NEW torchAction
 		HALT player
 		NOTIFICATION It's a torch.
 		NOTIFICATION You thought it would talk? You twit...
+		UNHALT player
+	NEW speedpotion
+		HALT player
+		DIALOGUE left speedpotion Here, have a potion!
+		NOTIFICATION You take a swig of the potion. You feel a slight lightness in your feet...
+		UNHALT player
+		SETSPEED player 2
+		WAIT 7500
+		SETSPEED player 1
+		HALT player
+		WAITTOSTOP player
+		NOTIFICATION The potion's effects wear off...
 		UNHALT player
 	NEW chris_dialogue
 		HALT player
@@ -135,8 +164,8 @@
 		FACE player chris
 		FACE chris player
 		DIALOGUE left chris Hey, hold up! It's dangerous out there. I won't let you leave without a cat grenade.
-		UNHALT player
 		UNHALT chris
+		UNHALT player
 		WAITTOSTOP player
 		MOVE player W 1
 :TRIGGERS

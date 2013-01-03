@@ -1,6 +1,7 @@
 package com.fisherevans.twc.states.adventure;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.tiled.TiledMap;
 
 import com.fisherevans.twc.GameDriver;
@@ -16,6 +17,8 @@ public class MapManager
 	private int _mapW, _mapH, _mapTileSize; // Width and height of map and it's tiles
 	
 	private int _tsX, _tsY, _sX, _sY, _baseSX, _baseSY;
+	
+	public static final int TILES_WIDE = 22, TILES_HIGH = 14;
 	
 	public MapManager(AdventureState as)
 	{
@@ -63,9 +66,27 @@ public class MapManager
 	 */
 	public void drawLayer(Graphics gfx, int layer)
 	{
+		/* built in method
 		gfx.scale(2, 2);
-		_map.render(_sX, _sY, _tsX, _tsY, 22, 14, layer, false);
+		_map.render(_sX, _sY, _tsX, _tsY, TILES_WIDE, TILES_HIGH, layer, false);
 		gfx.scale(0.5f, 0.5f);
+		*/
+		//* Custom MEthod
+		Image imgBuff;
+		float sX2 = _sX*2;
+		float sY2 = _sY*2;
+		for(int x = Math.max(_tsX, 0);x < Math.min(_tsX+TILES_WIDE, _map.getWidth());x++)
+		{
+			for(int y = Math.max(_tsY, 0);y < Math.min(_tsY+TILES_HIGH, _map.getHeight());y++)
+			{
+				imgBuff = _map.getTileImage(x, y, layer);
+				if(imgBuff != null)
+				{
+					imgBuff.draw(sX2+(x-_tsX)*_mapTileSize, sY2+(y-_tsY)*_mapTileSize, 2f);
+				}
+			}
+		}
+		//*/
 	}
 	
 	public void drawLayer(Graphics gfx, String layer)

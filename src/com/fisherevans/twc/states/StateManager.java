@@ -17,8 +17,6 @@ public class StateManager
 	private FadeManager _fm;
 	private TimeManager _timeM;
 	private boolean _switchingState = false;
-
-	private Image _loadingImage;
 	
 	/** create the manager
 	 * @param gd The driver using this manager
@@ -26,8 +24,6 @@ public class StateManager
 	public StateManager(GameDriver gd)
 	{
 		_gd = gd;
-		
-		_loadingImage = ResourceTools.getImage("res/gui/loading.png");
 		
 		_fm = new FadeManager(null);
 		setState(new StartingState(this, _gd.getInput()));
@@ -88,11 +84,7 @@ public class StateManager
 	{
 		gfx.setColor(new Color(1f, 1f, 1f));
 
-		if(_currentState.isLoadUpdate())
-		{
-			_loadingImage.draw(GameDriver.NATIVE_SCREEN_WIDTH - _loadingImage.getWidth()*2, GameDriver.NATIVE_SCREEN_HEIGHT - _loadingImage.getHeight()*2);
-		}
-		else
+		if(!_currentState.isLoadUpdate())
 		{
 			_currentState.render(gc, gfx);
 		}

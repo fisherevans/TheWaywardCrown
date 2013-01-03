@@ -19,6 +19,7 @@ public class MovableEntity extends AdventureEntity
 	
 	private float _xb, _yb, _xa, _ya; // posa and posb corrids for interpolation
 	private boolean _moving = false; // true if in a moving phase
+	private float _moveScale = 1;
 	private long _startTime; // Start time of movement
 	private Animation _anUp , _anDown, _anLeft, _anRight;
 	private EntityController _controler;
@@ -36,7 +37,7 @@ public class MovableEntity extends AdventureEntity
 	{
 		super(em);
 
-		setDrawOffset(new int[] { 0, -64 });
+		setDrawOffset(new float[] { 0, -64 });
 	}
 	
 	public void setAnimation(Image image)
@@ -63,14 +64,18 @@ public class MovableEntity extends AdventureEntity
 	@Override
 	public void update(int delta)
 	{
+		boolean doMove = true;
 		// If the player is moving, step the animation and interpolation.
 		if(isMoving())
 		{
-			moveStep();
+			doMove = moveStep();
 			updateAnimation(delta);
 		}
 		
-		getControler().update(delta);
+		if(doMove)
+		{
+			getControler().update(delta);
+		}
 	}
 	
 	/** Steps throug animation
@@ -134,9 +139,9 @@ public class MovableEntity extends AdventureEntity
 	
 	/** While moving - interpolates through movestep. 
 	 */
-	public void moveStep()
+	public boolean moveStep()
 	{
-		float t = (((float)(System.currentTimeMillis() - _startTime))/(MOVE_TIME))*_speedScale;
+		float t = (((float)(System.currentTimeMillis() - _startTime))/(MOVE_TIME*_moveScale))*_speedScale;
 		setX(_xa + ((_xb - _xa) * t));
 		setY(_ya + ((_yb - _ya) * t));
 		
@@ -145,8 +150,10 @@ public class MovableEntity extends AdventureEntity
 			setX(_xb);
 			setY(_yb);
 			_moving = false;
-			getEM().getAS().getTM().checkTrigger(this);
+			return !getEM().getAS().getTM().checkTrigger(this);
 		}
+		
+		return true;
 	}
 	
 	/** creates the move action
@@ -179,6 +186,7 @@ public class MovableEntity extends AdventureEntity
 			_xb = moveVec[0];
 			_yb = moveVec[1];
 			_moving = true;
+			_moveScale = distance;
 			_startTime = System.currentTimeMillis();
 		}
 	}

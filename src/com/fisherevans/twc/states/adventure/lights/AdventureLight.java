@@ -73,4 +73,11 @@ public abstract class AdventureLight
 	{
 		return _name;
 	}
+	
+	public Color getLightColor(Color daylight)
+	{
+		return new Color(Math.max(_color.r, daylight.r), 
+				Math.max(_color.g, daylight.g), 
+				Math.max(_color.b, daylight.b));
+	}
 }

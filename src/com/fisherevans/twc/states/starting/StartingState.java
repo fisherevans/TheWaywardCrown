@@ -17,7 +17,7 @@ public class StartingState extends State
 {
 	private float _ready = 180f; // Flashes the "press enter" text
 	private Image titleScreen; // Image that is faded in
-	private final String READY_STRING = "[ Press Enter ]"; // Text that flashes when "ready"
+	private final String READY_STRING = "[ Press Select ]"; // Text that flashes when "ready"
 	private final String TITLE = "The Wayward Crown"; // Title of the game
 	
 	private boolean _leaving = false;
@@ -64,7 +64,7 @@ public class StartingState extends State
 	@Override
 	public void keyPressed(int key, char c)
 	{
-		if(key == 28 && !_leaving)
+		if(KeyTools.isSELECT(key))
 		{
 			_leaving = true;
 			getSM().getFM().fadeOut();

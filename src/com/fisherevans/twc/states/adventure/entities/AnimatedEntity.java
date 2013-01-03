@@ -25,7 +25,7 @@ public class AnimatedEntity extends AdventureEntity
 	{
 		super(em);
 
-		setDrawOffset(new int[] { 0, -64 });
+		setDrawOffset(new float[] { 0, -64 });
 	}
 	
 	public void setAnimation(Image image, int frameDuration)

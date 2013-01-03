@@ -23,12 +23,17 @@ public class TriggerManager
 		System.out.println("Loaded " + _triggers.size() + " Triggers.");
 	}
 	
-	public void checkTrigger(MovableEntity ent)
+	public boolean checkTrigger(MovableEntity ent)
 	{
+		boolean triggered = false;
 		for(AdventureTrigger trigger:_triggers)
 		{
-			trigger.checkTrigger(ent);
+			if(trigger.checkTrigger(ent))
+			{
+				triggered = true;
+			}
 		}
+		return triggered;
 	}
 	
 	public void update(int delta)
