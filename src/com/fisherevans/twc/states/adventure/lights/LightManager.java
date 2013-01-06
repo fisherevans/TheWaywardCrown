@@ -116,11 +116,11 @@ public class LightManager
 			Graphics lg = _lightMap.getGraphics();
 			lg.drawImage(_whitePixel, 0, 0, _lightMap.getWidth(), _lightMap.getHeight(), 0, 0, 1, 1, _curTimeColor);
 			//_ltShdr.startShader();
-			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+			GL14.glBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 			for(AdventureLight light:_lights)
 			{
 				int offset = (int) ((light.getSize()/32f)*16);
-				lg.drawImage(_lightImage.getScaledCopy(light.getScale()), _as.getScreenX(light.getX())-offset, _as.getScreenY(light.getY())-offset, light.getColor());
+				lg.drawImage(_lightImage.getScaledCopy(light.getScale()), _as.getScreenX(light.getX())-offset, _as.getScreenY(light.getY())-offset, light.getLightColor(_curTimeColor));
 			}
 			//Shader.forceFixedShader();
 			//lg.drawImage(_spotLight.getScaledCopy(4), GameDriver.NATIVE_SCREEN_H_WIDTH-256, GameDriver.NATIVE_SCREEN_H_HEIGHT-256 - 32);
