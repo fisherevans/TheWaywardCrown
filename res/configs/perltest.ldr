@@ -1,0 +1,76 @@
+use feature qw(say);
+require 'LDRMethods.pl';
+
+mapSettings("forest_layout.tmx", "player", "player");
+
+say ":LIGHTS";
+say "  DAWN  153 178 180";
+say "  DAY   251 255 237";
+say "  DUSK  207 159 116";
+say "  NIGHT 50  55  105";
+
+@torchLocs = ( 126, 130,	122, 132,	119, 127,
+			   111, 130,	134, 128,	116, 134,	115, 128 );
+for($torch = 0;$torch < $#torchLocs;$torch += 2)
+{
+	light("TORCH", "torch" . $torch/2 . "_light",
+		  $torchLocs[$torch], $torchLocs[$torch+1], 512);
+		
+	animatedEntity("torch" . $torch/2 . "_ent", "Torch " . $torch/2, "torchAction",
+				   "res/sprites/ents/torch.png", "res/sprites/test/default64x64.png",
+				   $torchLocs[$torch], $torchLocs[$torch+1], "N");		
+}
+
+movableEntity("player", "Main Player", "none",
+			  "res/sprites/test/char.png", "res/sprites/test/default64x64.png",
+			  115, 131, "N",
+			  "player", "1");
+
+movableEntity("chris", "Chris", "chris_dialogue",
+			  "res/sprites/test/char3.png", "res/sprites/test/default64x64.png",
+			  127, 131, "W",
+			  "null", "1");
+
+movableEntity("ashley", "Ashley", "speedpotion",
+			  "res/sprites/test/char2.png", "res/sprites/test/default64x64.png",
+			  124, 129, "S",
+			  "null", "1");
+			  
+trigger(127, 132, 0, "stop_player", "player");
+
+say ":ACTIONS";
+say "  NEW torchAction";
+say "    HALT player";
+say "    NOTIFICATION It's a torch.";
+say "    NOTIFICATION You thought it would talk? You twit...";
+say "    UNHALT player";
+say "  NEW speedpotion";
+say "    HALT player";
+say "    DIALOGUE left speedpotion Here, have a potion!";
+say "    NOTIFICATION You take a swig of the potion. You feel a slight lightness in your feet...";
+say "    UNHALT player";
+say "    SETSPEED player 2";
+say "    WAIT 7500";
+say "    SETSPEED player 1";
+say "    HALT player";
+say "    WAITTOSTOP player";
+say "    NOTIFICATION The potion's effects wear off...";
+say "    UNHALT player";
+say "  NEW chris_dialogue";
+say "    HALT player";
+say "    HALT chris";
+say "    FACE player chris";
+say "    FACE chris player";
+say "    DIALOGUE left chris There are some scary creatures out there. You shouldn't venture out unarmed...";
+say "    UNHALT player";
+say "    UNHALT chris";
+say "  NEW stop_player";
+say "    HALT player";
+say "    HALT chris";
+say "    FACE player chris";
+say "    FACE chris player";
+say "    DIALOGUE left chris Hey, hold up! It's dangerous out there. I won't let you leave without a cat grenade.";
+say "    UNHALT chris";
+say "    UNHALT player";
+say "    WAITTOSTOP player";
+say "    MOVE player W 1";

@@ -1,5 +1,6 @@
 package com.fisherevans.twc.states.adventure.config;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import com.fisherevans.twc.states.adventure.actions.*;
 import com.fisherevans.twc.states.adventure.config.EntityConfig.ENTTYPE;
 import com.fisherevans.twc.states.adventure.lights.TorchLight;
 import com.fisherevans.twc.states.adventure.triggers.AdventureTrigger;
+import com.fisherevans.twc.tools.PerlParser;
 
 public class AdventureConfigLoader
 {
@@ -20,7 +22,7 @@ public class AdventureConfigLoader
 	private AdventureState _as;
 	
 	private File _file;
-	private Scanner _reader;
+	private BufferedReader _ldrInput;
 	
 	private LOADPART _curLoadPart;
 	
@@ -56,15 +58,15 @@ public class AdventureConfigLoader
 		_curLoadPart = LOADPART.MAP;
 		try
 		{
-			_reader = new Scanner(_file);
+			_ldrInput = PerlParser.parseLDR(location);
 			
 			String buffer = "";
-			while(_reader.hasNextLine())
+			while((buffer = _ldrInput.readLine()) != null)
 			{
-				buffer = _reader.nextLine();
 				buffer = buffer.replaceAll("#.*", "").replaceAll("\\s+", " ").replaceAll("^\\s+", ""); // Get rid of comments and extra spaces and leading spaces.
 				if(!buffer.matches("^ *$"))
 				{
+					//System.out.println(buffer);
 					if(checkLoadPartSwitch(buffer));
 					else
 					{
@@ -143,6 +145,11 @@ public class AdventureConfigLoader
 			case "PLAYER":
 				_mapConfig.setPlayer(line[1]);
 				break;
+			case "ALL":
+				_mapConfig.setTmx(line[1]);
+				_mapConfig.setTiles(line[2]);
+				_mapConfig.setCamera(line[3]);
+				_mapConfig.setPlayer(line[4]);
 		}
 	}
 	
@@ -167,8 +174,17 @@ public class AdventureConfigLoader
 				{
 					case "TORCH":
 						_lightIndex = _lightConfig.addLight(new TorchLight(line[2]));
+						//System.out.println("One Liner?");
+						if(line.length > 3)
+						{
+							//System.out.println("Yes, One Liner");
+							_lightConfig.getLight(_lightIndex).setX(Integer.parseInt(line[3]));
+							_lightConfig.getLight(_lightIndex).setY(Integer.parseInt(line[4]));
+							_lightConfig.getLight(_lightIndex).setSize(Integer.parseInt(line[5]));
+						}
 						break;
-				} break;
+				}
+				break;
 			case "X":
 				_lightConfig.getLight(_lightIndex).setX(Integer.parseInt(line[1]));
 				break;
@@ -217,34 +233,28 @@ public class AdventureConfigLoader
 				_entityConfigs.get(_entityIndex).setAnimDur(Integer.parseInt(line[1]));
 				break;
 			case "FACE":
-				switch(line[1])
-				{
-					case "N":
-						_entityConfigs.get(_entityIndex).setAngle(270);
-						break;
-					case "S":
-						_entityConfigs.get(_entityIndex).setAngle(90);
-						break;
-					case "W":
-						_entityConfigs.get(_entityIndex).setAngle(180);
-						break;
-					case "E":
-						_entityConfigs.get(_entityIndex).setAngle(0);
-						break;
-					default:
-						_entityConfigs.get(_entityIndex).setAngle(Integer.parseInt(line[1]));
-				}
+				setEntityFace(line[1]);
 				break;
 			case "TYPE":
-				switch(line[1])
-				{
-					case "movable":
-						_entityConfigs.get(_entityIndex).setType(ENTTYPE.MOVABLE);
-						break;
-					case "animated":
-						_entityConfigs.get(_entityIndex).setType(ENTTYPE.ANIMATED);
-						break;
-				}
+				setEntityType(line[1]);
+				break;
+			case "IMAGES":
+				_entityConfigs.get(_entityIndex).setSprite(line[1]);
+				_entityConfigs.get(_entityIndex).setIcon(line[2]);
+				break;
+			case "POSITION":
+				_entityConfigs.get(_entityIndex).setX(Float.parseFloat(line[1]));
+				_entityConfigs.get(_entityIndex).setY(Float.parseFloat(line[2]));
+				setEntityFace(line[3]);
+				break;
+			case "CHARACTER":
+				setEntityType(line[1]);
+				_entityConfigs.get(_entityIndex).setActions(line[2]);
+				_entityConfigs.get(_entityIndex).setDispName(getStringFrom(line, 3));
+				break;
+			case "MOVEMENT":
+				_entityConfigs.get(_entityIndex).setController(line[1]);
+				_entityConfigs.get(_entityIndex).setSpeed(Float.parseFloat(line[2]));
 				break;
 		}
 	}
@@ -407,5 +417,39 @@ public class AdventureConfigLoader
 	public LightConfig getLightConfig()
 	{
 		return _lightConfig;
+	}
+	
+	private void setEntityFace(String line)
+	{
+		switch(line)
+		{
+			case "N":
+				_entityConfigs.get(_entityIndex).setAngle(270);
+				break;
+			case "S":
+				_entityConfigs.get(_entityIndex).setAngle(90);
+				break;
+			case "W":
+				_entityConfigs.get(_entityIndex).setAngle(180);
+				break;
+			case "E":
+				_entityConfigs.get(_entityIndex).setAngle(0);
+				break;
+			default:
+				_entityConfigs.get(_entityIndex).setAngle(Integer.parseInt(line));
+		}
+	}
+	
+	private void setEntityType(String line)
+	{
+		switch(line)
+		{
+			case "movable":
+				_entityConfigs.get(_entityIndex).setType(ENTTYPE.MOVABLE);
+				break;
+			case "animated":
+				_entityConfigs.get(_entityIndex).setType(ENTTYPE.ANIMATED);
+				break;
+		}
 	}
 }

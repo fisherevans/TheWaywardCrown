@@ -1,177 +1,72 @@
-:MAP
-	TMX res/maps/tmx/forest_layout.tmx
-	TILES res/maps/tilesets
-	CAMERA player
-	PLAYER player
+use feature qw(say);
+require 'LDRMethods.pl';
 
-:LIGHTS
-	DAWN  153 178 180
-	DAY   251 255 237
-	DUSK  207 159 116
-	NIGHT 50  55  105
-	NEW TORCH torch1_light
-		X 126
-		Y 130
-		SIZE 512
-	NEW TORCH torch2_light
-		X 122
-		Y 132
-		SIZE 512
-	NEW TORCH torch3_light
-		X 119
-		Y 127
-		SIZE 512
-	NEW TORCH torch4_light
-		X 111
-		Y 130
-		SIZE 512
-	NEW TORCH torch5_light
-		X 134
-		Y 128
-		SIZE 512
-	NEW TORCH torch6_light
-		X 116
-		Y 134
-		SIZE 512
-	NEW TORCH torch7_light
-		X 115
-		Y 128
-		SIZE 512
-:ENTITIES
-	NEW player                                     # Main Player Entity
-		TYPE      movable
-		SPRITE    res/sprites/test/char.png
-		ICON      res/sprites/test/default64x64.png
-		X         115
-		Y         131
-		FACE      N
-		CONTROLER player
-		SPEED     1
-		NAME      Main Player
-	NEW chris
-		Type      movable
-		SPRITE    res/sprites/test/char3.png
-		ICON      res/sprites/test/default64x64.png
-		X         127
-		Y         131
-		FACE      W
-		CONTROLER null
-		SPEED     1
-		NAME      NPC Chris
-		ACTIONS   chris_dialogue
-	NEW speedpotion
-		TYPE      movable
-		SPRITE    res/sprites/test/char2.png
-		ICON      res/sprites/test/default64x64.png
-		X         124
-		Y         129
-		FACE      S
-		CONTROLER null
-		NAME      Annebeth
-		ACTIONS   speedpotion
-	NEW torch1
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         126
-		Y         130
-		FACE      N
-		NAME      Torch 1
-		ACTIONS   torchAction
-	NEW torch2
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         122
-		Y         132
-		FACE      N
-		NAME      Torch 2
-		ACTIONS   torchAction
-	NEW torch3
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         119
-		Y         127
-		FACE      N
-		NAME      Torch 3
-		ACTIONS   torchAction
-	NEW torch4
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         111
-		Y         130
-		FACE      N
-		NAME      Torch 4
-		ACTIONS   torchAction
-	NEW torch5
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         134
-		Y         128
-		FACE      N
-		NAME      Torch 5
-		ACTIONS   torchAction
-	NEW torch6
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         116
-		Y         134
-		FACE      N
-		NAME      Torch 6
-		ACTIONS   torchAction
-	NEW torch7
-		TYPE      animated
-		SPRITE    res/sprites/ents/torch.png
-		ICON      res/sprites/test/default64x64.png
-		X         115
-		Y         128
-		FACE      N
-		NAME      Torch 7
-		ACTIONS   torchAction
-:ACTIONS
-	NEW torchAction
-		HALT player
-		NOTIFICATION It's a torch.
-		NOTIFICATION You thought it would talk? You twit...
-		UNHALT player
-	NEW speedpotion
-		HALT player
-		DIALOGUE left speedpotion Here, have a potion!
-		NOTIFICATION You take a swig of the potion. You feel a slight lightness in your feet...
-		UNHALT player
-		SETSPEED player 2
-		WAIT 7500
-		SETSPEED player 1
-		HALT player
-		WAITTOSTOP player
-		NOTIFICATION The potion's effects wear off...
-		UNHALT player
-	NEW chris_dialogue
-		HALT player
-		HALT chris
-		FACE player chris
-		FACE chris player
-		DIALOGUE left chris There are some scary creatures out there. You shouldn't venture out unarmed...
-		UNHALT player
-		UNHALT chris
-	NEW stop_player
-		HALT player
-		HALT chris
-		FACE player chris
-		FACE chris player
-		DIALOGUE left chris Hey, hold up! It's dangerous out there. I won't let you leave without a cat grenade.
-		UNHALT chris
-		UNHALT player
-		WAITTOSTOP player
-		MOVE player W 1
-:TRIGGERS
-	NEW
-		X 127
-		Y 132
-		TIMES 0
-		ACTIONS stop_player
-		EFFECTS player
+mapSettings("forest_layout.tmx", "player", "player");
+
+defaultDaycolors();
+
+@torchX = ( 126, 122, 119, 111, 134, 116, 115 );
+@torchY = ( 130, 132, 127, 130, 128, 134, 128 );
+for($torch = 0;$torch < $#torchX;$torch++)
+{
+    light("TORCH", "torch" . $torch . "_light",
+          $torchX[$torch], $torchY[$torch], 512);
+        
+    animatedEntity("torch" . $torch . "_ent", "Torch $torch", "torchAction",
+                   "res/sprites/ents/torch.png", "res/sprites/test/default64x64.png",
+                   $torchX[$torch], $torchY[$torch], "N");        
+}
+
+movableEntity("player", "Main Player", "none",
+              "res/sprites/test/char.png", "res/sprites/test/default64x64.png",
+              115, 131, "N",
+              "player", 1);
+
+movableEntity("chris", "Chris", "chris_dialogue",
+              "res/sprites/test/char3.png", "res/sprites/test/default64x64.png",
+              127, 131, "W",
+              "null", 1);
+
+movableEntity("ashley", "Ashley", "speedpotion",
+              "res/sprites/test/char2.png", "res/sprites/test/default64x64.png",
+              124, 129, "S",
+              "null", 1);
+              
+trigger(127, 132, 0, "stop_player", "player");
+
+say ":ACTIONS
+  NEW torchAction
+    HALT player
+    NOTIFICATION It's a torch.
+    NOTIFICATION You thought it would talk? You twit...
+    UNHALT player
+  NEW speedpotion
+    HALT player
+    DIALOGUE left ashley Here, have a potion!
+    NOTIFICATION You take a swig of the potion. You feel a slight lightness in your feet...
+    UNHALT player
+    SETSPEED player 2
+    WAIT 7500
+    SETSPEED player 1
+    HALT player
+    WAITTOSTOP player
+    NOTIFICATION The potion's effects wear off...
+    UNHALT player
+  NEW chris_dialogue
+    HALT player
+    HALT chris
+    FACE player chris
+    FACE chris player
+    DIALOGUE left chris There are some scary creatures out there. You shouldn't venture out unarmed...
+    UNHALT player
+    UNHALT chris
+  NEW stop_player
+    HALT player
+    HALT chris
+    FACE player chris
+    FACE chris player
+    DIALOGUE left chris Hey, hold up! It's dangerous out there. I won't let you leave without a cat grenade.
+    UNHALT chris
+    UNHALT player
+    WAITTOSTOP player
+    MOVE player W 1";

@@ -21,6 +21,6 @@ public class AdventureDemoItem extends MenuItem
 	@Override
 	public State action()
 	{
-		return new AdventureState(MainMenuState.getSM(), GameDriver.getInput(), "res/configs/forest_test.ldr");
+		return new AdventureState(MainMenuState.getSM(), GameDriver.getInput(), "forest_test.ldr");
 	}
 }
