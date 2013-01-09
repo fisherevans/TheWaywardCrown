@@ -7,29 +7,25 @@ import java.util.logging.Logger;
 import com.almworks.sqlite4java.SQLiteConnection;
 import com.almworks.sqlite4java.SQLiteException;
 import com.almworks.sqlite4java.SQLiteStatement;
+import com.fisherevans.twc.tools.DBHandler;
 
 // http://code.google.com/p/sqlite4java/
+// http://sourceforge.net/projects/sqlitebrowser/?source=dlp
 public class SQLiteTester
 {
 	public SQLiteTester() throws SQLiteException
 	{
-		File saveFile = new File("res/saves/save001.db");
-		Logger.getLogger("com.almworks.sqlite4java").setLevel(Level.WARNING);
-		SQLiteConnection db = new SQLiteConnection(saveFile);
-	    db.open(true);
-	    
-	    SQLiteStatement st = db.prepare("SELECT * FROM save_info");
+		DBHandler.setSaveName("res/saves/save001.sqlite");
+		
+		DBHandler.openDB();
 
-    	System.out.printf(" %-3s | %20s | %-20s\n", "ROW", "INFO NAME", "INFO VALUE");
-    	System.out.print("-----+----------------------+----------------------\n");
-	    int step = 0;
-	    while(st.step())
-	    {
-	    	System.out.printf(" %-3s | %20s | %-60s\n", step++, st.columnString(0), st.columnString(1));
-	    }
-	    
-	    st.dispose();
-	    db.dispose();
+		System.out.println(DBHandler.getAttribText("test"));
+		DBHandler.setAttrib("test4", "does this work?");
+		System.out.println(DBHandler.getAttribText("test3"));
+		System.out.printf("There are %d %s that are %s to the number %f.\n",
+				DBHandler.getAttribInt("test2"), DBHandler.getAttribText("test2"), DBHandler.getAttribBoolean("test2")?"true":"false", DBHandler.getAttribFloat("test2"));
+		
+		DBHandler.closeDB();
 	}
 	
 	public static void main(String[] args)

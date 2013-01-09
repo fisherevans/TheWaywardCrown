@@ -26,6 +26,7 @@ import com.fisherevans.twc.states.adventure.config.AdventureConfigLoader;
 import com.fisherevans.twc.states.adventure.entities.*;
 import com.fisherevans.twc.states.adventure.lights.LightManager;
 import com.fisherevans.twc.states.adventure.triggers.TriggerManager;
+import com.fisherevans.twc.states.pausemenu.PauseMenuState;
 import com.fisherevans.twc.tools.*;
 
 public class AdventureState extends State
@@ -47,6 +48,8 @@ public class AdventureState extends State
 	public AdventureState(StateManager sm, Input input, String ldr)
 	{
 		super(sm, input);
+		DBHandler.setSaveName("res/saves/save001.sqlite");
+		DBHandler.openDB();
 		_ldr = ldr;
 	}
 
@@ -105,6 +108,11 @@ public class AdventureState extends State
 		_dm.keyPressed(key, c);
 		//if(_am.keyPressed(key, c)) { return; }
 		_em.getPlayerEntity().getControler().keyPressed(key, c);
+		
+		if(KeyTools.isBACK(key))
+		{
+			getSM().setStateQuick(new PauseMenuState(getSM(), getInput(), this));
+		}
 	}
 
 	@Override

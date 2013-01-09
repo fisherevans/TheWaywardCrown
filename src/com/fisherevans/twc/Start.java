@@ -17,6 +17,8 @@ import org.newdawn.slick.CanvasGameContainer;
 import org.newdawn.slick.ScalableGame;
 import org.newdawn.slick.SlickException;
 
+import com.fisherevans.twc.tools.DBHandler;
+
 public class Start implements ComponentListener
 {
 	public static boolean DEBUG = false; // Used to turn on or off debug printing throughout the game.
@@ -154,6 +156,7 @@ public class Start implements ComponentListener
 	}
 
     public static void pullThePlug() {
+    	DBHandler.closeDB();
             WindowEvent wev = new WindowEvent(_frame, WindowEvent.WINDOW_CLOSING);
             Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
     }

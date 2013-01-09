@@ -44,6 +44,15 @@ public class StateManager
 		_switchingState = true;
 	}
 	
+	/** Sets the current state to the passed state
+	 * @param newState The new state to be updated and rendered.
+	 */
+	public void setStateQuick(State newState)
+	{
+		_currentState = newState;
+		_switchingState = true;
+	}
+	
 	/** @return the Game driver using this state */
 	public static GameDriver getGD()
 	{

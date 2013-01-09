@@ -1,5 +1,15 @@
 use feature qw(say);
 require 'LDRMethods.pl';
+require 'SaveDB.pl';
+openDB($ARGV[0]);
+
+dbDO('INSERT into global_attribs ("name", "text") VALUES ("perl_test", "should be secod entry")');
+
+$res = dbSELECT('SELECT * FROM global_attribs WHERE "name"="perl_test"');
+foreach my $row (@$res) {
+my ($id, $name, $int, $float, $text, $bool) = @$row;
+say "$id|$name|$int|$float|$text|$bool";
+}
 
 mapSettings("forest_layout.tmx", "player", "player");
 
@@ -70,3 +80,5 @@ say ":ACTIONS
     UNHALT player
     WAITTOSTOP player
     MOVE player W 1";
+	
+closeDB();

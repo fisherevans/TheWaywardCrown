@@ -13,6 +13,7 @@ import com.fisherevans.twc.states.adventure.actions.*;
 import com.fisherevans.twc.states.adventure.config.EntityConfig.ENTTYPE;
 import com.fisherevans.twc.states.adventure.lights.TorchLight;
 import com.fisherevans.twc.states.adventure.triggers.AdventureTrigger;
+import com.fisherevans.twc.tools.DBHandler;
 import com.fisherevans.twc.tools.PerlParser;
 
 public class AdventureConfigLoader
@@ -58,15 +59,17 @@ public class AdventureConfigLoader
 		_curLoadPart = LOADPART.MAP;
 		try
 		{
-			_ldrInput = PerlParser.parseLDR(location);
+			DBHandler.closeDB();
+			_ldrInput = PerlParser.parseLDR(location + " " + DBHandler.getSaveName());
+			DBHandler.openDB();
 			
 			String buffer = "";
 			while((buffer = _ldrInput.readLine()) != null)
 			{
 				buffer = buffer.replaceAll("#.*", "").replaceAll("\\s+", " ").replaceAll("^\\s+", ""); // Get rid of comments and extra spaces and leading spaces.
+				System.out.println(buffer);
 				if(!buffer.matches("^ *$"))
 				{
-					//System.out.println(buffer);
 					if(checkLoadPartSwitch(buffer));
 					else
 					{
