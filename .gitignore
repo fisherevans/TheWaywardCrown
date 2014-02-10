@@ -1,0 +1,7 @@
+# Ignore
+.git
+.hg
+.idea/workspace.xml
+out
+javadoc
+bin
