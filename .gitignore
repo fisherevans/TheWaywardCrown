@@ -1,7 +1,4 @@
-# Ignore
 .git
-.hg
-.idea/workspace.xml
+.idea
 out
-javadoc
 bin
