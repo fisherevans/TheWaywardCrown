@@ -3,6 +3,8 @@ TheWaywardCrown
 
 An RPG project lead by Fisher. Uses Java Slick2D.
 
-Not sure what to say here.
+Demo videos:
 
-http://fisherevans.com/?page_id=125
+[![Watch a demo](https://img.youtube.com/vi/KkkSmBo4tss/hqdefault.jpg)](https://www.youtube.com/watch?v=KkkSmBo4tss)
+
+[![Watch a demo](https://img.youtube.com/vi/IxDtreRA4dU/hqdefault.jpg)](https://www.youtube.com/watch?v=IxDtreRA4dU)
